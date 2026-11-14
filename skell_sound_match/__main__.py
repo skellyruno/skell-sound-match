@@ -25,12 +25,19 @@ def main() -> None:
     st.add_argument("--early", nargs=2, type=float, default=[.8, 6.5])
     st.add_argument("--middle", nargs=2, type=float, default=[7., 12.3])
     st.add_argument("--late", nargs=2, type=float, default=[12.7, 18.3])
+    ix = sub.add_parser("interactions", help="Analyze main-stage level dependence from four aligned WAVs")
+    for name in ("dry","recording","main","combined"):
+        ix.add_argument(name)
+    ix.add_argument("--window",nargs=2,type=float,default=[.9,6.8])
     args = p.parse_args()
     if args.command == "stages":
         from .stages import analyze_stages
         paths=(args.dry,args.recording,args.main,args.combined)
         out=analyze_stages(*(load_wav(p) for p in paths),
                            windows={"early":tuple(args.early),"middle":tuple(args.middle),"late":tuple(args.late)})
+    elif args.command == "interactions":
+        from .interactions import analyze_interactions
+        out = analyze_interactions(*(load_wav(p) for p in (args.dry,args.recording,args.main,args.combined)),window=tuple(args.window))
     elif args.command == "compare":
         ref, x = load_wav(args.reference), load_wav(args.candidate)
         out = compare(ref, x)
