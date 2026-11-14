@@ -33,13 +33,45 @@ For experimental PyTorch losses/processors: `pip install -e ".[research]"`. Inst
 
 See `AGENTS.md` for development standards. Third-party projects: [auraloss](https://github.com/csteinmetz1/auraloss) and [dasp-pytorch](https://github.com/csteinmetz1/dasp-pytorch) (both Apache-2.0; install as external packages rather than copying their code).
 
+## Four-render serial-chain diagnostics (tested)
 
-## Serial recording + main chain diagnostics (verified locally)
-
-Use four **sample-aligned exports of the same take** (never check private WAVs into a public repository):
+To investigate a recording-stage → main-stage vocal chain **without copying private audio into the repository**:
 
 ```powershell
 python -m skell_sound_match stages "dry.wav" "recording_only.wav" "main_only.wav" "combined.wav"
 ```
 
-Reports measured band gain and dynamic spread for recording-only, dry→main and recording→main. When the main-chain transfer depends on its input, a single static EQ is insufficient to describe it. The tool does **not** identify which plugin is responsible or decode proprietary settings. Default windows assume ~19-second experiments; use `--early START END --middle START END --late START END` to adapt.
+The tool measures time-varying output/input gain within body, low-mid, mid, presence and consonant bands, separately for dry→main and recording→main. It rejects different sample counts, channels, sample rates, and non-finite data rather than silently aligning or downmixing. Measurements do **not** reveal the proprietary plugins' original settings, prove which plugin caused the difference, or constitute a sound match.
+
+The default early/middle/late windows suit the 18.75-second Deuce experiment; for other clip durations choose `--early START END --middle START END --late START END` in seconds. Use multiple fresh performances before claiming a transferable preset.
+
+## Experimental serial calibration (REC → MAIN)
+
+Use four **sample-aligned** exports of the **same take** to fit an offline model of
+REC followed by MAIN. Provide *both* dry→MAIN-only and REC-only→combined
+examples. Any proprietary `.fst` state, private voice, or FL Studio project
+must remain outside this public repository.
+
+```powershell
+python -m skell_sound_match serialfit "dry.wav" "rec_only.wav" "main_only.wav" "rec_plus_main.wav" --model "local_models/serial.json" --report "reports/private/serial.json" --champion "protected_champion.wav"
+```
+
+The model uses two regularized FIR filters with bounded, input-conditioned
+5 ms gain curves. **This is an offline experiment with lookahead, not a VST3
+or a reproduction of proprietary DSP.** The program reports REC, full-chain,
+and champion metrics on chronological sections; it explicitly refuses to
+promote a candidate automatically. `dry_path_probe` tests whether a fitted
+parallel dry term improves held-out audio, but does **not** establish the actual
+FL Studio routing; inspect the mixer routing or FLP to verify that.
+
+Optional offline render (no forced limiting or loudness manipulation):
+
+```powershell
+python -m skell_sound_match serialrender "dry.wav" "local_models/serial.json" "local_models/serial_trial.wav"
+```
+
+Rendering refuses existing output paths, non-finite material, and peaks above
+-1 dBTP (4× approximate oversampling). Do not compare the rendered trial by
+ear without first matching listening loudness. The model's training/validation
+passages may be from the same take, so generalization to other recordings and
+true perceptual similarity remain unverified.
