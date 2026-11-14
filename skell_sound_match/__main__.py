@@ -19,8 +19,19 @@ def main() -> None:
     r.add_argument("dry")
     r.add_argument("reference")
     r.add_argument("--steps", type=int, default=80)
+    st = sub.add_parser("stages", help="Diagnose record/main chains from four same-take WAVs")
+    for name in ("dry", "recording", "main", "combined"):
+        st.add_argument(name)
+    st.add_argument("--early", nargs=2, type=float, default=[.8, 6.5])
+    st.add_argument("--middle", nargs=2, type=float, default=[7., 12.3])
+    st.add_argument("--late", nargs=2, type=float, default=[12.7, 18.3])
     args = p.parse_args()
-    if args.command == "compare":
+    if args.command == "stages":
+        from .stages import analyze_stages
+        paths=(args.dry,args.recording,args.main,args.combined)
+        out=analyze_stages(*(load_wav(p) for p in paths),
+                           windows={"early":tuple(args.early),"middle":tuple(args.middle),"late":tuple(args.late)})
+    elif args.command == "compare":
         ref, x = load_wav(args.reference), load_wav(args.candidate)
         out = compare(ref, x)
         if args.research_loss:

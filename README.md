@@ -32,3 +32,14 @@ For experimental PyTorch losses/processors: `pip install -e ".[research]"`. Inst
 5. Integrate with Skell Preset only after phase/latency, preset recall, CPU and FL Studio tests.
 
 See `AGENTS.md` for development standards. Third-party projects: [auraloss](https://github.com/csteinmetz1/auraloss) and [dasp-pytorch](https://github.com/csteinmetz1/dasp-pytorch) (both Apache-2.0; install as external packages rather than copying their code).
+
+
+## Serial recording + main chain diagnostics (verified locally)
+
+Use four **sample-aligned exports of the same take** (never check private WAVs into a public repository):
+
+```powershell
+python -m skell_sound_match stages "dry.wav" "recording_only.wav" "main_only.wav" "combined.wav"
+```
+
+Reports measured band gain and dynamic spread for recording-only, dry→main and recording→main. When the main-chain transfer depends on its input, a single static EQ is insufficient to describe it. The tool does **not** identify which plugin is responsible or decode proprietary settings. Default windows assume ~19-second experiments; use `--early START END --middle START END --late START END` to adapt.
