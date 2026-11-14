@@ -75,3 +75,14 @@ Rendering refuses existing output paths, non-finite material, and peaks above
 ear without first matching listening loudness. The model's training/validation
 passages may be from the same take, so generalization to other recordings and
 true perceptual similarity remain unverified.
+
+## Offline phase + envelope experiment (unapproved)
+
+`pip install -e ".[test,fit]"` enables training. The command below operates on **local private audio only** and refuses to overwrite existing outputs:
+
+```powershell
+python -m skell_sound_match.phase_contour --base candidate.wav --dry dry.wav --reference target.wav --wav trial.wav --model trial.json
+pytest -q
+```
+
+This offline experiment learns a regularized **4095-tap symmetric FIR** and a bounded 5 ms level-contour correction on **the opening 0.94–6.84 s only**. It preserves previously approved output files and rejects unsafe peaks and malformed inputs. The noncausal FIR requires approximately **46 ms of lookahead**; it is **not real-time-safe VST3 DSP**. Its numerical fit can improve while audibility worsens; never promote without a level-matched listening test. No private recordings or fitted models belong in Git history.
