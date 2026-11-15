@@ -107,3 +107,28 @@ The default chronological sections suit a 15 s clip (0.8–5.7 s training,
 `--training START END --validation START END --test START END`.
 **Never claim the repeatedly inspected sections are blind.** A better score
 is a listening hypothesis, not a verified preset or a VST3 release.
+
+## Experimental offline pre-echo removal (reference-free rendering)
+
+Long noncausal phase-match filters can create a vocal onset **before** the true
+phrase begins. The experimental `onset_cleaner` isolates major phrases from
+a candidate WAV and suppresses only the configurable early gate opening.
+The output is a separate file; the original source is never edited.
+Reference audio is **not** used during rendering.
+
+```powershell
+python -m skell_sound_match.onset_cleaner candidate.wav --wav onset_trial.wav --report onset_trial.json --threshold-dbfs -55 --holdoff-ms 35 --fade-ms 4
+```
+
+The values above are an *illustrative experimental combination*, **not** a
+universal vocal setting or verified original-plugin knob positions. Calibrate
+on an opening section and evaluate on later passages; do not infer sound
+quality from a single waveform score. The input is not a true zero-latency
+stream, since detection can look ahead over the phrase. **Do not deploy in a
+Windows VST3 until a causal, allocation-free rewrite, latency/CPU benchmarks,
+automation and FL Studio regression checks are complete.**
+
+The tool refuses to overwrite files, requires explicit threshold/holdoff
+arguments, validates finite audio/true peaks, and writes a local report with
+SHA-256 fingerprints but **no private source filenames**. Never commit
+user recordings or fitted model reports to the public repository.
