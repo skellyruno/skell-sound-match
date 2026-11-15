@@ -86,3 +86,24 @@ pytest -q
 ```
 
 This offline experiment learns a regularized **4095-tap symmetric FIR** and a bounded 5 ms level-contour correction on **the opening 0.94–6.84 s only**. It preserves previously approved output files and rejects unsafe peaks and malformed inputs. The noncausal FIR requires approximately **46 ms of lookahead**; it is **not real-time-safe VST3 DSP**. Its numerical fit can improve while audibility worsens; never promote without a level-matched listening test. No private recordings or fitted models belong in Git history.
+
+## Champion-quality gate (candidate versus protected reference)
+
+The quality gate **never auto-promotes** a candidate. It reports signed waveform correlation,
+null residual, multi-resolution spectral error, 5/20/200 ms envelope error,
+crest factor, approximate 4x true peaks, loudness and SHA-256 fingerprints.
+It reports all tradeoffs on chronological sections with at least 200 ms gaps.
+The output includes no private filenames or audio. Never commit user WAVs or private reports.
+
+Install `pip install -e ".[test]"`; for LUFS checks include `pyloudnorm`
+(from the base dependencies). Run locally with audio of the **same take**:
+
+```powershell
+python -m skell_sound_match.quality_gate reference.wav protected_champion.wav new_candidate.wav --out local_reports/candidate.json
+```
+
+The default chronological sections suit a 15 s clip (0.8–5.7 s training,
+6.1–10.4 s validation, 10.8–14.4 s test). For other durations, pass
+`--training START END --validation START END --test START END`.
+**Never claim the repeatedly inspected sections are blind.** A better score
+is a listening hypothesis, not a verified preset or a VST3 release.
