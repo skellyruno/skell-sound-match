@@ -656,6 +656,384 @@
         "type": "direct",
         "repo_path": "archive/data/deuce/screenshots/20261114-131647-1.png"
       }
+    },
+    {
+      "path": "data/deuce/research_models/Deuce_MainStage_TwoInput.json",
+      "original_name": "models/Deuce_MainStage_TwoInput.json",
+      "original_sha256": "515a2fdd1eb75270c52744810cea7046004b21a1e5e810bf6eb2adff5369c840",
+      "sha256": "515a2fdd1eb75270c52744810cea7046004b21a1e5e810bf6eb2adff5369c840",
+      "bytes": 162165,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_models/Deuce_MainStage_TwoInput.json"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_models/Deuce_v14_Contour_Model.json",
+      "original_name": "models/Deuce_v14_Contour_Model.json",
+      "original_sha256": "85956ffc0617dc05605eb5f26c7d610a8d85ee5628171c51ff05543c66062fe3",
+      "sha256": "85956ffc0617dc05605eb5f26c7d610a8d85ee5628171c51ff05543c66062fe3",
+      "bytes": 1877248,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_models/Deuce_v14_Contour_Model.json"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_models/Deuce_v17_ConditionalPresence.json",
+      "original_name": "models/Deuce_v17_ConditionalPresence.json",
+      "original_sha256": "b45909a6a18a64ee0c25119b504b7677f97466153bde291d3fadb574605f80c1",
+      "sha256": "b45909a6a18a64ee0c25119b504b7677f97466153bde291d3fadb574605f80c1",
+      "bytes": 764,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_models/Deuce_v17_ConditionalPresence.json"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_reports/Deuce_FST_Chain_Map.json",
+      "original_name": "reports/Deuce_FST_Chain_Map.json",
+      "original_sha256": "06d1afbe8505b6ae82605d4b821e684387a56f17a504eddeaedd4e09ba17df81",
+      "sha256": "06d1afbe8505b6ae82605d4b821e684387a56f17a504eddeaedd4e09ba17df81",
+      "bytes": 17585,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_reports/Deuce_FST_Chain_Map.json"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_reports/v17_audit.json",
+      "original_name": "reports/v17_audit.json",
+      "original_sha256": "c5fa0a014e7d55e0a4fbe67f99242d0acbe14749ea76304dd9a0adc1dcb5375e",
+      "sha256": "c5fa0a014e7d55e0a4fbe67f99242d0acbe14749ea76304dd9a0adc1dcb5375e",
+      "bytes": 6190,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_reports/v17_audit.json"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_reports/Checksums.json",
+      "original_name": "reports/Checksums.json",
+      "original_sha256": "5685bbd77666e21f80d63f3b7c0fb30ce863c8b10af6a2ef25a19aaed326691c",
+      "sha256": "5685bbd77666e21f80d63f3b7c0fb30ce863c8b10af6a2ef25a19aaed326691c",
+      "bytes": 4407,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_reports/Checksums.json"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/fst_inspector.py",
+      "original_name": "code/fst_inspector.py",
+      "original_sha256": "aeb3cfdbfa3478199ef242d5b5e109468478cca402bbd656d34305689cb973cb",
+      "sha256": "aeb3cfdbfa3478199ef242d5b5e109468478cca402bbd656d34305689cb973cb",
+      "bytes": 5831,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/fst_inspector.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/deuce_v14.py",
+      "original_name": "code/deuce_v14.py",
+      "original_sha256": "da7cb3dd30d7d742e10d16739060d3d89e18c7173bf8a59a3c2344fd953b480f",
+      "sha256": "da7cb3dd30d7d742e10d16739060d3d89e18c7173bf8a59a3c2344fd953b480f",
+      "bytes": 7079,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/deuce_v14.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/skelly_soundmatch_v08.py",
+      "original_name": "code/skelly_soundmatch_v08.py",
+      "original_sha256": "c3a6cff4587de58a718dc593c042908f94b462bd3088c7ae8490e1e3b4852edf",
+      "sha256": "c3a6cff4587de58a718dc593c042908f94b462bd3088c7ae8490e1e3b4852edf",
+      "bytes": 13154,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/skelly_soundmatch_v08.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/dual_input_main_calibrator.py",
+      "original_name": "code/dual_input_main_calibrator.py",
+      "original_sha256": "b7c8d3a189e29c888a40cfbe9a8f2c33e52f937fd595cb3238010fdaedf1b3b0",
+      "sha256": "b7c8d3a189e29c888a40cfbe9a8f2c33e52f937fd595cb3238010fdaedf1b3b0",
+      "bytes": 5833,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/dual_input_main_calibrator.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/deuce_contour_v09.py",
+      "original_name": "code/deuce_contour_v09.py",
+      "original_sha256": "8b889e1ea4920480206d6b86bcea7a14fb0a52301c9538da7d2cb2b905336a56",
+      "sha256": "8b889e1ea4920480206d6b86bcea7a14fb0a52301c9538da7d2cb2b905336a56",
+      "bytes": 8030,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/deuce_contour_v09.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/vocalmatch_v12.py",
+      "original_name": "code/vocalmatch_v12.py",
+      "original_sha256": "dc8d91f65449be68b78f178cd905bdbf5689d02c091fbe3470bc96a33f4b6d48",
+      "sha256": "dc8d91f65449be68b78f178cd905bdbf5689d02c091fbe3470bc96a33f4b6d48",
+      "bytes": 10126,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/vocalmatch_v12.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/test_tools.py",
+      "original_name": "code/test_tools.py",
+      "original_sha256": "ee3a3cf5a0301d6d7b71be52a55ba6742101ea472ad5979d9d0366bb901b7a04",
+      "sha256": "ee3a3cf5a0301d6d7b71be52a55ba6742101ea472ad5979d9d0366bb901b7a04",
+      "bytes": 2723,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/test_tools.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/audit_v17.py",
+      "original_name": "code/audit_v17.py",
+      "original_sha256": "f027434f50978ec80bc0ea27cf2cd26b05cedc811ca218912b80216d3b21a35a",
+      "sha256": "f027434f50978ec80bc0ea27cf2cd26b05cedc811ca218912b80216d3b21a35a",
+      "bytes": 7567,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/audit_v17.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/deuce_v17_voicing.py",
+      "original_name": "code/deuce_v17_voicing.py",
+      "original_sha256": "daf2c848ab3e05226f41f521fea5b0785e17d8a4d6f12dad60df83036cc40161",
+      "sha256": "daf2c848ab3e05226f41f521fea5b0785e17d8a4d6f12dad60df83036cc40161",
+      "bytes": 6797,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/deuce_v17_voicing.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/deuce_v13.py",
+      "original_name": "code/deuce_v13.py",
+      "original_sha256": "6935f9a3c9700f8ef44fd585272d8467e2230b9e1a1572f668b9a91d053e7df8",
+      "sha256": "6935f9a3c9700f8ef44fd585272d8467e2230b9e1a1572f668b9a91d053e7df8",
+      "bytes": 3340,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/deuce_v13.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/vocalmatch_v11.py",
+      "original_name": "code/vocalmatch_v11.py",
+      "original_sha256": "2fdff98ed9d34ba8ab18457de79dcd6f3c873cef5c8cb146766314fbeccde1a0",
+      "sha256": "2fdff98ed9d34ba8ab18457de79dcd6f3c873cef5c8cb146766314fbeccde1a0",
+      "bytes": 8742,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/vocalmatch_v11.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/vocalmatch_residual_v10.py",
+      "original_name": "code/vocalmatch_residual_v10.py",
+      "original_sha256": "5929fa0d15b293d83002c1de3a9bf762f4d41d64cf6c3a4ab64ea99b0d4eacbc",
+      "sha256": "5929fa0d15b293d83002c1de3a9bf762f4d41d64cf6c3a4ab64ea99b0d4eacbc",
+      "bytes": 10483,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/vocalmatch_residual_v10.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/stage_audit.py",
+      "original_name": "code/stage_audit.py",
+      "original_sha256": "1c8011e1074bd2c03bf6438be183354623be404155570eb2c95958d12a9500d7",
+      "sha256": "1c8011e1074bd2c03bf6438be183354623be404155570eb2c95958d12a9500d7",
+      "bytes": 3199,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/stage_audit.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/alchemist/research_code/vocal_match_v07.py",
+      "original_name": "Skelly_Sound_Matching_v0_7/vocal_match_v07.py",
+      "original_sha256": "24c35f6c0812338ea5f06405ee0963ce0ae1b7b9f7bf264208b30ba5d5eb549d",
+      "sha256": "24c35f6c0812338ea5f06405ee0963ce0ae1b7b9f7bf264208b30ba5d5eb549d",
+      "bytes": 12654,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/alchemist/research_code/vocal_match_v07.py"
+      },
+      "provenance_zip": "Skelly_Sound_Matching_v0_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/alchemist/research_code/skelly_pipeline_v07.py",
+      "original_name": "Skelly_Sound_Matching_v0_7/skelly_pipeline_v07.py",
+      "original_sha256": "4cd7a29edaf1525000737ff85af2c4c52355716e55adca2e43bccc677cea49dd",
+      "sha256": "4cd7a29edaf1525000737ff85af2c4c52355716e55adca2e43bccc677cea49dd",
+      "bytes": 3636,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/alchemist/research_code/skelly_pipeline_v07.py"
+      },
+      "provenance_zip": "Skelly_Sound_Matching_v0_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/alchemist/research_code/vocal_match_skelly_v3.py",
+      "original_name": "Skelly_Sound_Matching_v0_7/vocal_match_skelly_v3.py",
+      "original_sha256": "ced84cbac5897329d6166d56a516ac0a8244716b5a7f16941c2812bf0c2984e2",
+      "sha256": "ced84cbac5897329d6166d56a516ac0a8244716b5a7f16941c2812bf0c2984e2",
+      "bytes": 72403,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/alchemist/research_code/vocal_match_skelly_v3.py"
+      },
+      "provenance_zip": "Skelly_Sound_Matching_v0_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/alchemist/research_code/phase_match_v04.py",
+      "original_name": "Skelly_Sound_Matching_v0_7/phase_match_v04.py",
+      "original_sha256": "d2df6c5da3791f9c336c5f754c424e2ff9318c3df8ba0449d857d3e008ee618c",
+      "sha256": "d2df6c5da3791f9c336c5f754c424e2ff9318c3df8ba0449d857d3e008ee618c",
+      "bytes": 16090,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/alchemist/research_code/phase_match_v04.py"
+      },
+      "provenance_zip": "Skelly_Sound_Matching_v0_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/alchemist/research_code/inspect_fst.py",
+      "original_name": "Skelly_Sound_Matching_v0_7/inspect_fst.py",
+      "original_sha256": "85e69cd377869a7d65f3ed6cea11e218c508c3cf3db7cfeee8e7d23045bed1bb",
+      "sha256": "85e69cd377869a7d65f3ed6cea11e218c508c3cf3db7cfeee8e7d23045bed1bb",
+      "bytes": 2191,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/alchemist/research_code/inspect_fst.py"
+      },
+      "provenance_zip": "Skelly_Sound_Matching_v0_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/alchemist/research_reports/SHA256_MANIFEST.json",
+      "original_name": "Skelly_Sound_Matching_v0_7/SHA256_MANIFEST.json",
+      "original_sha256": "27d58b3ddad0e32a79f3331d9d83b2967a3e15243e403905b66c8c81c9bd812d",
+      "sha256": "27d58b3ddad0e32a79f3331d9d83b2967a3e15243e403905b66c8c81c9bd812d",
+      "bytes": 1474,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/alchemist/research_reports/SHA256_MANIFEST.json"
+      },
+      "provenance_zip": "Skelly_Sound_Matching_v0_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/alchemist/research_reports/Alchemist_Refined_v07_report.json",
+      "original_name": "Skelly_Sound_Matching_v0_7/Alchemist/Alchemist_Refined_v07_report.json",
+      "original_sha256": "48f49fa0bf28f83e7eef1911afc0dd8d8df35b0f1a0d63da97765d47c8fb69f0",
+      "sha256": "48f49fa0bf28f83e7eef1911afc0dd8d8df35b0f1a0d63da97765d47c8fb69f0",
+      "bytes": 8006,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/alchemist/research_reports/Alchemist_Refined_v07_report.json"
+      },
+      "provenance_zip": "Skelly_Sound_Matching_v0_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/alchemist/research_reports/MAIN_FST_Structure.json",
+      "original_name": "Skelly_Sound_Matching_v0_7/Alchemist/MAIN_FST_Structure.json",
+      "original_sha256": "a768372b3ffcf273ac6c3b19ed4478dab8c7e7c82cf171feb59b397bd1ad32d5",
+      "sha256": "a768372b3ffcf273ac6c3b19ed4478dab8c7e7c82cf171feb59b397bd1ad32d5",
+      "bytes": 17090,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/alchemist/research_reports/MAIN_FST_Structure.json"
+      },
+      "provenance_zip": "Skelly_Sound_Matching_v0_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
     }
   ]
 }

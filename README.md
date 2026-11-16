@@ -1,6 +1,6 @@
 # Skell Sound Match 🩻
 
-Offline audio matching research for the Skelly ecosystem. **No private vocal recordings, unreleased samples, `.fst` files, FL Studio projects, or commercial plugin binaries belong in Git history.** This repository is source code and synthetic tests only.
+Offline audio matching research for the Skelly ecosystem. **Data policy:** Owner-approved Deuce and Alchemist recordings, preset states, and research models are now explicitly archived here under `archive/`. This repository is public; future sensitive data remains excluded unless the owner separately approves publishing it.
 
 ## Status
 
@@ -132,3 +132,7 @@ The tool refuses to overwrite files, requires explicit threshold/holdoff
 arguments, validates finite audio/true peaks, and writes a local report with
 SHA-256 fingerprints but **no private source filenames**. Never commit
 user recordings or fitted model reports to the public repository.
+
+## Owner-approved research archive
+
+The public `archive/` contains 63 owner-approved research artifacts (51.94 MB of lossless and source data): original Deuce and Alchemist stage audio, `.fst` presets, screenshots, measured reports, historical fitted models, and legacy experimental DSP code. Large tracks are losslessly chunked. Run `python scripts/materialize_archive.py --verify` followed by `python scripts/materialize_archive.py --restore --output local_sound_archive` to reconstruct files. Use `recipes/deuce.json` or `recipes/alchemist.json` as evidence-tagged **planning inputs** for Skell Preset and Skell AdlibLab—not as finished native VST3 presets. See `archive/README.md` for provenance and limitations.

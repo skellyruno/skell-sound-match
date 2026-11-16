@@ -1,0 +1,251 @@
+{
+  "status": "EXPERIMENTAL - listening approval required",
+  "quality_gate_passed": true,
+  "promoted_to_champion": false,
+  "reference_sha256": "7043899b926e1f8c2b1865adc76126570d7a12f43ca7cc82cd44591df2296e13",
+  "previous_sha256": "d5f99b5d9498f11ae73dd6e5419aa7a72a4401ba984322af8d52311691d63216",
+  "output_sha256": "bc28d81cee1ab3e89af0d5abf38468d22ca95a2ae49670f663f5e3acd1dc89c8",
+  "sample_rate": 44100,
+  "samples": 1878768,
+  "alignment": {
+    "envelope_alignment_5ms_blocks": 0,
+    "envelope_alignment_correlation": 0.9343,
+    "aligned_within_ms": 5,
+    "length_difference_samples": 0
+  },
+  "harmonic_model": {
+    "cubic_coefficient": -0.017994,
+    "coefficient_at_limit": true,
+    "training_p99": 0.3012775,
+    "training_gain_normalization_db": 0.0775,
+    "algorithm": "gentle bounded cubic waveshaper, no uncontrolled makeup gain"
+  },
+  "dynamic_model": {
+    "slow_level_coefficient": -0.123735,
+    "fast_minus_slow_coefficient": -0.35,
+    "training_reference_level_offset_db_excluded_from_processing": 1.261,
+    "max_control_db": 0.6,
+    "control_max_abs_db": 0.6,
+    "detectors_ms": [
+      20,
+      120,
+      280
+    ],
+    "block_ms": 10.0,
+    "smoothing_sigma_frames": 1.5,
+    "training_loss": 0.99493,
+    "runtime_uses_reference_audio": false
+  },
+  "safety": {
+    "input_peak_dbtp": -3.135,
+    "gain_change_db": 0.0,
+    "output_peak_dbtp": -3.135,
+    "ceiling_dbtp": -1.0,
+    "previous_peak_dbtp": -2.01,
+    "peak_change_from_previous_db": -1.125,
+    "max_permitted_abs_peak_change_db": 1.5
+  },
+  "metrics": {
+    "training": {
+      "start_end_s": [
+        1,
+        18
+      ],
+      "previous": {
+        "zero_lag_signed_waveform_correlation": 0.9811,
+        "polarity_agnostic_correlation": 0.9811,
+        "best_single_gain_null_residual_db_relative_to_reference": -14.258,
+        "best_fit_gain": 1.1344,
+        "level_difference_to_reference_db": 1.261,
+        "spectral_bands_mae_db": 0.298,
+        "per_band_candidate_minus_reference_db": {
+          "70-120": 0.37,
+          "120-250": -0.48,
+          "250-500": 0.45,
+          "500-1000": -0.29,
+          "1000-2000": -0.11,
+          "2000-4000": -0.3,
+          "4000-6000": 0.09,
+          "6000-10000": 0.5,
+          "10000-16000": -0.11
+        },
+        "active_envelope_mae_db": {
+          "10ms": 0.889,
+          "20ms": 0.864,
+          "200ms": 0.627
+        },
+        "active_10ms_crest_mae_db": 0.469
+      },
+      "trial": {
+        "zero_lag_signed_waveform_correlation": 0.9815,
+        "polarity_agnostic_correlation": 0.9815,
+        "best_single_gain_null_residual_db_relative_to_reference": -14.36,
+        "best_fit_gain": 1.1361,
+        "level_difference_to_reference_db": 1.27,
+        "spectral_bands_mae_db": 0.311,
+        "per_band_candidate_minus_reference_db": {
+          "70-120": 0.44,
+          "120-250": -0.45,
+          "250-500": 0.49,
+          "500-1000": -0.28,
+          "1000-2000": -0.13,
+          "2000-4000": -0.33,
+          "4000-6000": 0.08,
+          "6000-10000": 0.47,
+          "10000-16000": -0.12
+        },
+        "active_envelope_mae_db": {
+          "10ms": 0.864,
+          "20ms": 0.839,
+          "200ms": 0.621
+        },
+        "active_10ms_crest_mae_db": 0.383
+      }
+    },
+    "validation": {
+      "start_end_s": [
+        19,
+        35
+      ],
+      "previous": {
+        "zero_lag_signed_waveform_correlation": 0.9785,
+        "polarity_agnostic_correlation": 0.9785,
+        "best_single_gain_null_residual_db_relative_to_reference": -13.704,
+        "best_fit_gain": 1.1247,
+        "level_difference_to_reference_db": 1.21,
+        "spectral_bands_mae_db": 0.379,
+        "per_band_candidate_minus_reference_db": {
+          "70-120": 0.85,
+          "120-250": -0.16,
+          "250-500": 0.73,
+          "500-1000": -0.34,
+          "1000-2000": -0.01,
+          "2000-4000": 0.08,
+          "4000-6000": 0.27,
+          "6000-10000": 0.16,
+          "10000-16000": -0.82
+        },
+        "active_envelope_mae_db": {
+          "10ms": 1.052,
+          "20ms": 1.001,
+          "200ms": 0.656
+        },
+        "active_10ms_crest_mae_db": 0.5
+      },
+      "trial": {
+        "zero_lag_signed_waveform_correlation": 0.979,
+        "polarity_agnostic_correlation": 0.979,
+        "best_single_gain_null_residual_db_relative_to_reference": -13.807,
+        "best_fit_gain": 1.1273,
+        "level_difference_to_reference_db": 1.226,
+        "spectral_bands_mae_db": 0.378,
+        "per_band_candidate_minus_reference_db": {
+          "70-120": 0.87,
+          "120-250": -0.12,
+          "250-500": 0.77,
+          "500-1000": -0.33,
+          "1000-2000": -0.04,
+          "2000-4000": 0.04,
+          "4000-6000": 0.28,
+          "6000-10000": 0.14,
+          "10000-16000": -0.83
+        },
+        "active_envelope_mae_db": {
+          "10ms": 1.018,
+          "20ms": 0.968,
+          "200ms": 0.646
+        },
+        "active_10ms_crest_mae_db": 0.417
+      }
+    },
+    "late": {
+      "start_end_s": [
+        35,
+        42
+      ],
+      "previous": {
+        "zero_lag_signed_waveform_correlation": 0.9796,
+        "polarity_agnostic_correlation": 0.9796,
+        "best_single_gain_null_residual_db_relative_to_reference": -13.948,
+        "best_fit_gain": 1.1442,
+        "level_difference_to_reference_db": 1.349,
+        "spectral_bands_mae_db": 0.258,
+        "per_band_candidate_minus_reference_db": {
+          "70-120": -0.3,
+          "120-250": 0.43,
+          "250-500": 0.68,
+          "500-1000": -0.21,
+          "1000-2000": -0.04,
+          "2000-4000": -0.14,
+          "4000-6000": -0.2,
+          "6000-10000": -0.07,
+          "10000-16000": -0.26
+        },
+        "active_envelope_mae_db": {
+          "10ms": 1.0,
+          "20ms": 0.96,
+          "200ms": 0.674
+        },
+        "active_10ms_crest_mae_db": 0.52
+      },
+      "trial": {
+        "zero_lag_signed_waveform_correlation": 0.9801,
+        "polarity_agnostic_correlation": 0.9801,
+        "best_single_gain_null_residual_db_relative_to_reference": -14.037,
+        "best_fit_gain": 1.1457,
+        "level_difference_to_reference_db": 1.356,
+        "spectral_bands_mae_db": 0.264,
+        "per_band_candidate_minus_reference_db": {
+          "70-120": -0.23,
+          "120-250": 0.46,
+          "250-500": 0.71,
+          "500-1000": -0.2,
+          "1000-2000": -0.06,
+          "2000-4000": -0.17,
+          "4000-6000": -0.18,
+          "6000-10000": -0.09,
+          "10000-16000": -0.26
+        },
+        "active_envelope_mae_db": {
+          "10ms": 0.99,
+          "20ms": 0.95,
+          "200ms": 0.674
+        },
+        "active_10ms_crest_mae_db": 0.431
+      }
+    }
+  },
+  "audio_profiles": {
+    "reference": {
+      "rms_dbfs": -18.933,
+      "sample_peak_dbfs": -0.025,
+      "true_peak_dbtp_4x_estimate": 0.025,
+      "active_200ms_p90_minus_p10_spread_db": 2.966,
+      "side_to_mid_db": -128.794,
+      "integrated_loudness_lufs": -14.255
+    },
+    "prior": {
+      "rms_dbfs": -20.18,
+      "sample_peak_dbfs": -2.016,
+      "true_peak_dbtp_4x_estimate": -2.01,
+      "active_200ms_p90_minus_p10_spread_db": 2.776,
+      "side_to_mid_db": -219.82,
+      "integrated_loudness_lufs": -15.525
+    },
+    "trial": {
+      "rms_dbfs": -20.193,
+      "sample_peak_dbfs": -3.14,
+      "true_peak_dbtp_4x_estimate": -3.135,
+      "active_200ms_p90_minus_p10_spread_db": 2.723,
+      "side_to_mid_db": -219.807,
+      "integrated_loudness_lufs": -15.545
+    }
+  },
+  "warnings": [
+    "Same-take heldout test sections have been inspected during model development: not a blind external validation.",
+    "Matching a waveform does not identify the original proprietary processing.",
+    "Offline fitted phase filter in v0.4-v0.6 ancestry does not port directly to low latency VST3.",
+    "This is a post-processing stage: start with audio-only or guided original VocalMatch to make a good initial match.",
+    "Do not confuse a tiny objective gain with perceptible improvement."
+  ]
+}
