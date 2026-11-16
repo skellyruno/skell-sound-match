@@ -12,7 +12,7 @@ def test_missing_implementation_explicit_blocker():
     assert not p['ready'] and p['blockers']
 
 def test_mapping_respects_automation_ids():
-    p=create_integration_plan(BASE,'skell-preset',{'Synthetic Compressor':{'id':'skell.comp','parameter_map':{'attack':'skell.comp.attack_ms'}}})
+    p=create_integration_plan(BASE,'skell-preset',{'Synthetic Compressor':{'id':'skell.comp','verified':True,'parameter_map':{'attack':{'id':'skell.comp.attack_ms','unit':'ms'}}}})
     assert p['ready'] and p['processors'][0]['parameters']['skell.comp.attack_ms']['value']==13
 
 def test_fst_raw_not_percent():
