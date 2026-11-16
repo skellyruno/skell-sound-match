@@ -1034,6 +1034,19 @@
       },
       "provenance_zip": "Skelly_Sound_Matching_v0_7_Complete.zip",
       "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/reports/deuce_timbre_audit.json",
+      "original_name": "deuce_timbre_audit.json",
+      "original_sha256": "96db90d021b0fad4be9a2f476950365fa3f98f7efadb2cb64f25f74dda5c3b22",
+      "sha256": "96db90d021b0fad4be9a2f476950365fa3f98f7efadb2cb64f25f74dda5c3b22",
+      "bytes": 17440,
+      "kind": "measurement_report",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/reports/deuce_timbre_audit.json"
+      },
+      "status": "objective_offline_report_not_listening_approval"
     }
   ]
 }

@@ -6,7 +6,7 @@ The owner explicitly chose to publish the matching data in this GitHub repositor
 
 - `data/deuce/`: 4 original 24-bit audio stages (dry, recording-only, main-only, combined), recording/main `.fst` states, protected v1.4/v1.7, 15-second A/original, D/Max champion and E/onset experiment, plus 14 configuration screenshots.
 - `data/alchemist/`: 4 original-stage exports, `MAIN.fst`, the v0.3 Hybrid candidate and v0.7 experimental render, plus legacy analysis code and saved FST structures. The input recording already includes printed tracking effects and is **not fully dry**.
-- `data/reports/`: objective measurements and source handoff notes.
+- `data/reports/`: objective measurements, 15-second sustained-vocal timbre analysis, and source handoff notes.
 - `recipes/deuce.json`, `recipes/alchemist.json`: versioned, evidence-tagged effect-chain recipes intended as *future inputs* to Skell Preset and Skell AdlibLab. These **are not native VST3 presets** and must not be represented as exact proprietary plugin emulations.
 
 To avoid failures with GitHub's binary connector, some larger audio files are stored in ordered, SHA-256-verified chunks under `archive/chunks/`; smaller files are in `archive/data/`. `archive/manifest.json` provides the original name, 24-bit FLAC sample metadata, SHA-256 hash and reconstruction path for each asset.
