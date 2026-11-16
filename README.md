@@ -135,7 +135,7 @@ user recordings or fitted model reports to the public repository.
 
 ## Owner-approved research archive
 
-The public `archive/` contains 64 owner-approved research artifacts (51.96 MB of lossless and source data): original Deuce and Alchemist stage audio, `.fst` presets, screenshots, measured reports, historical fitted models, and legacy experimental DSP code. Large tracks are losslessly chunked. Run `python scripts/materialize_archive.py --verify` followed by `python scripts/materialize_archive.py --restore --output local_sound_archive` to reconstruct files. Use `recipes/deuce.json` or `recipes/alchemist.json` as evidence-tagged **planning inputs** for Skell Preset and Skell AdlibLab—not as finished native VST3 presets. See `archive/README.md` for provenance and limitations.
+The public `archive/` contains 74 owner-approved research artifacts (54.16 MB of lossless and source data): original Deuce and Alchemist stage audio, `.fst` presets, screenshots, measured reports, historical fitted models, and legacy experimental DSP code. Large tracks are losslessly chunked. Run `python scripts/materialize_archive.py --verify` followed by `python scripts/materialize_archive.py --restore --output local_sound_archive` to reconstruct files. Use `recipes/deuce.json` or `recipes/alchemist.json` as evidence-tagged **planning inputs** for Skell Preset and Skell AdlibLab—not as finished native VST3 presets. See `archive/README.md` for provenance and limitations.
 
 ## Timbre diagnostics
 

@@ -40,3 +40,5 @@ Only promote integration plans after implementing the target processors and chec
 - Deuce: D/Max was the latest listening favorite; v1.9, v1.7, v1.4 preserved in available forms.
 - Alchemist: Hybrid v0.3 was strongly preferred; v0.7 is experimental, with later status not conclusively approved.
 - The Deuce D/Max **full-length WAV is not recovered from the provided artifacts**. The exact 15-second lossless A/B export is archived. Do not invent a full-length version.
+
+Unclassified original screenshots from the original research sessions are preserved under `archive/data/uncategorized_source_screenshots/`. Their project association is deliberately left unverified.
