@@ -2,10 +2,10 @@
   "schema": "skell.sound-match.recipe",
   "version": 1,
   "id": "deuce-combined-2026",
-  "title": "Deuce main vocal (REC\u2192MAIN)",
+  "title": "Deuce main vocal (REC→MAIN)",
   "source_state": "dry-recording",
   "target": "archive/data/deuce/audio/full_combined.flac",
-  "listening_champion": "D/Max 15-second experiment; v1.9 previously preferred; v1.4 archived",
+  "listening_champion": "Deuce v2.5 Presence Repair (2026-11-15 user-preferred lossless offline A/B); D/Max protected rollback baseline",
   "not_approved_for_native_recall": true,
   "stages": [
     {
@@ -88,7 +88,7 @@
               "source": "image review"
             },
             "ratio": {
-              "value": 8.0,
+              "value": 8,
               "unit": "ratio",
               "status": "verified",
               "origin": "screenshot",
@@ -188,6 +188,8 @@
   "notes": [
     "FST raw values not interpreted as UI percentages",
     "Do not use preset settings to claim proprietary plugin emulation",
-    "Do not overwrite native parameter IDs"
+    "Do not overwrite native parameter IDs",
+    "v2.5 is a research-stage post-v2.3 candidate, not a complete native REC→MAIN chain",
+    "Do not replace the D/Max rollback or existing factory preset/state without native and FL Studio verification"
   ]
 }
