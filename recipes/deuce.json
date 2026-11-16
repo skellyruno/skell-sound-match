@@ -1,0 +1,193 @@
+{
+  "schema": "skell.sound-match.recipe",
+  "version": 1,
+  "id": "deuce-combined-2026",
+  "title": "Deuce main vocal (REC\u2192MAIN)",
+  "source_state": "dry-recording",
+  "target": "archive/data/deuce/audio/full_combined.flac",
+  "listening_champion": "D/Max 15-second experiment; v1.9 previously preferred; v1.4 archived",
+  "not_approved_for_native_recall": true,
+  "stages": [
+    {
+      "id": "rec",
+      "processors": [
+        {
+          "slot": 1,
+          "name": "Fruity Parametric EQ 2",
+          "parameters": {}
+        },
+        {
+          "slot": 2,
+          "name": "Fruity Limiter",
+          "parameters": {}
+        },
+        {
+          "slot": 3,
+          "name": "Soundgoodizer",
+          "parameters": {
+            "mode": {
+              "value": "A",
+              "unit": "enum",
+              "status": "verified",
+              "origin": "screenshot",
+              "source": "rec deuce.fst"
+            },
+            "amount": {
+              "value": 43,
+              "unit": "raw",
+              "status": "verified",
+              "origin": "fst_raw",
+              "source": "rec deuce.fst"
+            }
+          }
+        },
+        {
+          "slot": 4,
+          "name": "Fruity Limiter",
+          "parameters": {}
+        }
+      ]
+    },
+    {
+      "id": "main",
+      "processors": [
+        {
+          "slot": 1,
+          "name": "Waves Renaissance EQ 6",
+          "parameters": {
+            "band2_gain": {
+              "value": -4.4,
+              "unit": "dB",
+              "status": "estimated",
+              "origin": "screenshot",
+              "source": "MAIN.fst inspect"
+            },
+            "band3_gain": {
+              "value": -4.3,
+              "unit": "dB",
+              "status": "estimated",
+              "origin": "screenshot",
+              "source": "MAIN.fst inspect"
+            }
+          }
+        },
+        {
+          "slot": 2,
+          "name": "Waves SSLChannel",
+          "parameters": {}
+        },
+        {
+          "slot": 3,
+          "name": "Fruity Compressor",
+          "parameters": {
+            "threshold": {
+              "value": -37.7,
+              "unit": "dB",
+              "status": "verified",
+              "origin": "screenshot",
+              "source": "image review"
+            },
+            "ratio": {
+              "value": 8.0,
+              "unit": "ratio",
+              "status": "verified",
+              "origin": "screenshot",
+              "source": "image review"
+            },
+            "attack": {
+              "value": 12.9,
+              "unit": "ms",
+              "status": "verified",
+              "origin": "screenshot",
+              "source": "image review"
+            },
+            "release": {
+              "value": 200,
+              "unit": "ms",
+              "status": "verified",
+              "origin": "screenshot",
+              "source": "image review"
+            },
+            "makeup": {
+              "value": 13.7,
+              "unit": "dB",
+              "status": "verified",
+              "origin": "screenshot",
+              "source": "image review"
+            }
+          }
+        },
+        {
+          "slot": 4,
+          "name": "Waves DeEsser",
+          "parameters": {
+            "frequency": {
+              "value": 5860,
+              "unit": "Hz",
+              "status": "verified",
+              "origin": "fst_decoded",
+              "source": "main deuce.fst"
+            },
+            "threshold": {
+              "value": -29.9,
+              "unit": "dB",
+              "status": "estimated",
+              "origin": "audio_estimate",
+              "source": "recorded FST readout"
+            }
+          }
+        },
+        {
+          "slot": 5,
+          "name": "Soundgoodizer",
+          "parameters": {
+            "mode": {
+              "value": "C",
+              "unit": "enum",
+              "status": "verified",
+              "origin": "screenshot",
+              "source": "main deuce.fst"
+            },
+            "amount": {
+              "value": 503,
+              "unit": "raw",
+              "status": "verified",
+              "origin": "fst_raw",
+              "source": "main deuce.fst"
+            }
+          }
+        },
+        {
+          "slot": 6,
+          "name": "Empty",
+          "parameters": {},
+          "empty": true
+        },
+        {
+          "slot": 7,
+          "name": "Slate Digital Fresh Air",
+          "parameters": {}
+        },
+        {
+          "slot": 8,
+          "name": "Waves C6",
+          "parameters": {}
+        },
+        {
+          "slot": 9,
+          "name": "Waves PuigTec EQP1A",
+          "parameters": {}
+        }
+      ]
+    }
+  ],
+  "destinations": [
+    "skell-preset",
+    "skell-adliblab"
+  ],
+  "notes": [
+    "FST raw values not interpreted as UI percentages",
+    "Do not use preset settings to claim proprietary plugin emulation",
+    "Do not overwrite native parameter IDs"
+  ]
+}

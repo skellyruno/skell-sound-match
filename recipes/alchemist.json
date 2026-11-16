@@ -1,0 +1,55 @@
+{
+  "schema": "skell.sound-match.recipe",
+  "version": 1,
+  "id": "alchemist-main-vocal-2026",
+  "title": "Alchemist main vocal",
+  "source_state": "recording_preset_printed",
+  "target": "archive/data/alchemist/audio/main_effects.flac",
+  "listening_champion": "Hybrid v0.3 / later experimental v0.7; exact final favorite unconfirmed",
+  "not_approved_for_native_recall": true,
+  "stages": [
+    {
+      "id": "printed_recording",
+      "processors": []
+    },
+    {
+      "id": "main",
+      "processors": [
+        {
+          "slot": 1,
+          "name": "Waves CLA-76",
+          "parameters": {
+            "embedded_preset": {
+              "value": "In Your Face Vocal",
+              "unit": "string",
+              "status": "verified",
+              "origin": "fst_decoded",
+              "source": "MAIN.fst"
+            }
+          }
+        },
+        {
+          "slot": 2,
+          "name": "Waves CLA-2A",
+          "parameters": {
+            "embedded_preset": {
+              "value": "Vox",
+              "unit": "string",
+              "status": "verified",
+              "origin": "fst_decoded",
+              "source": "MAIN.fst"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "destinations": [
+    "skell-preset",
+    "skell-adliblab"
+  ],
+  "notes": [
+    "The true recording input was already processed; not dry",
+    "Preset chain is partial; do not infer additional effects order"
+  ]
+}
