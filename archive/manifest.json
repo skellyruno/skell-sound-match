@@ -9,9 +9,10 @@
         "v1.4",
         "v1.7",
         "v1.9 (15s player only)",
-        "D/Max (15s player only)"
+        "D/Max (15s player only)",
+        "v2.5 (15-second player only; offline post-v2.3 candidate, not native VST3)"
       ],
-      "listening_champion": "D/Max, with v1.9 also protected",
+      "listening_champion": "Deuce v2.5 Presence Repair (listener-preferred 15-second offline candidate); D/Max protected rollback baseline; v1.9 retained",
       "known_limitations": [
         "Full v1.9 and Max WAV not in available artifacts; 15s comparisons archived",
         "Transfer curve and plugin algorithm emulation unverified"
