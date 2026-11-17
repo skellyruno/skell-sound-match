@@ -190,6 +190,7 @@
     "Do not use preset settings to claim proprietary plugin emulation",
     "Do not overwrite native parameter IDs",
     "v2.5 is a research-stage post-v2.3 candidate, not a complete native REC→MAIN chain",
-    "Do not replace the D/Max rollback or existing factory preset/state without native and FL Studio verification"
+    "Do not replace the D/Max rollback or existing factory preset/state without native and FL Studio verification",
+    "Input source: archive/data/deuce/audio/dry.flac. Target: archive/data/deuce/audio/full_combined.flac (manifest original label: 'deuce test main preset vocals.wav'; treat as the printed REC→MAIN vocal reference, not as dry audio). recording_only.flac and main_only.flac are intermediate comparisons. No 'deuce w beat.wav' beat-containing asset is listed in this archive manifest; keep beat-containing and vocal-only comparisons separate."
   ]
 }
