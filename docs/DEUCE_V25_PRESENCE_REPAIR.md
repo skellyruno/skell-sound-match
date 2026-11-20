@@ -32,10 +32,11 @@ A separate full-clip analysis-only loudness-matched comparison reports 4.5–7.9
 
 - Owner listening: **v2.5 preferred**; not a blind ABX.
 - Frozen presence stage + transfer audit focused tests: **26/26 passed locally**.
+- Exact consolidated PR #2 head 35c7e8200782a6707957684a82b31e6d8635a36c: full suite **138/138 passed on Ubuntu and 138/138 on Windows**, workflow #44793736166.
 - Reproduction: 15-second 24-bit FLAC matches the prior v2.5 render within quantization; report records full-clip band errors.
 - Browser: six lossless tracks loaded, synchronized switching and third-phrase looping worked in Chromium, no JavaScript errors.
 - Independent vocal stress: one 88.493 s stem reached -0.177 dBTP estimated (fails -1 dBTP output gate); one 42.602 s Alchemist REC-printed input reached -1.686 dBTP but is not a Deuce take or untreated dry source. Neither has an original Deuce REC→MAIN target; neither is a transfer-match pass.
-- Earlier Sound Match exact-head Python CI passed; new transfer audit requires a fresh exact-head CI run.
+- Full exact-head Sound Match CI passed on both Ubuntu and Windows; see workflow #44793736166.
 
 ## Native Skell Preset status
 

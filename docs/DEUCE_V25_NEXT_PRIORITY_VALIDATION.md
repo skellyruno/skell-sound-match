@@ -5,6 +5,7 @@
 skell_sound_match.deuce_transfer_audit applies the frozen v2.5 7 kHz presence repair to an already-rendered v2.3 candidate. It never fits parameters and never uses the reference audio to render. A same-performance original REC→MAIN target is optional and used only for scoring. Without it, the report explicitly says **Safety audit only** and emits no matching scores.
 
 - The focused v2.3 + v2.5 test suite passed **26/26 locally**.
+- The consolidated repository suite passed **138/138 on Ubuntu and 138/138 on Windows** on exact head 35c7e8200782a6707957684a82b31e6d8635a36c (workflow #44793736166).
 - The original 15-second Deuce v2.3 candidate was re-rendered through the module. Its v2.5 result reproduced the existing 24-bit FLAC within quantization.
 - Full-clip analysis-only loudness-matched band MAE: 4.5–7.9 kHz 1.308 dB → 1.105 dB; 9–14 kHz 1.153 dB → 1.111 dB.
 - This is reproducibility on the already-approved take, not independent transfer validation.

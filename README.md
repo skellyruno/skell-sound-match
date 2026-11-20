@@ -32,4 +32,4 @@ python -m skell_sound_match.deuce_transfer_audit new_v23_candidate.wav --target 
 
 The input must already be the same new performance rendered through the frozen v2.3 candidate; the optional target is that exact source through the original REC→MAIN chain. The target is scoring-only. Without it, the tool reports safety only. It refuses overwrites, non-finite/clipped samples and estimated 4× true peak above -1 dBTP. It never auto-promotes a candidate.
 
-The optional research dependencies are deferred experiments, not required for the current workflow. See the handoff for exact provenance and status.
+The optional research dependencies are deferred experiments, not required for the current workflow. Current integration PR: #2 (draft, base main); exact head 35c7e8200782a6707957684a82b31e6d8635a36c passed 138 tests on both Ubuntu and Windows in workflow #44793736166. See the handoff for exact provenance and status.
