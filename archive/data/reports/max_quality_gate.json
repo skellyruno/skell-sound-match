@@ -1,0 +1,151 @@
+{
+  "status": "audition_candidate_with_tradeoffs_no_auto_promotion",
+  "audition_blockers": [],
+  "improved_on_both_holdout_sections": [
+    "null_residual_db",
+    "spectral_error_db",
+    "envelope20_error_db"
+  ],
+  "regressed_on_any_holdout_over_0_25db": [
+    "crest_error_db"
+  ],
+  "audio": {
+    "sr": 44100,
+    "samples": 661500,
+    "channels": 2,
+    "reference_lufs": -19.999999995610732,
+    "champion_lufs": -20.00000000068732,
+    "candidate_lufs": -20.000000006244058,
+    "candidate_true_peak_dbtp_4x_estimate": -4.332242812249072,
+    "reference_vs_candidate_loudness_diff_db": 1.0633325331355081e-08,
+    "loudness_method": "LUFS"
+  },
+  "windows": {
+    "training": {
+      "champion": {
+        "waveform_correlation_signed": 0.9849848738956752,
+        "null_residual_db": -15.246999417932079,
+        "multires_spectral_mae_db": 3.6564747378324047,
+        "envelope_5ms_mae_db": 0.7331732834397613,
+        "envelope_20ms_mae_db": 0.72216407763926,
+        "envelope_200ms_mae_db": 0.5685420649016919,
+        "reference_rms_dbfs": -24.282596468108704,
+        "candidate_rms_dbfs": -24.340724768161426,
+        "reference_sample_peak_dbfs": -6.813342952365326,
+        "candidate_sample_peak_dbfs": -5.611715724871927,
+        "candidate_true_peak_dbtp_4x_estimate": -5.606188349840856,
+        "reference_crest_db": 17.46925351574338,
+        "candidate_crest_db": 18.729009043289498
+      },
+      "candidate": {
+        "waveform_correlation_signed": 0.9852109820110571,
+        "null_residual_db": -15.311545033671832,
+        "multires_spectral_mae_db": 3.614447101589406,
+        "envelope_5ms_mae_db": 0.8385058447431492,
+        "envelope_20ms_mae_db": 0.8277267882462248,
+        "envelope_200ms_mae_db": 0.5322110556359054,
+        "reference_rms_dbfs": -24.282596468108704,
+        "candidate_rms_dbfs": -24.336297147730335,
+        "reference_sample_peak_dbfs": -6.813342952365326,
+        "candidate_sample_peak_dbfs": -4.337770187280143,
+        "candidate_true_peak_dbtp_4x_estimate": -4.332242812249072,
+        "reference_crest_db": 17.46925351574338,
+        "candidate_crest_db": 19.998526960450192
+      },
+      "delta_candidate_minus_champion": {
+        "null_residual_db": -0.06454561573975326,
+        "spectral_error_db": -0.04202763624299877,
+        "envelope20_error_db": 0.10556271060696476,
+        "crest_error_db": 1.2695179171606945
+      }
+    },
+    "validation": {
+      "champion": {
+        "waveform_correlation_signed": 0.9859056208194003,
+        "null_residual_db": -15.486089116391689,
+        "multires_spectral_mae_db": 4.630743854854553,
+        "envelope_5ms_mae_db": 1.1427301537268417,
+        "envelope_20ms_mae_db": 1.1728496444315795,
+        "envelope_200ms_mae_db": 0.37847543939379097,
+        "reference_rms_dbfs": -24.507340703503576,
+        "candidate_rms_dbfs": -24.48339050715528,
+        "reference_sample_peak_dbfs": -6.813342952365326,
+        "candidate_sample_peak_dbfs": -7.599726396750015,
+        "candidate_true_peak_dbtp_4x_estimate": -7.578956007365429,
+        "reference_crest_db": 17.69399775113825,
+        "candidate_crest_db": 16.883664110405267
+      },
+      "candidate": {
+        "waveform_correlation_signed": 0.9877907218758557,
+        "null_residual_db": -16.038746231502916,
+        "multires_spectral_mae_db": 4.117566877351942,
+        "envelope_5ms_mae_db": 1.078034566957186,
+        "envelope_20ms_mae_db": 1.1055832817714868,
+        "envelope_200ms_mae_db": 0.34851962714860385,
+        "reference_rms_dbfs": -24.507340703503576,
+        "candidate_rms_dbfs": -24.39673395375555,
+        "reference_sample_peak_dbfs": -6.813342952365326,
+        "candidate_sample_peak_dbfs": -7.449413040684375,
+        "candidate_true_peak_dbtp_4x_estimate": -7.441313879997303,
+        "reference_crest_db": 17.69399775113825,
+        "candidate_crest_db": 16.947320913071174
+      },
+      "delta_candidate_minus_champion": {
+        "null_residual_db": -0.5526571151112272,
+        "spectral_error_db": -0.5131769775026109,
+        "envelope20_error_db": -0.06726636266009267,
+        "crest_error_db": -0.06365680266590701
+      }
+    },
+    "test": {
+      "champion": {
+        "waveform_correlation_signed": 0.9851717035401691,
+        "null_residual_db": -15.229360670037638,
+        "multires_spectral_mae_db": 3.9574019136102585,
+        "envelope_5ms_mae_db": 0.7413506501291877,
+        "envelope_20ms_mae_db": 0.7092190574334876,
+        "envelope_200ms_mae_db": 0.3178696969550848,
+        "reference_rms_dbfs": -24.68374914794593,
+        "candidate_rms_dbfs": -24.60746242881275,
+        "reference_sample_peak_dbfs": -6.813342952365326,
+        "candidate_sample_peak_dbfs": -6.396003549837392,
+        "candidate_true_peak_dbtp_4x_estimate": -6.390476174806321,
+        "reference_crest_db": 17.870406195580607,
+        "candidate_crest_db": 18.211458878975357
+      },
+      "candidate": {
+        "waveform_correlation_signed": 0.9858391094167931,
+        "null_residual_db": -15.38794930284694,
+        "multires_spectral_mae_db": 3.535835001677652,
+        "envelope_5ms_mae_db": 0.661993877308405,
+        "envelope_20ms_mae_db": 0.6157846575678962,
+        "envelope_200ms_mae_db": 0.278560048769923,
+        "reference_rms_dbfs": -24.68374914794593,
+        "candidate_rms_dbfs": -24.5620554376789,
+        "reference_sample_peak_dbfs": -6.813342952365326,
+        "candidate_sample_peak_dbfs": -6.092357346005567,
+        "candidate_true_peak_dbtp_4x_estimate": -6.026176212710064,
+        "reference_crest_db": 17.870406195580607,
+        "candidate_crest_db": 18.469698091673333
+      },
+      "delta_candidate_minus_champion": {
+        "null_residual_db": -0.1585886328093018,
+        "spectral_error_db": -0.42156691193260665,
+        "envelope20_error_db": -0.09343439986559132,
+        "crest_error_db": 0.25823921269797623
+      }
+    }
+  },
+  "limitations": [
+    "Chronological holdout sections of the SAME take, not a new performance.",
+    "The current Deuce holdouts have been examined repeatedly, so they are not blind.",
+    "A numeric pass is never automatic listening approval or release approval.",
+    "A 4x true-peak estimate is not a certified true-peak measurement."
+  ],
+  "input_sha256": {
+    "reference": "aaa5c9a6b781f59360d51aaf0f0c94236162d6897f3aa8fe4dc84ddd08a13a71",
+    "champion": "9a7dfc7c00bc40efb06c07c917623a9cb253ffd31f4d7828be3f585fbb9cf796",
+    "candidate": "b9776aeedc6472cf9cff2e6e3b2cae67661e1617e41a0386f70f91f00a18aafa"
+  },
+  "paths_recorded": false
+}

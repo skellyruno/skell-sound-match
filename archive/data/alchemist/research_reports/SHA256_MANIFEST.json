@@ -1,0 +1,44 @@
+{
+  "version": "v0.7",
+  "data_provenance": "user-uploaded Alchemist reference; unchanged originals",
+  "reference": {
+    "file": "alchemist test last limiter off.wav",
+    "sha256": "7043899b926e1f8c2b1865adc76126570d7a12f43ca7cc82cd44591df2296e13"
+  },
+  "previous_versions": {
+    "v03_champion": {
+      "sha256": "761b13b5f15d794171c863fef090465828a5006b28b4a91f52ba44caf5309bfe",
+      "name": "v03_champion.wav"
+    },
+    "v04B": {
+      "sha256": "a8a587b5ad96a1538f2610dd1b244b0d173399de6c9602f9565f6c90d00d4942",
+      "name": "v04B.wav"
+    },
+    "v05": {
+      "sha256": "b53060a45cc2a9be4101ab9790750c3c6e5e7fc52da66c7cd5b5008b1241cb43",
+      "name": "v05.wav"
+    },
+    "v06B": {
+      "sha256": "d5f99b5d9498f11ae73dd6e5419aa7a72a4401ba984322af8d52311691d63216",
+      "name": "v06B.wav"
+    }
+  },
+  "results": {
+    "Alchemist/Alchemist_Refined_v07_EXPERIMENT.wav": {
+      "sha256": "bc28d81cee1ab3e89af0d5abf38468d22ca95a2ae49670f663f5e3acd1dc89c8",
+      "bytes": 11272652
+    },
+    "Alchemist/Original_Reference_LevelMatched_v07.wav": {
+      "sha256": "1bc116032cd7e92de52ae83e085019cdf7100ef5b124b516fce36d391e48bd9e",
+      "bytes": 11272652
+    },
+    "AB_Blind/Listen_A.wav": {
+      "sha256": "de98f4f4f78ddb19470a1c1af970477bc930680337b253f80747f6bd8847d8a1",
+      "bytes": 4233644
+    },
+    "AB_Blind/Listen_B.wav": {
+      "sha256": "254c6b8520f1bd37da3189edd49214437bb274b30889295765cbf653ee16ab36",
+      "bytes": 4233644
+    }
+  }
+}

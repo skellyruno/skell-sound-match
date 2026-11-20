@@ -1,0 +1,103 @@
+{
+  "status": "audit_only_not_sound_approval",
+  "sample_rate": 44100,
+  "frame_count": 661500,
+  "channel_count": 2,
+  "modified_sample_fraction": 0.025208,
+  "modified_sample_duration_seconds": 0.3781,
+  "event_count": 4,
+  "events": [
+    {
+      "start_seconds": 0.44168,
+      "end_seconds": 0.53286,
+      "edited_duration_ms": 91.179,
+      "reference_active_fraction_in_edit": 0.1124,
+      "edited_trial_minus_base_rms_db": -9.584,
+      "local_reference_error": {
+        "champion_rms_error_dbfs": -34.2939,
+        "trial_rms_error_dbfs": -38.9637,
+        "trial_minus_champion_db": -4.6698
+      },
+      "dry_rms_in_edit_dbfs": -44.63,
+      "dry_peak_in_edit_dbfs": -26.629,
+      "local_evidence": "improvement"
+    },
+    {
+      "start_seconds": 3.87163,
+      "end_seconds": 3.99998,
+      "edited_duration_ms": 128.345,
+      "reference_active_fraction_in_edit": 0.0898,
+      "edited_trial_minus_base_rms_db": -3.617,
+      "local_reference_error": {
+        "champion_rms_error_dbfs": -36.8351,
+        "trial_rms_error_dbfs": -37.1105,
+        "trial_minus_champion_db": -0.2754
+      },
+      "dry_rms_in_edit_dbfs": -46.081,
+      "dry_peak_in_edit_dbfs": -24.718,
+      "local_evidence": "inconclusive"
+    },
+    {
+      "start_seconds": 7.31324,
+      "end_seconds": 7.44215,
+      "edited_duration_ms": 128.912,
+      "reference_active_fraction_in_edit": 0.0542,
+      "edited_trial_minus_base_rms_db": -11.306,
+      "local_reference_error": {
+        "champion_rms_error_dbfs": -35.968,
+        "trial_rms_error_dbfs": -36.0387,
+        "trial_minus_champion_db": -0.0707
+      },
+      "dry_rms_in_edit_dbfs": -57.131,
+      "dry_peak_in_edit_dbfs": -32.432,
+      "local_evidence": "inconclusive"
+    },
+    {
+      "start_seconds": 10.80803,
+      "end_seconds": 10.92424,
+      "edited_duration_ms": 116.213,
+      "reference_active_fraction_in_edit": 0.0862,
+      "edited_trial_minus_base_rms_db": -9.265,
+      "local_reference_error": {
+        "champion_rms_error_dbfs": -34.3548,
+        "trial_rms_error_dbfs": -38.0523,
+        "trial_minus_champion_db": -3.6975
+      },
+      "dry_rms_in_edit_dbfs": -47.774,
+      "dry_peak_in_edit_dbfs": -27.745,
+      "local_evidence": "improvement"
+    }
+  ],
+  "whole_clip_reference_error": {
+    "champion_rms_error_dbfs": -40.192,
+    "trial_rms_error_dbfs": -40.6491,
+    "trial_minus_champion_db": -0.4572
+  },
+  "reference_active_error": {
+    "champion_rms_error_dbfs": -38.8194,
+    "trial_rms_error_dbfs": -39.2474,
+    "trial_minus_champion_db": -0.428
+  },
+  "reference_quiet_error": {
+    "champion_rms_error_dbfs": -54.4678,
+    "trial_rms_error_dbfs": -59.3701,
+    "trial_minus_champion_db": -4.9022
+  },
+  "active_fraction": 0.7214,
+  "recommended_decision": "keep_current_champion_until_blind_listening",
+  "limitations": [
+    "The event positions and metrics come from the same reference recording.",
+    "Audio differences outside short edits can dominate perceived character.",
+    "No automatic champion promotion or inference from reference audio is permitted."
+  ],
+  "input_sha256": {
+    "A": "aaa5c9a6b781f59360d51aaf0f0c94236162d6897f3aa8fe4dc84ddd08a13a71",
+    "D": "b9776aeedc6472cf9cff2e6e3b2cae67661e1617e41a0386f70f91f00a18aafa",
+    "E": "db84e31e1f67b788006f55fbbec8c782f6e57005c818638ed4ea3f88d3921a91"
+  },
+  "dry_alignment_source": {
+    "file": "original user-supplied dry Deuce recording",
+    "offset_samples": 41454,
+    "alignment_to_full_chain": "verified by full reference sample correlation; not inferred from dry waveform"
+  }
+}

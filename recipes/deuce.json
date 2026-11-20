@@ -1,0 +1,218 @@
+{
+  "schema": "skell.sound-match.recipe",
+  "version": 1,
+  "id": "deuce-combined-2026",
+  "title": "Deuce main vocal (REC→MAIN)",
+  "source_state": "dry-recording",
+  "target": "archive/data/deuce/audio/full_combined.flac",
+  "listening_champion": "Deuce v2.5 Presence Repair (2026-11-15 user-preferred lossless offline A/B); D/Max protected rollback baseline",
+  "not_approved_for_native_recall": true,
+  "stages": [
+    {
+      "id": "rec",
+      "processors": [
+        {
+          "slot": 1,
+          "name": "Fruity Parametric EQ 2",
+          "parameters": {}
+        },
+        {
+          "slot": 2,
+          "name": "Fruity Limiter",
+          "parameters": {}
+        },
+        {
+          "slot": 3,
+          "name": "Soundgoodizer",
+          "parameters": {
+            "mode": {
+              "value": "A",
+              "unit": "enum",
+              "status": "verified",
+              "origin": "screenshot",
+              "source": "rec deuce.fst"
+            },
+            "amount": {
+              "value": 43,
+              "unit": "raw",
+              "status": "verified",
+              "origin": "fst_raw",
+              "source": "rec deuce.fst"
+            }
+          }
+        },
+        {
+          "slot": 4,
+          "name": "Fruity Limiter",
+          "parameters": {}
+        }
+      ]
+    },
+    {
+      "id": "main",
+      "processors": [
+        {
+          "slot": 1,
+          "name": "Waves Renaissance EQ 6",
+          "parameters": {
+            "band2_gain": {
+              "value": -4.4,
+              "unit": "dB",
+              "status": "estimated",
+              "origin": "screenshot",
+              "source": "MAIN.fst inspect"
+            },
+            "band3_gain": {
+              "value": -4.3,
+              "unit": "dB",
+              "status": "estimated",
+              "origin": "screenshot",
+              "source": "MAIN.fst inspect"
+            }
+          }
+        },
+        {
+          "slot": 2,
+          "name": "Waves SSLChannel",
+          "parameters": {}
+        },
+        {
+          "slot": 3,
+          "name": "Fruity Compressor",
+          "parameters": {
+            "threshold": {
+              "value": -37.7,
+              "unit": "dB",
+              "status": "verified",
+              "origin": "screenshot",
+              "source": "image review"
+            },
+            "ratio": {
+              "value": 8,
+              "unit": "ratio",
+              "status": "verified",
+              "origin": "screenshot",
+              "source": "image review"
+            },
+            "attack": {
+              "value": 12.9,
+              "unit": "ms",
+              "status": "verified",
+              "origin": "screenshot",
+              "source": "image review"
+            },
+            "release": {
+              "value": 200,
+              "unit": "ms",
+              "status": "verified",
+              "origin": "screenshot",
+              "source": "image review"
+            },
+            "makeup": {
+              "value": 13.7,
+              "unit": "dB",
+              "status": "verified",
+              "origin": "screenshot",
+              "source": "image review"
+            }
+          }
+        },
+        {
+          "slot": 4,
+          "name": "Waves DeEsser",
+          "parameters": {
+            "frequency": {
+              "value": 5860,
+              "unit": "Hz",
+              "status": "verified",
+              "origin": "fst_decoded",
+              "source": "main deuce.fst"
+            },
+            "threshold": {
+              "value": -29.9,
+              "unit": "dB",
+              "status": "estimated",
+              "origin": "audio_estimate",
+              "source": "recorded FST readout"
+            }
+          }
+        },
+        {
+          "slot": 5,
+          "name": "Soundgoodizer",
+          "parameters": {
+            "mode": {
+              "value": "C",
+              "unit": "enum",
+              "status": "verified",
+              "origin": "screenshot",
+              "source": "main deuce.fst"
+            },
+            "amount": {
+              "value": 503,
+              "unit": "raw",
+              "status": "verified",
+              "origin": "fst_raw",
+              "source": "main deuce.fst"
+            }
+          }
+        },
+        {
+          "slot": 6,
+          "name": "Empty",
+          "parameters": {},
+          "empty": true
+        },
+        {
+          "slot": 7,
+          "name": "Slate Digital Fresh Air",
+          "parameters": {}
+        },
+        {
+          "slot": 8,
+          "name": "Waves C6",
+          "parameters": {}
+        },
+        {
+          "slot": 9,
+          "name": "Waves PuigTec EQP1A",
+          "parameters": {}
+        }
+      ]
+    }
+  ],
+  "destinations": [
+    "skell-preset",
+    "skell-adliblab"
+  ],
+  "notes": [
+    "FST raw values not interpreted as UI percentages",
+    "Do not use preset settings to claim proprietary plugin emulation",
+    "Do not overwrite native parameter IDs",
+    "v2.5 is a research-stage post-v2.3 candidate, not a complete native REC→MAIN chain",
+    "Do not replace the D/Max rollback or existing factory preset/state without native and FL Studio verification",
+    "Input source: archive/data/deuce/audio/dry.flac. Target: archive/data/deuce/audio/full_combined.flac (manifest original label: 'deuce test main preset vocals.wav'; treat as the printed REC→MAIN vocal reference, not as dry audio). recording_only.flac and main_only.flac are intermediate comparisons. No 'deuce w beat.wav' beat-containing asset is listed in this archive manifest; keep beat-containing and vocal-only comparisons separate.",
+    "Current factory 46 is a native comparative trial built on a D/Max-inspired approximation; the v2.3 Sustained Air DSP has not been ported.",
+    "Independent stress-only input guwop vox.wav estimated -0.177 dBTP after the fixed stage and fails the -1 dBTP gate; it has no Deuce REC->MAIN target.",
+    "The 42.602 s Alchemist input is REC-printed, not untreated dry and not a Deuce take; its stress result is not Deuce matching evidence.",
+    "A valid new-take transfer test requires the same new dry Deuce take as frozen v2.3 candidate and original FL Studio REC->MAIN target."
+  ],
+  "native_status": {
+    "skell_preset_factory_index": 46,
+    "factory_46_role": "13-stage native trial, not an exact port of the approved offline v2.5 chain",
+    "v23_sustained_air_ported": false,
+    "exact_native_match_verified": false,
+    "main_vocals_browser": "Deuce (46) and Alchemist (43) only"
+  },
+  "offline_preferred_signal": {
+    "base": "Deuce v2.3 Sustained Air candidate",
+    "presence_eq": {
+      "frequency_hz": 7000,
+      "q": 0.75,
+      "gain_db": 0.75
+    },
+    "output_trim_db": -0.1467149783536854,
+    "user_approved_date": "2026-11-15",
+    "rollback": "D/Max"
+  }
+}

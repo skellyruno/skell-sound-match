@@ -1,0 +1,257 @@
+{
+  "reference": "Deuce full combined recording + main-only and recording-only isolated exports",
+  "training_window_s": [
+    0.94,
+    6.84
+  ],
+  "all_evaluation_passages_previously_consulted": true,
+  "main_stage_calibration": {
+    "dry_to_main_only": {
+      "middle": {
+        "FIR_only": {
+          "waveform_corr": 0.841937,
+          "active_envelope_mae_db": 4.3688
+        },
+        "FIR_plus_dynamic_gain": {
+          "waveform_corr": 0.923362,
+          "active_envelope_mae_db": 2.0179
+        }
+      },
+      "late": {
+        "FIR_only": {
+          "waveform_corr": 0.85071,
+          "active_envelope_mae_db": 3.357
+        },
+        "FIR_plus_dynamic_gain": {
+          "waveform_corr": 0.921948,
+          "active_envelope_mae_db": 1.8108
+        }
+      }
+    },
+    "record_only_to_full": {
+      "middle": {
+        "FIR_only": {
+          "waveform_corr": 0.861381,
+          "active_envelope_mae_db": 4.1884
+        },
+        "FIR_plus_dynamic_gain": {
+          "waveform_corr": 0.91927,
+          "active_envelope_mae_db": 2.0906
+        }
+      },
+      "late": {
+        "FIR_only": {
+          "waveform_corr": 0.85138,
+          "active_envelope_mae_db": 3.3767
+        },
+        "FIR_plus_dynamic_gain": {
+          "waveform_corr": 0.906421,
+          "active_envelope_mae_db": 1.7772
+        }
+      }
+    }
+  },
+  "reference_vs_v17": {
+    "lufs": -20.0,
+    "true_peak_dbtp": -6.4182,
+    "passages": {
+      "opening": {
+        "broadband_5ms_mae_db": 0.49,
+        "highband_5ms_mae_db": 1.138
+      },
+      "middle": {
+        "broadband_5ms_mae_db": 0.714,
+        "highband_5ms_mae_db": 1.459
+      },
+      "late": {
+        "broadband_5ms_mae_db": 0.769,
+        "highband_5ms_mae_db": 1.129
+      }
+    }
+  },
+  "reference_vs_v14": {
+    "lufs": -20.0,
+    "true_peak_dbtp": -6.4342,
+    "passages": {
+      "opening": {
+        "broadband_5ms_mae_db": 0.49,
+        "highband_5ms_mae_db": 1.227
+      },
+      "middle": {
+        "broadband_5ms_mae_db": 0.715,
+        "highband_5ms_mae_db": 1.62
+      },
+      "late": {
+        "broadband_5ms_mae_db": 0.769,
+        "highband_5ms_mae_db": 1.248
+      }
+    }
+  },
+  "reference_vs_v16": {
+    "lufs": -20.0,
+    "true_peak_dbtp": -6.4145,
+    "passages": {
+      "opening": {
+        "broadband_5ms_mae_db": 0.489,
+        "highband_5ms_mae_db": 1.111
+      },
+      "middle": {
+        "broadband_5ms_mae_db": 0.712,
+        "highband_5ms_mae_db": 1.415
+      },
+      "late": {
+        "broadband_5ms_mae_db": 0.768,
+        "highband_5ms_mae_db": 1.118
+      }
+    }
+  },
+  "quality_gate": {
+    "champion": "v1.4",
+    "v17_status": "experiment: high-band improvement but not proven perceptual improvement",
+    "main_stage_status": "useful calibration model but full vocal render performs worse than v1.4",
+    "not_true_blind_test": true
+  },
+  "checks": [
+    {
+      "check": "all four renders are same sample length",
+      "passed": true
+    },
+    {
+      "check": "FST recording source intact",
+      "passed": true
+    },
+    {
+      "check": "FST main source intact",
+      "passed": true
+    },
+    {
+      "check": "main-stage model uses two pair types",
+      "passed": true
+    },
+    {
+      "check": "training window restricted to opening",
+      "passed": true
+    },
+    {
+      "check": "stage input checksums verified",
+      "passed": true
+    },
+    {
+      "check": "middle stage nonlinearity improves waveform corr",
+      "passed": true
+    },
+    {
+      "check": "middle stage nonlinearity improves envelope",
+      "passed": true
+    },
+    {
+      "check": "late stage nonlinearity improves waveform corr",
+      "passed": true
+    },
+    {
+      "check": "late stage nonlinearity improves envelope",
+      "passed": true
+    },
+    {
+      "check": "middle stage nonlinearity improves waveform corr",
+      "passed": true
+    },
+    {
+      "check": "middle stage nonlinearity improves envelope",
+      "passed": true
+    },
+    {
+      "check": "late stage nonlinearity improves waveform corr",
+      "passed": true
+    },
+    {
+      "check": "late stage nonlinearity improves envelope",
+      "passed": true
+    },
+    {
+      "check": "Deuce_v17_ConditionalPresence_EXPERIMENT sample rate",
+      "passed": true
+    },
+    {
+      "check": "Deuce_v17_ConditionalPresence_EXPERIMENT dual mono",
+      "passed": true
+    },
+    {
+      "check": "Deuce_v17_ConditionalPresence_EXPERIMENT all samples finite",
+      "passed": true
+    },
+    {
+      "check": "Deuce_v17_ConditionalPresence_EXPERIMENT correct loudness",
+      "passed": true
+    },
+    {
+      "check": "Deuce_v17_ConditionalPresence_EXPERIMENT peak below -1 dBTP",
+      "passed": true
+    },
+    {
+      "check": "Deuce_v14_Contour_Trial sample rate",
+      "passed": true
+    },
+    {
+      "check": "Deuce_v14_Contour_Trial dual mono",
+      "passed": true
+    },
+    {
+      "check": "Deuce_v14_Contour_Trial all samples finite",
+      "passed": true
+    },
+    {
+      "check": "Deuce_v14_Contour_Trial correct loudness",
+      "passed": true
+    },
+    {
+      "check": "Deuce_v14_Contour_Trial peak below -1 dBTP",
+      "passed": true
+    },
+    {
+      "check": "Deuce_v16_Experimental_HighBand sample rate",
+      "passed": true
+    },
+    {
+      "check": "Deuce_v16_Experimental_HighBand dual mono",
+      "passed": true
+    },
+    {
+      "check": "Deuce_v16_Experimental_HighBand all samples finite",
+      "passed": true
+    },
+    {
+      "check": "Deuce_v16_Experimental_HighBand correct loudness",
+      "passed": true
+    },
+    {
+      "check": "Deuce_v16_Experimental_HighBand peak below -1 dBTP",
+      "passed": true
+    },
+    {
+      "check": "model replays byte-identical WAV",
+      "passed": true
+    },
+    {
+      "check": "no-overwrite guard",
+      "passed": true
+    },
+    {
+      "check": "reject materially stereo audio",
+      "passed": true
+    },
+    {
+      "check": "reject unsafe stage strength",
+      "passed": true
+    },
+    {
+      "check": "reject mismatched prior v1.4 model",
+      "passed": true
+    },
+    {
+      "check": "all inputs and protected renders byte unchanged",
+      "passed": true
+    }
+  ],
+  "tests_passed": 35
+}

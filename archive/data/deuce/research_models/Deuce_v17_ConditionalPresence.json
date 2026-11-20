@@ -1,0 +1,28 @@
+{
+  "version": "1.7-experiment",
+  "sample_rate": 44100,
+  "training_window_s": [
+    0.94,
+    6.84
+  ],
+  "band_hz": [
+    6500,
+    11000
+  ],
+  "low_band_hz": [
+    500,
+    3500
+  ],
+  "intercept_db": 0.656317,
+  "slope_db_per_ratio_db": -0.060268,
+  "strength": 0.8,
+  "gain_min_db": -1.0,
+  "gain_max_db": 1.8,
+  "smooth_frames": 2.0,
+  "min_active_db": -45.0,
+  "control_rate_ms": 4.988662131519274,
+  "trained_frames": 874,
+  "description": "Consonant-aware upper-band texture. Only opening phrase used to estimate ratio map; never exact Waves or FL plugin emulation.",
+  "prior_audio_sha256": "f63148197ef8993817b832a6f1e802c3372e3190df21fa8f35de0cd893a0b204",
+  "prior_model_sha256": "85956ffc0617dc05605eb5f26c7d610a8d85ee5628171c51ff05543c66062fe3"
+}
