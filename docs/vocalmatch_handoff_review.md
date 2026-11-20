@@ -1,3 +1,5 @@
+> **Historical research only (2026-11-20):** this VocalMatch estimator/refinement review is not the current Deuce v2.5 listening champion, not the native VST3 implementation, and not a release candidate. The current approval and task order are in docs/SOUND_MATCHING_HANDOFF_2026-11-20.md.
+
 # VocalMatch handoff evaluation (experimental) 🩻
 
 The user-provided November 2026 Vocal Match handoff contained (1) an offline effect-chain estimator and (2) a cross-validated post-refinement script. The handoff SHA-256 manifest matched all 29 recorded entries. The supplied refinement tool passed its 8 synthetic tests. Its full source remains user-supplied research material; this branch integrates a safety-checked local runner without bundling private audio, vendor preset files or an unreviewed 65 KB estimator.
