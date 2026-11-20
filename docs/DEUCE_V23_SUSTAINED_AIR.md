@@ -1,3 +1,5 @@
+> **Status (2026-11-20):** v2.3 alone is a historical base stage, not the current listening champion. The owner preferred offline v2.5 (v2.3 Sustained Air plus the fixed 7 kHz presence repair). See docs/DEUCE_V25_PRESENCE_REPAIR.md.
+
 # Deuce v2.3 — Sustained Air (experimental) 🩻
 
 **Listening champion:** D/Max (15-second extract). **Protected history:** v1.9, v1.7, v1.4. This experiment is not approved or native-VST3-ready.

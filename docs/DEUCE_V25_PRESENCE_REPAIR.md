@@ -1,57 +1,46 @@
-# Deuce v2.5 — Presence Repair (listener-preferred offline experiment)
+# Deuce v2.5 — Presence Repair and current native status 🩻
 
-**Listening decision (2026-11-15):** The owner auditioned the six-way, lossless, same-take 15-second A/B player and explicitly said **“v 2.5 sounds better.”** v2.5 replaces v2.3/D/Max as the **preferred offline reference sound** for future Deuce work. The protected **D/Max** remains the rollback baseline. This does **not** make v2.5 a verified Skell Preset Windows VST3 preset or prove that it matches on a different take. Original WAVs, previous renders, FST files, automation IDs and saved preset states were not changed.
+**Owner listening decision (2026-11-15):** the owner auditioned the six-way synchronized 15-second lossless comparison and said **"v 2.5 sounds better."** The approved listening target is offline v2.5. D/Max remains the protected rollback; v2.3 and v2.4 remain historical experiments.
 
-## Motivation
+## Frozen offline signal path
 
-v2.3 improved 9–14 kHz air but softened 4.5–7.9 kHz consonant presence, especially around the third phrase (about 7.4–10.0 seconds). v2.4 Gentle and Safe applied phrase-specific corrections; those timings are not a portable audio algorithm. v2.5 instead uses one continuous, causal, candidate-only correction with **no reference or phrase lookup during rendering**.
+This runs after the v2.3 Sustained Air candidate, not on dry vocal and not as a substitute for the original REC→MAIN chain.
 
-## Offline signal path
+- v2.3: candidate-only 7.9–15 kHz Butterworth band conditioner; amount 0.45, threshold -12 dB, knee 4 dB, attack 35 ms, activity floor -55 dB. Fitted on 0–4.8 s of the original 44.1 kHz take.
+- v2.5: RBJ peaking EQ, 7,000 Hz, Q 0.75, +0.75 dB; fixed output trim -0.1467149783536854 dB.
+- No target waveform lookup or phrase-specific timestamps during rendering. Python/SciPy implementation is offline research, not audio-thread-safe VST3 DSP.
 
-This stage runs **after** the v2.3 Sustained Air candidate, **not** on the dry vocal and **not** as a substitute for the REC→MAIN processing chain.
+## Same-take measurements
 
-- Peaking EQ: RBJ biquad, 7,000 Hz, Q 0.75, +0.75 dB.
-- Fixed output trim: −0.1467149783536854 dB, calibrated against D/Max level using the first 4.8 seconds.
-- Filter parameters selected using 0–4.8 seconds of the 44.1-kHz reference take only; subsequent phrases were evaluated later, but are still from the **same performance**.
-- Causal filtering, persistent filter state across blocks, no lookahead or phrase timestamps. Python/SciPy processing is **offline research** and is not audio-thread safe.
+Active-frame STFT band-level MAE; lower means closer for this metric only.
 
-## Same-take measurement (dB error; lower means closer)
+| Segment | Version | 4.5–7.9 kHz | 9–14 kHz |
+|---|---|---:|---:|
+| 0.4–4.8 s | D/Max | 1.150 dB | 1.840 dB |
+| 0.4–4.8 s | v2.3 | 1.284 dB | 1.282 dB |
+| 0.4–4.8 s | v2.5 | **1.093 dB** | **1.212 dB** |
+| 7.4–10.0 s | D/Max | 0.863 dB | 1.783 dB |
+| 7.4–10.0 s | v2.3 | 1.140 dB | 0.839 dB |
+| 7.4–10.0 s | v2.4 Gentle | 0.912 dB | 1.467 dB |
+| 7.4–10.0 s | v2.5 | **0.892 dB** | **0.809 dB** |
+| 11.0–14.0 s | v2.3 | 1.227 dB | 0.948 dB |
+| 11.0–14.0 s | v2.5 | **1.041 dB** | **0.913 dB** |
 
-Active-frame mean absolute STFT band-level error, 2048-sample frames, 512-sample hop. This metric is not a general perceptual quality rating.
-
-| Segment / version | 4.5–7.9 kHz | 9–14 kHz |
-|---|---:|---:|
-| 0.4–4.8s D/Max | 1.150 | 1.840 |
-| 0.4–4.8s v2.3 | 1.284 | 1.282 |
-| 0.4–4.8s v2.5 | **1.093** | **1.212** |
-| 7.4–10.0s D/Max | 0.863 | 1.783 |
-| 7.4–10.0s v2.3 | 1.140 | 0.839 |
-| 7.4–10.0s v2.4 Gentle | 0.912 | 1.467 |
-| 7.4–10.0s v2.5 | **0.892** | **0.809** |
-| 11.0–14.0s v2.3 | 1.227 | 0.948 |
-| 11.0–14.0s v2.5 | **1.041** | **0.913** |
-
-Full 15-second trial: -19.9985 LUFS and approximately -4.03 dBTP (4x oversampled), 44.1 kHz 24-bit stereo FLAC. These are measurements of the offline trial, **not native VST3**.
+A separate full-clip analysis-only loudness-matched comparison reports 4.5–7.9 kHz MAE **1.308 → 1.105 dB** and 9–14 kHz **1.153 → 1.111 dB** (v2.3 → v2.5). v2.5 measured -19.9985 LUFS and approximately -4.027 dBTP using 4× reconstruction. All these are same-take offline measurements, not proof of generalization.
 
 ## Verification status
 
-- **Owner listening:** v2.5 preferred in the six-way synchronized comparison; not a blind ABX.
-- **Local Python:** 21 of 21 tests pass after adding frequency-response/stability and mono/empty-buffer coverage, across 44.1/48/96 kHz for the parameterized tests.
-- **Real source check:** re-rendering the archived 15-second v2.3 comparison through this module matches the existing 24-bit v2.5 audio render within file quantization (MAE 2.63e-8; max 5.97e-8).
-- **Previous browser check:** lossless tracks load, synchronized switching and third-phrase looping work, Chromium console had zero script errors.
-- **Not verified:** entirely different Deuce performance with same REC→MAIN target; Skell Preset native implementation; Windows VST3; FL Studio; CPU/latency; preset/state recall; real-time thread safety; long-session A/B.
+- Owner listening: **v2.5 preferred**; not a blind ABX.
+- Frozen presence stage + transfer audit focused tests: **25/25 passed locally**.
+- Reproduction: 15-second 24-bit FLAC matches the prior v2.5 render within quantization; report records full-clip band errors.
+- Browser: six lossless tracks loaded, synchronized switching and third-phrase looping worked in Chromium, no JavaScript errors.
+- Independent vocal stress: one 88.493 s stem reached -0.177 dBTP estimated (fails -1 dBTP output gate); one 42.602 s Alchemist REC-printed input reached -1.686 dBTP but is not a Deuce take or untreated dry source. Neither has an original Deuce REC→MAIN target; neither is a transfer-match pass.
+- Earlier Sound Match exact-head Python CI passed; new transfer audit requires a fresh exact-head CI run.
 
-## Reproduce
+## Native Skell Preset status
 
-```bash
-python -m skell_sound_match.deuce_presence_repair prior_v23.flac new_v25.flac
-pytest -q tests/test_deuce_presence_repair.py
-```
+The current Skell Preset integration line contains a 13-stage factory 46 **Deuce v2.5 (Native Trial)**. It uses a D/Max-inspired native REC/MAIN base, broad corrective EQ, +0.75 dB / 7 kHz / Q0.75 bell and output calibration. The underlying v2.3 Sustained Air stage has **not** been ported. Do not call this an exact v2.5 port or an approved VST3 sound. Exact-head Windows VST3 and portable CI passed on integration commit 68ae71414d28cc30fa89275c1104544c000d6cef (run #44719941231); FL Studio and owner listening of the native trial remain separate gates.
 
-Output refuses overwrites and refuses nonfinite or clipping rendered samples. Do not commit original/private vocal recordings.
+## Transfer-audit acceptance gate
 
-## Promotion gate
-
-1. Process a **different dry vocal performance** through the established Deuce REC→MAIN target chain. Apply this fixed correction to its v2.3 candidate **without refitting**. Measure, level-match and listen for sibilance, consonants, metallic artifacts and transients.
-2. Port the causal filter to Skell Preset C++/JUCE with no audio-thread allocations; verify identical impulse/frequency and real-audio outputs, parameter/state compatibility, CPU and latency.
-3. Build/test actual Windows VST3, FL Studio, preset save/restore and previous project compatibility. No automatic replacement of factory preset IDs or the D/Max rollback.
+See DEUCE_V25_NEXT_PRIORITY_VALIDATION.md. A new test requires two sample-aligned files from the same entirely new Deuce performance: (1) frozen v2.3 candidate output and (2) original FL Studio REC→MAIN target. The reference is scoring-only. Never refit on the new target. Keep D/Max and original presets untouched.

@@ -5,8 +5,14 @@
   "title": "Alchemist main vocal",
   "source_state": "recording_preset_printed",
   "target": "archive/data/alchemist/audio/main_effects.flac",
-  "listening_champion": "Hybrid v0.3 / later experimental v0.7; exact final favorite unconfirmed",
+  "listening_champion": "Hybrid v0.3 (historically owner-preferred offline candidate); latest final Alchemist preference not reconfirmed",
   "not_approved_for_native_recall": true,
+  "native_status": {
+    "skell_preset_factory_index": 43,
+    "factory_43_role": "protected seven-stage native approximation, not an exact Waves/FL Studio match",
+    "diagnostic_trials": "Factories 45 and 47–54 are unapproved experiments; no automatic promotion",
+    "visible_main_vocals_browser": "Alchemist (43) and Deuce (46) only"
+  },
   "stages": [
     {
       "id": "printed_recording",
@@ -17,29 +23,53 @@
       "processors": [
         {
           "slot": 1,
-          "name": "Waves CLA-76",
+          "name": "Fruity Parametric EQ 2",
+          "parameters": {}
+        },
+        {
+          "slot": 2,
+          "name": "Fruity Parametric EQ 2",
+          "parameters": {}
+        },
+        {
+          "slot": 3,
+          "name": "Fruity Limiter",
+          "parameters": {}
+        },
+        {
+          "slot": 4,
+          "name": "Waves CLA-76 Stereo",
+          "parameters": {}
+        },
+        {
+          "slot": 5,
+          "name": "Waves CLA-2A Stereo",
+          "parameters": {}
+        },
+        {
+          "slot": 6,
+          "name": "Soundgoodizer",
           "parameters": {
-            "embedded_preset": {
-              "value": "In Your Face Vocal",
-              "unit": "string",
+            "mode": {
+              "value": "A",
+              "unit": "enum",
               "status": "verified",
-              "origin": "fst_decoded",
+              "origin": "fst_manifest",
+              "source": "MAIN.fst"
+            },
+            "amount": {
+              "value": 169,
+              "unit": "raw",
+              "status": "verified",
+              "origin": "fst_raw",
               "source": "MAIN.fst"
             }
           }
         },
         {
-          "slot": 2,
-          "name": "Waves CLA-2A",
-          "parameters": {
-            "embedded_preset": {
-              "value": "Vox",
-              "unit": "string",
-              "status": "verified",
-              "origin": "fst_decoded",
-              "source": "MAIN.fst"
-            }
-          }
+          "slot": 7,
+          "name": "Fruity Limiter",
+          "parameters": {}
         }
       ]
     }
@@ -49,7 +79,13 @@
     "skell-adliblab"
   ],
   "notes": [
-    "The true recording input was already processed; not dry",
-    "Preset chain is partial; do not infer additional effects order"
+    "The hash-verified MAIN.fst has seven slots; the earlier six-slot inventory omitted the second Fruity Parametric EQ 2.",
+    "Source MAIN.fst SHA-256: 66077b7a4e1695ab8817b6cbe74be7f098afa1fe8fee52ac4fa3e90065359424.",
+    "The original input is already REC/recording-printed and is not untreated dry vocal.",
+    "Native Fruity Parametric EQ 2 state vectors and proprietary Waves physical knob mappings are not fully decoded.",
+    "Soundgoodizer Mode A/raw 169 is a raw serialized integer, not 169 percent.",
+    "The offline v0.7 correlation and native factories 48/54 are diagnostic evidence only, not owner approval.",
+    "Do not infer stored FST slot audibility without FL Studio routing, bypass and wet/dry checks.",
+    "Do not use this recipe as a native VST3 preset or proprietary plugin emulation."
   ]
 }

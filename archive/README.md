@@ -1,44 +1,29 @@
 # Skell Sound Match — research archive
 
-The owner explicitly chose to publish the matching data in this GitHub repository. **It is public** and should be treated as a public research archive; deleting or changing the repository later cannot revoke existing copies.
+The owner explicitly approved the historical Deuce and Alchemist matching archive for publication in this public repository. Deleting a public file later cannot revoke copies already made. Preserve original source bytes, FSTs, protected candidates and checksums; do not add new private vocals, FLPs, FSTs or proprietary plugin states without separate explicit approval.
 
 ## Contents
 
-- `data/deuce/`: 4 original 24-bit audio stages (dry, recording-only, main-only, combined), recording/main `.fst` states, protected v1.4/v1.7, 15-second A/original, D/Max champion and E/onset experiment, plus 14 configuration screenshots.
-- `data/alchemist/`: 4 original-stage exports, `MAIN.fst`, the v0.3 Hybrid candidate and v0.7 experimental render, plus legacy analysis code and saved FST structures. The input recording already includes printed tracking effects and is **not fully dry**.
-- `data/reports/`: objective measurements, 15-second sustained-vocal timbre analysis, and source handoff notes.
-- `recipes/deuce.json`, `recipes/alchemist.json`: versioned, evidence-tagged effect-chain recipes intended as *future inputs* to Skell Preset and Skell AdlibLab. These **are not native VST3 presets** and must not be represented as exact proprietary plugin emulations.
+- data/deuce/: original 24-bit audio stages (dry, recording-only, main-only, combined), REC/MAIN FST states, protected history and lossless A/original, D/Max and E/onset comparison excerpts, plus source screenshots.
+- data/alchemist/: original-stage exports, MAIN.fst, protected Hybrid v0.3 / experimental v0.7 candidates, reports, legacy code and FST structures. The input recording already contains printed recording/REC effects; it is **not untreated dry vocal**.
+- data/reports/: objective measurements and historical handoffs.
+- recipes/deuce.json and recipes/alchemist.json: evidence-tagged source-chain records and future integration planning inputs. They are **not** native VST3 presets or exact proprietary plugin emulations.
 
-To avoid failures with GitHub's binary connector, some larger audio files are stored in ordered, SHA-256-verified chunks under `archive/chunks/`; smaller files are in `archive/data/`. `archive/manifest.json` provides the original name, 24-bit FLAC sample metadata, SHA-256 hash and reconstruction path for each asset.
+Larger FLACs are stored as ordered SHA-256-verified chunks under archive/chunks/; smaller assets are in archive/data/. archive/manifest.json records original names, sample metadata, SHA-256 hashes and reconstruction paths.
 
-The historical Python modules are preserved as research evidence, **not** imported as trusted production DSP. Their original dependency and gain-handling issues may persist.
+## Restore and verify
 
-## Restore
-
-On checkout (Python 3.10+):
-
-```powershell
+~~~powershell
 python scripts/materialize_archive.py --verify
-python scripts/materialize_archive.py --restore --output "local_sound_archive"
-```
+python scripts/materialize_archive.py --restore --output local_sound_archive
+~~~
 
-No extra packages are required to verify/restore the FLAC and `.fst` bytes. FLAC is lossless; for WAV conversion use a dedicated sample-preserving converter (`soundfile` can restore PCM_24). The tool never overwrites differing existing files.
+The restore tool refuses to overwrite differing existing files. FLAC reconstruction is lossless.
 
-## Reusing a recipe
+## Current approval register
 
-```python
-from skell_sound_match.recipe_export import read_recipe, create_integration_plan
-recipe = read_recipe('recipes/deuce.json')
-plan = create_integration_plan(recipe, 'skell-preset', {})
-assert not plan['ready']  # Native DSP algorithms + automation IDs are NOT yet implemented
-```
+- **Deuce:** offline v2.5 is the latest owner-preferred listening sound (explicit approval 2026-11-15). D/Max remains the protected rollback reference. Older v1.3A/v1.4/v1.7 and v2.3/v2.4 material stays archived; v1.4 contour and phrase-specific v2.4 are not approved replacements. Only the 15-second D/Max extract is in this archive; do not invent a full-length D/Max render.
+- **Alchemist:** Hybrid v0.3 is a historically owner-preferred offline candidate. v0.7 and later native factories are experimental; the final latest preference has not been reconfirmed. Factory 43 is the protected native baseline; no Factory 45 or 47–54 candidate is approved.
+- **Native integration:** recipes remain blocked from automatic native recall until every processor and parameter has a verified native mapping and actual same-take host audio validation.
 
-Only promote integration plans after implementing the target processors and checking real audio, latency, CPU, automation recall, and FL Studio runtime behavior. `skell-adliblab` is also a supported *planning target*, not an implemented sound port.
-
-## Approval
-
-- Deuce: D/Max was the latest listening favorite; v1.9, v1.7, v1.4 preserved in available forms.
-- Alchemist: Hybrid v0.3 was strongly preferred; v0.7 is experimental, with later status not conclusively approved.
-- The Deuce D/Max **full-length WAV is not recovered from the provided artifacts**. The exact 15-second lossless A/B export is archived. Do not invent a full-length version.
-
-Unclassified original screenshots from the original research sessions are preserved under `archive/data/uncategorized_source_screenshots/`. Their project association is deliberately left unverified.
+Historical Python modules are preserved as research evidence, not trusted production DSP. Unclassified source screenshots remain unclassified; do not infer project association.

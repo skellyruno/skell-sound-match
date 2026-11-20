@@ -191,6 +191,28 @@
     "Do not overwrite native parameter IDs",
     "v2.5 is a research-stage post-v2.3 candidate, not a complete native REC→MAIN chain",
     "Do not replace the D/Max rollback or existing factory preset/state without native and FL Studio verification",
-    "Input source: archive/data/deuce/audio/dry.flac. Target: archive/data/deuce/audio/full_combined.flac (manifest original label: 'deuce test main preset vocals.wav'; treat as the printed REC→MAIN vocal reference, not as dry audio). recording_only.flac and main_only.flac are intermediate comparisons. No 'deuce w beat.wav' beat-containing asset is listed in this archive manifest; keep beat-containing and vocal-only comparisons separate."
-  ]
+    "Input source: archive/data/deuce/audio/dry.flac. Target: archive/data/deuce/audio/full_combined.flac (manifest original label: 'deuce test main preset vocals.wav'; treat as the printed REC→MAIN vocal reference, not as dry audio). recording_only.flac and main_only.flac are intermediate comparisons. No 'deuce w beat.wav' beat-containing asset is listed in this archive manifest; keep beat-containing and vocal-only comparisons separate.",
+    "Current factory 46 is a native comparative trial built on a D/Max-inspired approximation; the v2.3 Sustained Air DSP has not been ported.",
+    "Independent stress-only input guwop vox.wav estimated -0.177 dBTP after the fixed stage and fails the -1 dBTP gate; it has no Deuce REC->MAIN target.",
+    "The 42.602 s Alchemist input is REC-printed, not untreated dry and not a Deuce take; its stress result is not Deuce matching evidence.",
+    "A valid new-take transfer test requires the same new dry Deuce take as frozen v2.3 candidate and original FL Studio REC->MAIN target."
+  ],
+  "native_status": {
+    "skell_preset_factory_index": 46,
+    "factory_46_role": "13-stage native trial, not an exact port of the approved offline v2.5 chain",
+    "v23_sustained_air_ported": false,
+    "exact_native_match_verified": false,
+    "main_vocals_browser": "Deuce (46) and Alchemist (43) only"
+  },
+  "offline_preferred_signal": {
+    "base": "Deuce v2.3 Sustained Air candidate",
+    "presence_eq": {
+      "frequency_hz": 7000,
+      "q": 0.75,
+      "gain_db": 0.75
+    },
+    "output_trim_db": -0.1467149783536854,
+    "user_approved_date": "2026-11-15",
+    "rollback": "D/Max"
+  }
 }
