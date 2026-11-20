@@ -1,0 +1,63 @@
+{
+  "schema": "skell.deuce-v25.unseen-transfer-audit",
+  "version": 1,
+  "algorithm_frozen": true,
+  "causal_candidate_only": true,
+  "native_vst3_verified": false,
+  "source_role": "v2.3 candidate audio, not original dry recording",
+  "presence": {
+    "frequency_hz": 7000,
+    "q": 0.75,
+    "gain_db": 0.75,
+    "output_trim_db": -0.1467149783536854
+  },
+  "duration_s": 15,
+  "sample_rate": 44100,
+  "channels": 2,
+  "candidate_input": {
+    "lufs": -19.989235575715007,
+    "sample_peak_dbfs": -4.305216825129903,
+    "estimated_true_peak_dbtp_4x": -4.299689450098831
+  },
+  "trial": {
+    "lufs": -19.998498657384832,
+    "sample_peak_dbfs": -4.032891512064934,
+    "estimated_true_peak_dbtp_4x": -4.027364137033863
+  },
+  "finite": true,
+  "stereo_shape_preserved": true,
+  "render_chunk_consistency_max_error": 0,
+  "has_original_rec_main_target": true,
+  "claim": "Same-performance, frozen-parameter matching audit",
+  "target": {
+    "lufs": -19.999999995610732,
+    "sample_peak_dbfs": -6.813342952365326,
+    "estimated_true_peak_dbtp_4x": -4.355498960916253
+  },
+  "analysis_only_loudness_matched_to_target": true,
+  "band_metrics": {
+    "4500_7900_hz": {
+      "baseline": {
+        "mean_absolute_db": 1.3079664190243723,
+        "active_frames": 924
+      },
+      "v25": {
+        "mean_absolute_db": 1.1050302575400277,
+        "active_frames": 924
+      },
+      "delta_mae_db": -0.20293616148434457
+    },
+    "9000_14000_hz": {
+      "baseline": {
+        "mean_absolute_db": 1.1526753698001542,
+        "active_frames": 925
+      },
+      "v25": {
+        "mean_absolute_db": 1.1109916148876313,
+        "active_frames": 925
+      },
+      "delta_mae_db": -0.04168375491252285
+    }
+  },
+  "no_automatic_promotion": true
+}
