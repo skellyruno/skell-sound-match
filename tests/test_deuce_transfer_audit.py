@@ -58,6 +58,6 @@ def test_target_sample_rate_mismatch_is_rejected(tmp_path):
     candidate = tmp_path / "candidate.wav"
     target = tmp_path / "target.wav"
     sf.write(candidate, source(sr=44100), 44100, subtype="PCM_24")
-    sf.write(target, source(sr=48000), 48000, subtype="PCM_24")
+    sf.write(target, source(sr=48000, n=48000), 48000, subtype="PCM_24")
     with pytest.raises(ValueError, match="sample rate mismatch"):
         run(candidate, tmp_path / "out.wav", tmp_path / "report.json", target)

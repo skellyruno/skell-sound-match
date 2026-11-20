@@ -31,7 +31,7 @@ A separate full-clip analysis-only loudness-matched comparison reports 4.5–7.9
 ## Verification status
 
 - Owner listening: **v2.5 preferred**; not a blind ABX.
-- Frozen presence stage + transfer audit focused tests: **25/25 passed locally**.
+- Frozen presence stage + transfer audit focused tests: **26/26 passed locally**.
 - Reproduction: 15-second 24-bit FLAC matches the prior v2.5 render within quantization; report records full-clip band errors.
 - Browser: six lossless tracks loaded, synchronized switching and third-phrase looping worked in Chromium, no JavaScript errors.
 - Independent vocal stress: one 88.493 s stem reached -0.177 dBTP estimated (fails -1 dBTP output gate); one 42.602 s Alchemist REC-printed input reached -1.686 dBTP but is not a Deuce take or untreated dry source. Neither has an original Deuce REC→MAIN target; neither is a transfer-match pass.

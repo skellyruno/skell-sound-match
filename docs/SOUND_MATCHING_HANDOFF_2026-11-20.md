@@ -65,7 +65,7 @@ Added:
 - reports/existing_deuce_repro_audit_15s.json
 - reports/independent_vocal_stress_no_reference.json
 
-Focused local suite: **25/25 passed**. Earlier exact-head Python CI passed on commit 7eb041a (workflow #43988265267); rerun GitHub CI on the new commit before merge.
+Focused local suite: **26/26 passed**. Earlier exact-head Python CI passed on commit 7eb041a (workflow #43988265267); rerun GitHub CI on the new commit before merge.
 
 For a new test, prepare two sample-aligned files from the same genuinely new Deuce performance:
 1. new_v23_candidate.wav — same new dry take rendered through the frozen v2.3 candidate.
