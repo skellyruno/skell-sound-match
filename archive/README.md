@@ -6,7 +6,7 @@ The owner explicitly approved the historical Deuce and Alchemist matching archiv
 
 - data/deuce/: original 24-bit audio stages (dry, recording-only, main-only, combined), REC/MAIN FST states, protected history and lossless A/original, D/Max and E/onset comparison excerpts, plus source screenshots.
 - data/alchemist/: original-stage exports, MAIN.fst, protected Hybrid v0.3 / experimental v0.7 candidates, reports, legacy code and FST structures. The input recording already contains printed recording/REC effects; it is **not untreated dry vocal**.
-- data/reports/: objective measurements and historical handoffs.
+- data/reports/: objective measurements and historical handoffs. The archived data/reports/handoff_notes.md is an older uploaded handoff; its date-specific status is superseded by docs/SOUND_MATCHING_HANDOFF_2026-11-20.md. Do not edit this checksum-backed archive copy.
 - recipes/deuce.json and recipes/alchemist.json: evidence-tagged source-chain records and future integration planning inputs. They are **not** native VST3 presets or exact proprietary plugin emulations.
 
 Larger FLACs are stored as ordered SHA-256-verified chunks under archive/chunks/; smaller assets are in archive/data/. archive/manifest.json records original names, sample metadata, SHA-256 hashes and reconstruction paths.

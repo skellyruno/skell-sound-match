@@ -18,7 +18,7 @@
 | Native vocal presets | skellyruno/skell-preset-vst, branch fix/main-vocals-alchemist-deuce-only-20261120 | PR #85 draft; exact-head Windows VST3/portable CI passed; history integration still blocked |
 | Mastering / Deuce Match | skellyruno/skell-master-vst, branch tune/deuce-post-limiter-makeup-2p4db-20261120 | PR #33 draft; Windows + Linux CI passed; exact PR33 owner-WAV render/listening still required |
 
-The sound-match repository is **public**. Its archive contains owner-approved historical data. Do not add new raw vocals, FLPs, FSTs, proprietary state or unreleased audio to public Git. Preserve the existing archive and its checksums.
+The sound-match repository is **public**. Its archive contains owner-approved historical data. Do not add new raw vocals, FLPs, FSTs, proprietary state or unreleased audio to public Git. Preserve the existing archive and its checksums. The archived data/reports/handoff_notes.md is an earlier uploaded handoff and is retained byte-for-byte for provenance; its status claims are superseded by this document.
 
 ## Deuce vocal chain
 
