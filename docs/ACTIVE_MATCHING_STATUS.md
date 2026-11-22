@@ -41,3 +41,9 @@ Read [Round 2 feedback, blind-letter mappings and priorities](ROUND2_FEEDBACK_AN
 4. Update **this** status register plus `docs/BULK_MATCHER.md`, source/provenance reports and PR #2. Batch code changes, keep PR #2 in draft, do not merge without CI and listening. Keep Skell Preset DSP/native changes separate under the current gate PR #94 or one future consolidated draft when justified.
 
 **Rules:** preserve ALL original file versions and 55 factory identities. Never push raw owner audio, original project/preset binaries, protected source, embedded-audio HTML, private training models or evaluation-only performance waveforms to public GitHub. Never claim perfect match or release-ready VST3 based on offline numeric metrics alone.
+# Sound Battles
+
+The private battle format presents three blind attempts per preset and an unlettered original. Feedback records a winner and an elimination, or allows a round to stay undecided. The next round keeps both survivors and adds one challenger. Preserve the winning render as a comparison baseline before tuning either survivor.
+
+Full effects prints are used for Speakerz, Hop Out, and the four Club adlibs. Deuce and Alchemist use their available processed main prints, and the Club MIC Gate uses its gate print. The fitting and selection windows precede the comparison excerpts. The final adjustments also use the comparison excerpt as a regression check, so those scores are same-take development evidence.
+
