@@ -63,6 +63,18 @@ python -m skell_sound_match.wav_only.skelly_bulk_match apply-main C:\SkellyPriva
 
 Do not confuse an automatic `fit` recipe (`skelly.wav-only.batch-main.v1`, EQ+leveler only) with a reviewed standalone source-to-effects recipe (`skelly.wav-only.standalone-experiment.v1`, models+stages). Only the latter is discoverable by `apply-many`.
 
+## Private blind listening A/B helper
+
+After a candidate has passed the preliminary safety and held-out metrics, create blinded and level-matched listening clips. The original reference and candidate must be the **same take**, start-aligned, and the same length, sample rate, and channels. This tool does not fix alignment for you.
+
+```powershell
+python -m skell_sound_match.wav_only.listening_test C:\SkellyPrivate\original_main.wav C:\SkellyPrivate\candidate.flac --output-dir C:\SkellyPrivate\blind_reviews\speakerz_001 --start 2 --duration 10 --target-lufs -18
+```
+
+The command writes `A.flac`, `B.flac`, `LISTENING_SESSION.md`, and `answer_key.json` **only** to the private output directory. The A/B identities are randomized; the answer key is deliberately separate. The clips are matched by integrated LUFS, and a **common** safety attenuation is then applied equally to both files, so one is not made louder by the peak guard. The originals remain untouched, and prior A/B outputs are never silently overwritten. Read the listening instructions and record your preference before revealing the key. The output uses a 4× estimated peak check, not a certified true-peak limiter. If a file is silent or the pair has different durations/channels/rates, the CLI rejects it instead of guessing.
+
+This prepares reproducible A/B material for owner review; it **does not** independently validate sonic accuracy or imply plugin release readiness.
+
 ## Many presets, one repeatable review loop
 
 1. Upload ZIPs with any combination of dry, main-only, full-effects, isolated delay/reverb/chorus, `.fst/.flp` if ever available, and notes. The tooling does **not require** the original project or preset.
