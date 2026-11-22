@@ -140,6 +140,8 @@ def make_lab(manifest: Path, output: Path, *, target_lufs: float = -18.0,
         shape = None
         for clip in clips:
             label = _safe_name(clip["label"])
+            if clip.get("kind", "candidate") not in {"candidate", "reference", "reference-stage"}:
+                raise ValueError("Unknown clip kind; explicitly mark candidate or reference")
             # Files are resolved relative to the local, private manifest.
             path = (manifest.parent / str(clip["path"])).resolve()
             x, sr = _read_clip(path, start, seconds)
@@ -219,7 +221,7 @@ button,select,textarea{font:inherit;color:var(--text);background:#1b2824;border:
 .reference-pane{border:1px solid #45624c;background:#11251c;border-radius:10px;padding:11px 13px;margin:14px 0 9px}.reference-pane strong{font-size:12px;color:var(--bright);letter-spacing:.06em}.reference-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.reference-buttons button{background:#173422;color:#e8ffe0;border-color:#568159}.reference-buttons button.active{background:#315f37}.candidates-heading{font-size:12px;letter-spacing:.1em;color:#d4e9cb;margin:16px 0 5px}.score-note{font-size:13px;color:#b4c9b6}.issue-grid{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0 3px}.issue-chip{display:inline-flex;align-items:center;gap:5px;margin:0;padding:5px 8px;border:1px solid #355244;border-radius:6px;font-size:12px;background:#101c17;color:#d7e8d7}.issue-chip input{accent-color:#baff7c}.single-rating{margin:8px 0 3px}.single-rating label{display:flex;flex-direction:column;align-items:flex-start;gap:6px}.single-rating select{display:block;min-width:230px;max-width:100%}.columns label select{display:block;margin-top:6px}.reference-note{font-size:11px;color:#b9cfc0;margin-top:5px}.issue-label{font-size:12px;color:#d0e2d0;margin-top:12px}
 @media(max-width:600px){.columns{grid-template-columns:1fr}.card{padding:14px}} 
 </style></head><body><main>
-<header><div class="eyebrow">SKELLY / SOUND MATCH</div><h1>BLIND LISTENING LAB</h1><p><strong>ORIGINAL is your reference, never a voting choice.</strong> Compare the candidate letters against it. Switching any audio starts from 0:00. Rate how close it sounds, then pick winners only when there are multiple candidates.</p><p class="info">Offline · private embedded audio · matched levels within each round · originals are always separate from candidate votes</p></header>
+<header><div class="eyebrow">SKELLY / SOUND MATCH</div><h1>BLIND LISTENING LAB</h1><p><strong>ORIGINAL is your reference, never a voting choice.</strong> Compare the candidate letters against it. Switch at the same point to compare a phrase, or choose restart mode. Rate how close it sounds, then pick winners only when there are multiple candidates.</p><p class="info">Offline · private embedded audio · matched levels within each round · originals are always separate from candidate votes</p><label>Switch playback<select id="playbackMode" aria-label="Switch playback"><option value="aligned">Same point · synchronized</option><option value="restart">Restart at 0:00</option></select></label></header>
 <nav class="quickjump" id="jump" aria-label="Jump to listening round"></nav><p class="review-progress" id="progress"></p>
 <div id="groups"></div><section class="card"><h2>Send your winners & losers</h2><p>Export the completed feedback, or copy the text summary and paste it into our chat. You can listen again and change any vote.</p><div class="btnrow"><button id="copy">Copy feedback</button><button id="export">Download feedback JSON</button><button id="generate" class="alt">Refresh summary</button></div><p id="status" role="status"></p><textarea id="feedbackText" aria-label="Copyable listening results" readonly></textarea></section>
 <footer>Comparison votes exclude original/reference clips. A match rating is subjective and not a native plugin validation. Historical Deuce MP3 origins remain lossy even though comparison clips are FLAC. Same-take offline research does not establish independent transfer, exact FL Studio settings, or a verified native VST3. A peak check uses 4× reconstruction, not certified BS.1770 metering.</footer>
@@ -279,18 +281,20 @@ LAB.groups.forEach((g,index)=>{
  const jump=el('a','',`${index+1} · ${g.title.split(' · ')[0]}`);jump.href=`#round-${index+1}`;document.getElementById('jump').append(jump);
  const top=el('div','top'),block=el('div');block.append(el('h2','',`${index+1}. ${g.title}`),el('p','',g.note));top.append(block,el('span','flag',`${choices.length} candidate${choices.length===1?'':'s'} · ${g.duration}s`));card.append(top);
  const audio=el('audio');audio.controls=true;audio.preload='none';audio.setAttribute('aria-label',g.title+' comparison audio');
- const selected=el('p','tiny','Select ORIGINAL or a candidate. Every switch restarts at 0:00.');
+ audio.addEventListener('play',()=>{if(currentAudio&&currentAudio!==audio)currentAudio.pause();currentAudio=audio});
+ const selected=el('p','tiny','Select ORIGINAL or a candidate. Switch mode applies within this round.');
  const buttons=[];let active=null,selectionToken=0;
  function createPlayButton(c,caption,container){
   const b=el('button','',caption);b.type='button';b.setAttribute('aria-pressed','false');buttons.push(b);
   b.addEventListener('click',async()=>{
    if(currentAudio&&currentAudio!==audio)currentAudio.pause();
    if(active===c.letter){currentAudio=audio;if(audio.paused){try{await audio.play()}catch(e){selected.textContent='Press Play in the player.'}}else audio.pause();return}
+   const position=document.getElementById('playbackMode').value==='aligned'&&active!==null&&Number.isFinite(audio.currentTime)?audio.currentTime:0;
    const token=++selectionToken;audio.pause();audio.src=c.audio;audio.load();
-   const resetAtStart=()=>{if(token===selectionToken){try{audio.currentTime=0}catch(_){}}};
+   const resetAtStart=()=>{if(token===selectionToken){try{if(position>0)audio.currentTime=Math.min(position,Number.isFinite(audio.duration)?Math.max(0,audio.duration-.01):position);else audio.currentTime=0}catch(_){}}};
    audio.addEventListener('loadedmetadata',resetAtStart,{once:true});resetAtStart();active=c.letter;currentAudio=audio;
    buttons.forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false')});b.classList.add('active');b.setAttribute('aria-pressed','true');
-   selected.textContent=`Now playing ${caption.replace('▶ ','')} from the beginning.`;
+   selected.textContent=`Now playing ${caption.replace('▶ ','')} at ${position.toFixed(1)}s.`;
    try{await audio.play()}catch(e){selected.textContent=`Selected ${caption} at 0:00. Press Play in the player.`}
   });container.append(b);
  }
@@ -421,9 +425,15 @@ def main() -> None:
             parser.error("--externalize and --append-from are separate operations")
         stats = externalize_lab(args.manifest, args.output)
     else:
-        stats = make_lab(args.manifest, args.output, target_lufs=args.target_lufs,
-                         ceiling_dbtp=args.ceiling_dbtp, seed=args.seed,
-                         append_from=args.append_from)
+        schema=json.loads(args.manifest.read_text(encoding='utf-8')).get('schema')
+        if schema=='skelly.verified-listening-manifest.v1':
+            if args.append_from is not None:parser.error('Audited sessions use explicit version provenance, not legacy append')
+            from .verified_listening_lab import make_lab as make_verified_lab
+            stats=make_verified_lab(args.manifest,args.output)
+        else:
+            stats = make_lab(args.manifest, args.output, target_lufs=args.target_lufs,
+                             ceiling_dbtp=args.ceiling_dbtp, seed=args.seed,
+                             append_from=args.append_from)
     print(json.dumps({k: v for k, v in stats.items() if k != 'audits'}, indent=2))
 
 

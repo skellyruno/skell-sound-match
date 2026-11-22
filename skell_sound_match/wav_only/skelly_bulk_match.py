@@ -27,6 +27,7 @@ MAX_MEMBER_BYTES = 256 * 1024 * 1024
 MAX_ARCHIVE_BYTES = 4 * 1024 * 1024 * 1024
 MAX_ENTRIES = 4000
 SOURCE_EXT = {'.wav', '.flac'}
+INFERENCE_VERSION = 'roles-v3-recording-hints'
 LABELS = {'delay':'delay','del':'delay','echo':'delay','rev':'reverb','reverb':'reverb',
           'chorus':'chorus','flangus':'flangus','flanger':'flangus',
           'convolver':'convolver','convolution':'convolver',
@@ -55,6 +56,27 @@ def infer(path, parent=''):
     """Produce conservative target / role hints; never claim chain provenance."""
     t=canonical(Path(path).stem)
     set_t=set(t)
+    # Resolve observed owner export names before generic token heuristics.
+    # Negated effects are context, never isolated wet training targets.
+    text=' '.join(t)
+    target_hint=None;target_prefix=''
+    for alias, slug in sorted(ALIASES.items(),key=lambda z:-len(z[0])):
+        if text==alias or text.startswith(alias+' '):
+            target_hint=slug
+            target_prefix=alias
+            break
+    for alias, slug in [('angelic','angelic_adlib'),('mufflr','muffle_adlib'),
+                        ('muffle','muffle_adlib'),('wobble','wobbly_adlib'),
+                        ('wobbly','wobbly_adlib'),('zaam','zaam_adlib')]:
+        if alias in set_t and 'club' in set_t:
+            return slug,'all'
+    if text in {'club raw','club gate'}:
+        return 'club_gate',('dry' if 'raw' in set_t else 'main')
+    if target_hint and 'no' in set_t:
+        if target_hint=='alchemist' and 'no main effects' in text:
+            return target_hint,'rec'
+        if 'no rec' in text or 'no chorus' in text or 'no delay' in text:
+            return target_hint,'reference-stage'
     if 'main' in set_t and set_t.intersection({'dry','raw'}):role='main'
     elif 'all' in set_t or 'everything' in set_t or ('full' in set_t and 'combined' in set_t):role='all'
     elif 'delay' in set_t or 'del' in set_t or 'echo' in set_t:role='delay'
@@ -69,6 +91,14 @@ def infer(path, parent=''):
     else:role='unknown'
     if '47' in set_t and set_t.intersection({'separated','stereo'}) and role in {'main','all'}:
         role += '_width'
+    if target_hint:
+        suffix=text[len(target_prefix):].strip()
+        if suffix in {'1','2','3'}:return target_hint+'_'+suffix,role
+        if target_hint=='alchemist' and ('main effects on' in text or 'last limiter off' in text):
+            role='main' if 'main effects on' in text else 'reference-stage'
+        if target_hint=='alchemist' and 'rev and del' in text:role='reference-stage'
+        if 'beat' in set_t or 'master' in set_t:role='reference-stage'
+        return target_hint,role
     leftovers=[tok for tok in t if tok not in REMOVE_WORDS]
     pwords=[tok for tok in canonical(parent) if tok not in REMOVE_WORDS]
     # generic file names like dry.wav get identity from directory, not called "dry".
@@ -154,6 +184,9 @@ def scan_archives(inputs, workspace, db):
                 fp=zip_fingerprint(item)
             else:
                 st=item.stat();fp=f'{st.st_size}:{st.st_mtime_ns}'
+            # Refresh cached role hints after inference changes, even if audio
+            # is unchanged. Otherwise persistent databases retain old bugs.
+            fp += ':' + INFERENCE_VERSION
             old=db.execute('SELECT fingerprint FROM archives WHERE path=?',(archive,)).fetchone()
             if old and old['fingerprint']==fp:
                 count_skip+=1;continue
@@ -187,11 +220,18 @@ def scan_archives(inputs, workspace, db):
 def items(db):return [dict(r) for r in db.execute('SELECT * FROM items ORDER BY target_id,role,archive,member')]
 
 
+def recording_hint(row):
+    """Explicit take numbers partition work; an absent number is not proof."""
+    name=Path(row['member'] or row['archive']).stem
+    match=re.search(r'\b(?:take|recording|performance)[ _-]*(\d+)\b',name,re.I)
+    return 'take_'+match.group(1) if match else 'unspecified'
+
+
 def select_plan(rows):
     grouped=defaultdict(list)
-    for row in rows:grouped[row['target_id']].append(row)
+    for row in rows:grouped[(row['target_id'],recording_hint(row))].append(row)
     planned=[]
-    for target, group in sorted(grouped.items()):
+    for (target,recording), group in sorted(grouped.items()):
         by_role=defaultdict(list)
         for row in group:by_role[row['role']].append(row)
         def choose(role):
@@ -213,8 +253,15 @@ def select_plan(rows):
         if dry and main and status=='READY_FOR_MAIN_FIT':
             if (dry[0]['frames'],dry[0]['sample_rate'],dry[0]['channels']) != (
                  main[0]['frames'],main[0]['sample_rate'],main[0]['channels']):status='MISMATCHED_FORMAT_OR_LENGTH'
+            def container(row):
+                return (row['archive'],str(Path(row['member']).parent)) if row['member'] else (str(Path(row['archive']).parent),'')
+            # Never silently pair one ZIP/take with another unrelated upload.
+            # Duplicate copies retain all provenance, so common containers count.
+            dry_places={container(r) for r in group if r['sha256']==dry[0]['sha256']}
+            main_places={container(r) for r in group if r['sha256']==main[0]['sha256']}
+            if not dry_places.intersection(main_places):status='CROSS_RECORDING_REVIEW_REQUIRED'
         stage_names=sorted(set(row['role'] for row in group)-{'dry','main'})
-        planned.append({'target_id':target,'status':status,'dry':dry[0] if len(dry)==1 else None,
+        planned.append({'target_id':target,'recording_hint':recording,'status':status,'dry':dry[0] if len(dry)==1 else None,
                  'main':main[0] if len(main)==1 else None,'stage_roles':stage_names,
                  'files':len(group),'unique_hashes':len({x['sha256'] for x in group}),
                  'source_evidence':'filename-and-format-only; verify same performance and zero offset'})

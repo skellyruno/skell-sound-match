@@ -4,6 +4,16 @@
 
 ## Install and run
 
+For durable private intake, use the existing scanner through the new eager-retention wrapper:
+
+```powershell
+python -m skell_sound_match.wav_only.private_intake C:\SkellyPrivate\inbox --workspace C:\SkellyPrivate\match-work
+```
+
+The inbox and workspace must be disjoint, and the workspace must be outside a source repository. Repeating the command detects unchanged inputs, retains provenance for duplicates and refreshes changed role-inference rules. Every indexed WAV/FLAC (including ZIP members) is immediately verified into the private content-addressed cache. Existing uploads may then disappear without losing retained audio. This is a repeatable foreground command; it does not start a background watcher or scheduled service.
+
+`PRESET_REGISTER.json` and immutable `register_history/` snapshots retain all eight target identities, source hashes/roles, candidate versions, measurements, listening results and unresolved issues. New intake preserves existing review fields. Filename roles are hints: REC-printed Alchemist is not untreated dry; Club effects are not automatically paired with unrelated recordings. See [Round 4 measured outcomes](ROUND4_INTAKE_AND_MEASUREMENTS_2026-11-22.md).
+
 From this Sound Match repository root:
 
 ```powershell
