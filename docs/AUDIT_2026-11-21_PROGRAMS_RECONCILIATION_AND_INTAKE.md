@@ -127,6 +127,19 @@ The owner confirmed **Speakerz and Hop Out original FL Studio presets and projec
 
 **Next actual DSP bottlenecks:** solve time-variable Hop Out chorus and Speakerz Flangus rather than falsely using a static IR; verify the recipes on a different vocal take; then port compact causal, RT-safe algorithms into opt-in native Skell Preset trials with accurate host/FL Studio/UI validation. Preserve Deuce offline v2.5 and factory 46 trial, Alchemist factory 43, the historical 55 program identities and existing My Presets.
 
+## Club adlibs and Speakerz FST evidence (2026-11-22)
+The newly supplied PRIVATE `club.zip` has **four FL Studio .fst files, one .flp, and seven 44.1 kHz / 24-bit / stereo WAV prints** from the same 11.971 s source. Do not include these binaries or owner-derived learned filter models in public Git. Safe generic effect-name parsing is now in `wav_only/flstudio_preset_catalog.py`, available as `skelly_bulk_match fst-catalog`. Chain names/order are evidence only; exact third-party knob and bypass states are not reconstructed.
+
+- **Angelic Adlib**: original FST names include Fruity Chorus, two Parametric EQ 2, Fruity Limiter, Maximus, Fruity Compressor, Soundgoodizer, Fruity Delay Bank, Fruity Flangus and Fruity Reeverb 2. Both with-delay and no-delay same-source exports exist. Static main trial heldout spectral MAE **6.53→2.00 dB**, envelope **4.24→2.96 dB**. A measured ~0.928 s echo exists but a sparse static-stereo-delay trial performed worse on heldout wet residual and was rejected.
+- **Muffle Adlib**: Fruity Love Philter, two EQs, Fruity Compressor, Soundgoodizer, Fruity Convolver, Fruity Flangus, Fruity Reeverb 2, Fruity Delay 3. Static main trial heldout spectral **7.47→3.58 dB**, envelope **3.94→2.85 dB**.
+- **Wobbly Adlib**: three EQ 2 instances, Fruity Limiter, Soundgoodizer, Fruity Chorus, Fruity Flanger, Fruity Phaser, Fruity Convolver, Fruity Wrapper, Panagement 2. Static EQ+linked leveler trial improved tone **4.32→2.60 dB** but **worsened envelope 2.15→2.48 dB**. Do not promote; a time-varying modulation model is required.
+- **Zaam Adlib**: Fruity Chorus, two EQs, Fruity Limiter, Soundgoodizer, Fruity Flangus, Fruity Reeverb 2, Fruity Delay 2. Static main trial heldout spectral **8.97→3.34 dB**, envelope **5.98→5.27 dB**.
+- **Club noise gate reference**: club raw→club gate. A standalone causal stereo-linked gate fit (train first section, evaluate later on the same take) selected threshold **−46 dB**, attack **2 ms**, hold **25 ms**, release **40 ms**, hysteresis **4 dB**; heldout envelope MAE **19.26 dB ungated → 2.18 dB**. The gated reference also has ~**+1.65 dB of open-vocal makeup**, which the gate itself must **not** silently apply to every preset.
+- **Speakerz screenshot**: visible slots in order: Parametric EQ 2, DeEsser Stereo, EQ 2, Fruity Compressor, Soundgoodizer, Fresh Air (green/on); Fruity Reeverb 2, Fruity Flangus, Baby Comeback, Fruity Convolver (dark/off in capture). EQ UI labels include approx 56 Hz −16.9 dB, 1.5 kHz +2.2 dB, 8 kHz +1.0 dB. This is screenshot-state evidence, not the entire automation/mix history.
+- **Skell Preset integration**: [draft PR #94](https://github.com/skellyruno/skell-preset-vst/pull/94) appends an independent MIC Noise Gate page/automation and calibrates its newly selected factory preset defaults to the Club gate; old host states and native packages remain gate-OFF. No production preset has been changed yet.
+
+Four Club adlibs are **additional targets** beside original Deuce/Alchemist and newer Hop Out/Speakerz (eight total). All new audio trials are private and unapproved. The external host, local Quick4 screenshots and exact-head Windows VST3 still require verification.
+
 ## Frozen decisions
 - Main Vocals user-visible choices: Alchemist (43) and Deuce (46), only.
 - Factories 0–54, host APVTS/automation IDs, original old presets, imported My Presets and startup rack behavior stay compatible.
