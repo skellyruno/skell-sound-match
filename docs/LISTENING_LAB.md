@@ -62,3 +62,19 @@ The generated page now **restarts at 0:00 on every change to another letter**. C
 Every export contains a **session_id** tied to the exact embedded audio and shuffled letters. Browser persistence is keyed by session ID to stop a newly shuffled page from carrying over stale winner/loser choices. Download or copy feedback before closing, particularly when browser `file://` local-storage is restricted. Old v1 page results remain a distinct prior session and are summarized in `docs/ROUND2_FEEDBACK_AND_PRIORITIES_2026-11-22.md`.
 
 Round 2 field page: **12 groups, 35 embedded lossless-normalized clips** (the original seven comparisons unchanged, four additional Club adlibs, and a separate MIC gate group). All new club reference audio and FST/FLP data remain private; this repository stores only the reusable renderer, synthetic tests and written engineering decisions. The offline Chromium smoke test checked desktop/mobile layout, reset from ~1.2 s to ~0.1 s on letter switch, uncertainty/export interactions and no JS console exceptions. This does **not** certify audio output on the owner's system.
+
+## Large batches: fast, offline local-FLAC package
+
+A 12-round self-contained HTML with 35 FLAC clips is ~68 MB, which is cumbersome to parse on some phones. **Use the fast package for large batches.** It has a tiny HTML page and separately stored FLAC assets, so the browser only loads the selected audio.
+
+First generate the self-contained private HTML (optionally using `--append-from`), then convert it **without re-encoding any audio**:
+
+```powershell
+python -m skell_sound_match.wav_only.html_listening_lab C:\SkellyPrivate\expanded_blind_lab.html --externalize --output C:\SkellyPrivate\fast_lab\LISTEN.html
+```
+
+The output folder contains `LISTEN.html` and `LISTEN_audio/round_001_A_<hash>.flac` etc. Each filename contains only the round, blind letter and short content fingerprint; **no original artist/preset identity** is exposed in filenames. Zip the whole folder, extract it before opening, and keep `LISTEN_audio/` beside `LISTEN.html`. The HTML requires no network access. **Never commit the HTML, audio assets or ZIP to public Git.**
+
+The browser interface, random labels and **session ID** are preserved exactly between the self-contained and fast versions. Each FLAC asset is a byte-for-byte copy of the previously embedded clip, not a second DSP render or another loudness adjustment. It rejects existing destination files/folders and invalid/corrupt source HTML. Continue appending to the *self-contained* source HTML, then regenerate a fresh, non-overwriting fast package when new rounds arrive.
+
+Verification on the private 2026-11-22 12-round lab: ~19 KB HTML, 35 independent 44.1 kHz stereo FLAC assets (~50.9 MB), all existing 7 round/23-clip mappings preserved, WAV/FLAC decode and estimated 4× peak guards passed. This is browser-loading optimization, **not a new sonic match or a native VST3/UI validation**. Local Chromium rejected file:// and localhost navigation in the test harness; desktop/mobile screenshots tested actual generated UI through synthetic content, and one desktop capture of the large actual HTML succeeded. Device-local external-FLAC playback is still subject to owner-browser verification.

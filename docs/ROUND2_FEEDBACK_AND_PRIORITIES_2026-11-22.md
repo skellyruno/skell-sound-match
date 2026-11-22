@@ -37,3 +37,7 @@ The private HTML works offline with source-only self-contained FLAC, *but is not
 5. **Adlibs + MIC gate:** work from known FST effect order plus Club same-performance WAVs; restore modulation/filters explicitly and use the gate as the sound-matching front end without modifying previously saved FL Studio state.
 
 **Validation:** UI/HTML code/tests are not a VST3/Quick4/FL Studio test. Owner decisions aren't scientific estimates. Don't merge Sound Match PR #2 into public main unless public archive provenance/licensing and all review gates are separately cleared. Never upload new proprietary FLPs/FSTs/raw vocals/derived audio models to public Git.
+
+## Fast listening delivery / scale
+
+For large growing libraries, generate round-2 sessions with `--append-from` to keep old blind audio and letter mappings unchanged. Then optionally run `--externalize` to create a 19 KB offline HTML plus 35 local FLAC assets (~50.9 MB) in a private ZIP, rather than parsing 68 MB of embedded base64 on each device. This is not new sound matching; it is a UI loading/iteration optimization. Current generated Round-2 private session identifier: `2cd00d89eb94ad8c7ec2e444`. **Never commit the private generated audio files or session HTML to this public repository.**

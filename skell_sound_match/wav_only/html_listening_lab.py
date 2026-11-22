@@ -250,6 +250,53 @@ feedback();
 </script></body></html>'''
 
 
+def externalize_lab(source_html: Path, output_html: Path) -> dict:
+    """Convert trusted private self-contained HTML to fast, offline HTML+FLAC.
+
+    The standalone source is unchanged. The destination and its audio folder
+    must not exist. Files are named only by round/letter/hash to avoid
+    disclosing source identities through filenames before blind listening.
+    """
+    if output_html.exists():
+        raise FileExistsError(f"Refusing to overwrite: {output_html}")
+    asset_dir = output_html.parent / (output_html.stem + "_audio")
+    if asset_dir.exists():
+        raise FileExistsError(f"Refusing to overwrite: {asset_dir}")
+    groups, total_bytes = _read_prior_lab(source_html)
+    old_html = source_html.read_text(encoding="utf-8")
+    pos = old_html.index("const LAB = ") + len("const LAB = ")
+    old_doc, _ = json.JSONDecoder().raw_decode(old_html[pos:])
+    session_id = old_doc.get("session_id") or _session_fingerprint(groups)
+    # Preflight all bytes and names before creating any outputs.
+    assets: list[tuple[str,bytes]] = []
+    fast_groups: list[dict] = []
+    for group_index, group in enumerate(groups, start=1):
+        converted = {**group, "clips": []}
+        for clip in group["clips"]:
+            blob = base64.b64decode(clip["audio"].split(",",1)[1], validate=True)
+            # This is a privacy-preserving blind filename, not a label.
+            filename = f"round_{group_index:03d}_{clip['letter']}_{hashlib.sha256(blob).hexdigest()[:12]}.flac"
+            relative = f"{asset_dir.name}/{filename}"
+            assets.append((filename, blob))
+            converted["clips"].append({**clip, "audio": relative})
+        fast_groups.append(converted)
+    if len(assets) != sum(len(g['clips']) for g in groups) or sum(len(b) for _,b in assets) != total_bytes:
+        raise ValueError("Private FLAC export mismatch")
+    fast_doc = {"schema": SCHEMA, "session_id": session_id, "groups": fast_groups}
+    escaped = json.dumps(fast_doc, ensure_ascii=True).replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
+    html = _TEMPLATE.replace("/*__PRIVATE_GROUP_DATA__*/", escaped)
+    html = html.replace("Offline only · embedded audio", "Offline only · local FLAC assets")
+    output_html.parent.mkdir(parents=True, exist_ok=True)
+    asset_dir.mkdir()
+    for filename, blob in assets:
+        (asset_dir/filename).write_bytes(blob)
+    output_html.write_text(html,encoding="utf-8")
+    return {"schema": SCHEMA, "groups": len(groups), "clips": len(assets),
+            "session_id": session_id, "asset_dir": str(asset_dir),
+            "audio_bytes": total_bytes, "html_bytes": output_html.stat().st_size,
+            "html_sha256": hashlib.sha256(output_html.read_bytes()).hexdigest()}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("manifest", type=Path, help="private JSON manifest of groups and clips")
@@ -258,10 +305,16 @@ def main() -> None:
     parser.add_argument("--ceiling-dbtp", type=float, default=-1.2)
     parser.add_argument("--seed", type=int, default=None, help="deterministic QA only; omit for private random labels")
     parser.add_argument("--append-from", type=Path, help="reuse existing private HTML clips and their letter mapping")
+    parser.add_argument("--externalize", action="store_true", help="convert existing private HTML into small HTML plus local FLAC assets")
     args = parser.parse_args()
-    stats = make_lab(args.manifest, args.output, target_lufs=args.target_lufs,
-                     ceiling_dbtp=args.ceiling_dbtp, seed=args.seed,
-                     append_from=args.append_from)
+    if args.externalize:
+        if args.append_from is not None:
+            parser.error("--externalize and --append-from are separate operations")
+        stats = externalize_lab(args.manifest, args.output)
+    else:
+        stats = make_lab(args.manifest, args.output, target_lufs=args.target_lufs,
+                         ceiling_dbtp=args.ceiling_dbtp, seed=args.seed,
+                         append_from=args.append_from)
     print(json.dumps({k: v for k, v in stats.items() if k != 'audits'}, indent=2))
 
 

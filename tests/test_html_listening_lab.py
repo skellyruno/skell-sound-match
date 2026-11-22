@@ -120,3 +120,41 @@ def test_stable_session_fingerprint_only_when_content_and_letters_identical(tmp_
     b=make_lab(src,tmp_path/"b.html",seed=5)
     assert a["session_id"] == b["session_id"]
     assert a["html_sha256"] == b["html_sha256"]
+
+
+def test_externalize_fast_html_preserves_blind_session_and_lossless_audio(tmp_path):
+    from skell_sound_match.wav_only.html_listening_lab import externalize_lab
+    import base64
+    src=fixture(tmp_path)
+    full=tmp_path/'full.html'
+    previous=make_lab(src,full,seed=42)
+    fast=tmp_path/'light.html'
+    result=externalize_lab(full,fast)
+    assert result['groups']==1 and result['clips']==2
+    assert result['session_id']==previous['session_id']
+    assert fast.stat().st_size<30_000
+    text=fast.read_text(encoding='utf-8')
+    assert 'data:audio/flac;base64,' not in text
+    assert 'skelly-blind-feedback-v2-' in text
+    from re import search, S
+    a=json.loads(search(r'const LAB = (.*?);\nconst states',full.read_text(),S).group(1))
+    b=json.loads(search(r'const LAB = (.*?);\nconst states',text,S).group(1))
+    assert a['session_id']==b['session_id']
+    assert [c['identity'] for c in a['groups'][0]['clips']]==[c['identity'] for c in b['groups'][0]['clips']]
+    for original,light in zip(a['groups'][0]['clips'],b['groups'][0]['clips']):
+        path=tmp_path/light['audio']
+        assert path.is_file()
+        assert b' [original reference]' not in path.name.encode()
+        assert path.read_bytes()==base64.b64decode(original['audio'].split(',',1)[1])
+    with pytest.raises(FileExistsError):
+        externalize_lab(full,fast)
+
+
+def test_externalize_refuses_existing_audio_folder(tmp_path):
+    from skell_sound_match.wav_only.html_listening_lab import externalize_lab
+    src=fixture(tmp_path)
+    full=tmp_path/'full.html'
+    make_lab(src,full)
+    (tmp_path/'light_audio').mkdir()
+    with pytest.raises(FileExistsError):
+        externalize_lab(full,tmp_path/'light.html')

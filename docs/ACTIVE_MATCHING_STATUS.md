@@ -4,7 +4,7 @@
 
 ## Current listening feedback and latest page (2026-11-22)
 
-Read [Round 2 feedback, blind-letter mappings and priorities](ROUND2_FEEDBACK_AND_PRIORITIES_2026-11-22.md) before tuning a candidate. The new HTML generator can append clips without recompressing old audio, restarts switching versions from 0:00, safely scopes the saved votes to a session, and has too-close-to-call, a quick-jump navigator and a review counter. A **private** expanded lab with 12 groups (Deuce, Alchemist, Speakerz, Hop Out, Angelic, Muffle, Wobbly, Zaam, MIC Gate) was generated and checked. No private audio or FST/FLP/NPZ filters were added to public Git. Do not treat user uncertainty as a positive audio endorsement.
+Read [Round 2 feedback, blind-letter mappings and priorities](ROUND2_FEEDBACK_AND_PRIORITIES_2026-11-22.md) before tuning a candidate. The new HTML generator can append clips without recompressing old audio, restarts switching versions from 0:00, safely scopes the saved votes to a session, and has too-close-to-call, a quick-jump navigator and a review counter. A new `--externalize` mode creates an offline lightweight HTML plus local FLAC asset folder, avoiding repeated 68 MB page parsing; both formats preserve the same session and exact clips. A **private** expanded lab with 12 groups (Deuce, Alchemist, Speakerz, Hop Out, Angelic, Muffle, Wobbly, Zaam, MIC Gate) was generated and checked. No private audio or FST/FLP/NPZ filters were added to public Git. Do not treat user uncertainty as a positive audio endorsement.
 
 ## Verified baseline / preservation
 
