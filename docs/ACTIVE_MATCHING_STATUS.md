@@ -2,6 +2,10 @@
 
 **Updated:** 2026-11-22. **Primary repository:** `skellyruno/skell-sound-match`, draft PR **#2**, branch `feature/deuce-v25-listening-approved-20261115`. Native Skell Preset gate remains in its separate draft PR **#94**. This file is the latest compact work-in-progress status; the historical handoff and source audits remain preserved rather than overwritten.
 
+## Current listening feedback and latest page (2026-11-22)
+
+Read [Round 2 feedback, blind-letter mappings and priorities](ROUND2_FEEDBACK_AND_PRIORITIES_2026-11-22.md) before tuning a candidate. The new HTML generator can append clips without recompressing old audio, restarts switching versions from 0:00, safely scopes the saved votes to a session, and has too-close-to-call, a quick-jump navigator and a review counter. A **private** expanded lab with 12 groups (Deuce, Alchemist, Speakerz, Hop Out, Angelic, Muffle, Wobbly, Zaam, MIC Gate) was generated and checked. No private audio or FST/FLP/NPZ filters were added to public Git. Do not treat user uncertainty as a positive audio endorsement.
+
 ## Verified baseline / preservation
 
 - Skell Preset production PR **#88 merged 2026-11-21**, preserving 55 factory IDs **0–54** and stable host automation IDs. Main Vocals browser still shows **Alchemist index 43** and **Deuce index 46**. Imported/saved user presets remain in My Presets. Open draft factory **55** in Preset PR #89 is a hypothetical **56th** internal program, NOT an approved production sound.

@@ -73,3 +73,50 @@ def test_manifest_escape(tmp_path):
     html=(tmp_path/"new.html").read_text(encoding="utf-8")
     assert '</script><script>alert(1)' not in html
     assert '\\u003c/script\\u003e' in html
+
+
+def test_append_reuses_previous_blind_letters_and_audio_without_reencoding(tmp_path):
+    src = fixture(tmp_path)
+    first = tmp_path / "first.html"
+    one = make_lab(src, first, seed=27)
+    assert one["groups"] == 1 and one["new_groups"] == 1
+    payload = json.loads(src.read_text(encoding="utf-8"))
+    payload["groups"][0]["id"] = "new-round"
+    payload["groups"][0]["title"] = "More vocals"
+    src.write_text(json.dumps(payload), encoding="utf-8")
+    second = tmp_path / "second.html"
+    two = make_lab(src, second, seed=900, append_from=first)
+    assert two["groups"] == 2 and two["new_groups"] == 1
+    assert two["clips"] == 4 and two["new_clips"] == 2
+    assert two["session_id"] != one["session_id"]
+    import re
+    old = re.search(r"const LAB = (.*?);\nconst states", first.read_text(), re.S)
+    new = re.search(r"const LAB = (.*?);\nconst states", second.read_text(), re.S)
+    assert old and new
+    a, b = json.loads(old.group(1)), json.loads(new.group(1))
+    assert a["groups"][0] == b["groups"][0]
+    assert a["groups"][0]["clips"][0]["audio"] == b["groups"][0]["clips"][0]["audio"]
+    assert "audio.currentTime=0" in second.read_text()
+    assert "Switching keeps the current time" not in second.read_text()
+    assert "skelly-blind-feedback-v2-" in second.read_text()
+    assert "too close to call" in second.read_text().lower()
+
+
+def test_append_rejects_duplicate_round_and_malformed_lab(tmp_path):
+    src = fixture(tmp_path)
+    first = tmp_path / "first.html"
+    make_lab(src, first)
+    with pytest.raises(ValueError, match="unique"):
+        make_lab(src, tmp_path/"duplicate.html", append_from=first)
+    bogus = tmp_path/"bogus.html"
+    bogus.write_text("<p>not the generator output</p>")
+    with pytest.raises(ValueError, match="does not contain"):
+        make_lab(src, tmp_path/"other.html", append_from=bogus)
+
+
+def test_stable_session_fingerprint_only_when_content_and_letters_identical(tmp_path):
+    src=fixture(tmp_path)
+    a=make_lab(src,tmp_path/"a.html",seed=5)
+    b=make_lab(src,tmp_path/"b.html",seed=5)
+    assert a["session_id"] == b["session_id"]
+    assert a["html_sha256"] == b["html_sha256"]

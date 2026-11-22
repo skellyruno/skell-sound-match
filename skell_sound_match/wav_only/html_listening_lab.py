@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import base64
+import binascii
 import hashlib
 import io
 import json
@@ -50,8 +51,62 @@ def _safe_name(s: Any) -> str:
     return text
 
 
+def _read_prior_lab(path: Path) -> tuple[list[dict], int]:
+    """Reuse verified encoded A/B clips without rerendering or changing letters.
+
+    The source must be a trusted lab created by this generator. It contains
+    private audio and must never be checked into public Git.
+    """
+    html = path.read_text(encoding="utf-8")
+    marker = "const LAB = "
+    pos = html.find(marker)
+    if pos < 0:
+        raise ValueError("Existing file does not contain a listening lab")
+    try:
+        prior, _ = json.JSONDecoder().raw_decode(html[pos+len(marker):])
+    except (TypeError, ValueError) as exc:
+        raise ValueError("Invalid existing lab JSON") from exc
+    if not isinstance(prior, dict) or prior.get("schema") != SCHEMA or not isinstance(prior.get("groups"), list):
+        raise ValueError("Existing lab schema mismatch")
+    groups = prior["groups"]
+    if len(groups) > 100 or len({g.get("id") for g in groups}) != len(groups):
+        raise ValueError("Existing lab has invalid group identities")
+    count_bytes = 0
+    for group in groups:
+        clips = group.get("clips", [])
+        if not isinstance(clips, list) or not 2 <= len(clips) <= 12:
+            raise ValueError("Existing lab has invalid clips")
+        for number, clip in enumerate(clips):
+            if clip.get("letter") != chr(ord("A") + number):
+                raise ValueError("Existing lab has invalid letter mapping")
+            uri = clip.get("audio", "")
+            if not isinstance(uri, str) or not uri.startswith("data:audio/flac;base64,"):
+                raise ValueError("Existing lab has an invalid private FLAC")
+            try:
+                count_bytes += len(base64.b64decode(uri.split(",",1)[1], validate=True))
+            except (ValueError, binascii.Error) as exc:
+                raise ValueError("Existing lab contains invalid FLAC base64") from exc
+    if count_bytes > 85_000_000:
+        raise ValueError("Existing lab exceeds audio cap")
+    return groups, count_bytes
+
+
+def _session_fingerprint(groups: list[dict]) -> str:
+    """Bind votes to exact randomized mappings, not only group names."""
+    digest = hashlib.sha256()
+    for group in groups:
+        digest.update(group["id"].encode("utf-8"))
+        for clip in group["clips"]:
+            digest.update(clip["letter"].encode("ascii"))
+            digest.update(clip["identity"].encode("utf-8"))
+            # Hash the already encoded content, avoiding huge duplicate buffers.
+            digest.update(hashlib.sha256(clip["audio"].encode("ascii")).digest())
+    return digest.hexdigest()[:24]
+
+
 def make_lab(manifest: Path, output: Path, *, target_lufs: float = -18.0,
-             ceiling_dbtp: float = -1.2, seed: int | None = None) -> dict:
+             ceiling_dbtp: float = -1.2, seed: int | None = None,
+             append_from: Path | None = None) -> dict:
     if output.exists():
         raise FileExistsError(f"Refusing to overwrite: {output}")
     if not -30.0 <= target_lufs <= -12.0 or not -12.0 <= ceiling_dbtp <= -0.5:
@@ -61,10 +116,11 @@ def make_lab(manifest: Path, output: Path, *, target_lufs: float = -18.0,
     if not isinstance(groups_in, list) or not 1 <= len(groups_in) <= 100:
         raise ValueError("Expected between 1 and 100 listening groups")
     randomizer = random.Random(seed) if seed is not None else random.SystemRandom()
-    out_groups: list[dict] = []
+    out_groups, total_bytes = _read_prior_lab(append_from) if append_from else ([], 0)
+    if len(out_groups) + len(groups_in) > 100:
+        raise ValueError("Combined lab exceeds 100 groups; split into another chapter")
     qa: list[dict] = []
-    total_bytes = 0
-    ids: set[str] = set()
+    ids: set[str] = {group["id"] for group in out_groups}
     for g in groups_in:
         group_id = _safe_name(g["id"])
         if not group_id or group_id in ids:
@@ -134,13 +190,17 @@ def make_lab(manifest: Path, output: Path, *, target_lufs: float = -18.0,
         out_groups.append({"id": group_id, "title": title, "note": note,
                            "duration": seconds, "rate": rate, "safety_trim_db": round(safety_trim_db, 3),
                            "clips": outputs})
-    data_json = json.dumps({"schema": SCHEMA, "groups": out_groups}, ensure_ascii=True)
+    lab = {"schema": SCHEMA, "session_id": _session_fingerprint(out_groups),
+           "groups": out_groups}
+    data_json = json.dumps(lab, ensure_ascii=True)
     # Protect the HTML script element against injected text from local manifests.
     data_json = data_json.replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
     html = _TEMPLATE.replace("/*__PRIVATE_GROUP_DATA__*/", data_json)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(html, encoding="utf-8")
-    return {"schema": SCHEMA, "groups": len(out_groups), "clips": len(qa),
+    return {"schema": SCHEMA, "groups": len(out_groups),
+            "new_groups": len(groups_in), "clips": sum(len(g["clips"]) for g in out_groups),
+            "new_clips": len(qa), "session_id": lab["session_id"],
             "embedded_flac_bytes": total_bytes,
             "html_sha256": hashlib.sha256(output.read_bytes()).hexdigest(), "audits": qa}
 
@@ -155,10 +215,11 @@ main{max-width:1060px;margin:0 auto;padding:28px 17px 60px}.eyebrow{font-size:12
 .card{background:linear-gradient(135deg,#14201d,#0e1514);border:1px solid var(--edge);border-radius:14px;padding:20px;margin:18px 0}.top{display:flex;align-items:start;justify-content:space-between;gap:15px;flex-wrap:wrap}.flag{color:#b9df98;font-size:12px;border:1px solid #38503b;padding:5px 10px;border-radius:99px}
 button,select,textarea{font:inherit;color:var(--text);background:#1b2824;border:1px solid #496153;border-radius:7px}button{cursor:pointer;padding:9px 13px}button:hover{border-color:#bbff68}button.active{background:#263f2c;border:2px solid var(--bright);padding:8px 12px}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--bright);outline-offset:2px}
 .options{display:flex;gap:8px;flex-wrap:wrap;margin:17px 0}audio{width:100%;margin:8px 0 6px}label{display:block;font-size:13px;color:var(--muted);margin:10px 0 5px}select{padding:9px;min-width:155px;max-width:100%}.columns{display:grid;grid-template-columns:1fr 1fr;gap:12px}.columns>*{min-width:0}textarea{width:100%;min-height:70px;resize:vertical;padding:10px;background:#111b17}
-.btnrow{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.btnrow .alt{background:#101916;color:#b7cbc0} .reveal{font-size:12px;color:#a6dca0}.identity{border:1px dashed #3c4c3f;border-radius:7px;padding:10px;font-size:12px;white-space:pre-wrap;color:#c1d6ba;display:none}.identity.visible{display:block}.control{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.control strong{font-size:13px;color:#c7dacb}.tiny{font-size:12px;color:var(--muted)}#feedbackText{height:170px;white-space:pre-wrap}footer{color:#9caf9d;font-size:13px;margin-top:30px}#status{color:var(--bright)}
+.btnrow{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.btnrow .alt{background:#101916;color:#b7cbc0} .reveal{font-size:12px;color:#a6dca0}.identity{border:1px dashed #3c4c3f;border-radius:7px;padding:10px;font-size:12px;white-space:pre-wrap;color:#c1d6ba;display:none}.identity.visible{display:block}.control{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.control strong{font-size:13px;color:#c7dacb}.quickjump{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 6px}.quickjump a{color:#d5ecd5;text-decoration:none;font-size:12px;background:#12201a;border:1px solid #344d3e;border-radius:6px;padding:6px 9px}.quickjump a:hover,.quickjump a:focus-visible{border-color:var(--bright)}.review-progress{font-size:13px;color:var(--bright);margin:7px 0 12px}.tiny{font-size:12px;color:var(--muted)}#feedbackText{height:170px;white-space:pre-wrap}footer{color:#9caf9d;font-size:13px;margin-top:30px}#status{color:var(--bright)}
 @media(max-width:600px){.columns{grid-template-columns:1fr}.card{padding:14px}} 
 </style></head><body><main>
-<header><div class="eyebrow">SKELLY / SOUND MATCH</div><h1>BLIND LISTENING LAB</h1><p>Switch A/B/C at the same playback time. Pick your favorite and loser for each vocal, then export the results back to ChatGPT.</p><p class="info">Offline only · embedded audio · no uploads · level-matched within each comparison · source identities remain hidden until reveal</p></header>
+<header><div class="eyebrow">SKELLY / SOUND MATCH</div><h1>BLIND LISTENING LAB</h1><p>Switch A/B/C to replay each version <strong>from the beginning</strong>. Choose a winner, or mark sounds too close to call. Export your notes when done.</p><p class="info">Offline only · embedded audio · no uploads · level-matched within each comparison · source identities remain hidden until reveal</p></header>
+<nav class="quickjump" id="jump" aria-label="Jump to listening round"></nav><p class="review-progress" id="progress"></p>
 <div id="groups"></div><section class="card"><h2>Send your winners & losers</h2><p>Export the completed feedback, or copy the text summary and paste it into our chat. You can listen again and change any vote.</p><div class="btnrow"><button id="copy">Copy feedback</button><button id="export">Download feedback JSON</button><button id="generate" class="alt">Refresh summary</button></div><p id="status" role="status"></p><textarea id="feedbackText" aria-label="Copyable listening results" readonly></textarea></section>
 <footer>Historical Deuce MP3 origins remain lossy even though comparison clips are FLAC. Same-take offline research does not establish independent transfer, exact FL Studio settings, or a verified native VST3. A peak check uses 4× reconstruction, not certified BS.1770 metering.</footer>
 </main><script>
@@ -166,23 +227,24 @@ const LAB = /*__PRIVATE_GROUP_DATA__*/;
 const states={};
 let currentAudio=null;
 const root=document.getElementById('groups');
-const loadState=()=>{try{return JSON.parse(localStorage.getItem('skelly-blind-feedback-v1')||'{}')}catch(_){return {}}};
+const storageKey='skelly-blind-feedback-v2-'+LAB.session_id;
+const loadState=()=>{try{return JSON.parse(localStorage.getItem(storageKey)||'{}')}catch(_){return {}}};
 const saved=loadState();
-function persist(){try{localStorage.setItem('skelly-blind-feedback-v1',JSON.stringify(states))}catch(_){}}
+function persist(){try{localStorage.setItem(storageKey,JSON.stringify(states))}catch(_){}}
 function el(tag,cls,text){const a=document.createElement(tag);if(cls)a.className=cls;if(text!==undefined)a.textContent=text;return a}
-function feedback(){const result={schema:'skelly.blind-listening.feedback.v1',results:LAB.groups.map(g=>({vocal:g.title,group_id:g.id,winner:states[g.id]?.winner||'',loser:states[g.id]?.loser||'',notes:states[g.id]?.notes||'',revealed:!!states[g.id]?.revealed}))};document.getElementById('feedbackText').value=result.results.map(r=>`${r.vocal}: WINNER ${r.winner||'?'}, LOSER ${r.loser||'?'}${r.notes?' — '+r.notes:''}`).join('\n');return result}
-function addSelect(parent,g,field,caption){const lab=el('label','',caption);const select=el('select');select.setAttribute('aria-label',g.title+' '+caption);[['','Not chosen'],...g.clips.map(c=>[c.letter,c.letter])].forEach(([v,t])=>{const opt=el('option','',t);opt.value=v;select.append(opt)});select.value=states[g.id][field]||'';select.addEventListener('change',()=>{states[g.id][field]=select.value;persist();feedback()});lab.append(select);parent.append(lab)}
+function feedback(){const result={schema:'skelly.blind-listening.feedback.v2',session_id:LAB.session_id,results:LAB.groups.map(g=>({vocal:g.title,group_id:g.id,winner:states[g.id]?.uncertain?'':states[g.id]?.winner||'',loser:states[g.id]?.uncertain?'':states[g.id]?.loser||'',uncertain:!!states[g.id]?.uncertain,notes:states[g.id]?.notes||'',revealed:!!states[g.id]?.revealed}))};document.getElementById('feedbackText').value=result.results.map(r=>`${r.vocal}: ${r.uncertain?'TOO CLOSE TO CALL':('WINNER '+(r.winner||'?')+', LOSER '+(r.loser||'?'))}${r.notes?' — '+r.notes:''}`).join('\n');document.getElementById('progress').textContent=`${result.results.filter(r=>r.uncertain||r.winner||r.loser||r.notes).length}/${LAB.groups.length} rounds reviewed`;return result}
+function addSelect(parent,g,field,caption){const lab=el('label','',caption);const select=el('select');select.setAttribute('aria-label',g.title+' '+caption);[['','Not chosen'],...g.clips.map(c=>[c.letter,c.letter])].forEach(([v,t])=>{const opt=el('option','',t);opt.value=v;select.append(opt)});select.value=states[g.id][field]||'';select.addEventListener('change',()=>{states[g.id][field]=select.value;if(select.value){states[g.id].uncertain=false;const check=parent.parentElement.querySelector('input[type=checkbox]');if(check)check.checked=false;const opposite=field==='winner'?'loser':'winner';if(states[g.id][opposite]===select.value){states[g.id][opposite]='';const other=parent.querySelectorAll('select')[field==='winner'?1:0];if(other)other.value='';}}persist();feedback()});lab.append(select);parent.append(lab)}
 LAB.groups.forEach((g,index)=>{
- states[g.id]={winner:'',loser:'',notes:'',revealed:false,...saved[g.id]};
- const card=el('section','card');const top=el('div','top');const block=el('div');block.append(el('h2','',`${index+1}. ${g.title}`),el('p','',g.note));top.append(block,el('span','flag',`${g.clips.length} versions · ${g.duration}s`));card.append(top);
- const options=el('div','options');const audio=el('audio');audio.controls=true;audio.preload='none';audio.setAttribute('aria-label',g.title+' synchronized audio player');const selected=el('p','tiny','Select a version to start. Switching keeps the current time.');
- let active=null;const buttons=[];g.clips.forEach(c=>{const b=el('button','',`▶ ${c.letter}`);buttons.push(b);b.addEventListener('click',async()=>{const pos=audio.currentTime||0;const wasPlaying=!audio.paused;if(currentAudio&&currentAudio!==audio){currentAudio.pause()}if(active===c.letter){if(audio.paused){try{await audio.play()}catch(e){selected.textContent='Press Play in the audio player.'}}else{audio.pause()}return}audio.pause();audio.src=c.audio;audio.load();audio.currentTime=Math.max(0,Math.min(pos,g.duration-.1));active=c.letter;currentAudio=audio;buttons.forEach(x=>x.classList.remove('active'));b.classList.add('active');selected.textContent=`Now listening to ${c.letter}. Switch letters without restarting.`;try{await audio.play()}catch(e){selected.textContent=`Selected ${c.letter}. Press Play in the player.`}});options.append(b)});
+ states[g.id]={winner:'',loser:'',notes:'',uncertain:false,revealed:false,...saved[g.id]};
+ const card=el('section','card');card.id=`round-${index+1}`;const jump=el('a','',`${index+1} · ${g.title.split(' · ')[0]}`);jump.href=`#round-${index+1}`;document.getElementById('jump').append(jump);const top=el('div','top');const block=el('div');block.append(el('h2','',`${index+1}. ${g.title}`),el('p','',g.note));top.append(block,el('span','flag',`${g.clips.length} versions · ${g.duration}s`));card.append(top);
+ const options=el('div','options');const audio=el('audio');audio.controls=true;audio.preload='none';audio.setAttribute('aria-label',g.title+' synchronized audio player');const selected=el('p','tiny','Select a version. Each different letter starts at 0:00.');
+ let active=null,selectionToken=0;const buttons=[];g.clips.forEach(c=>{const b=el('button','',`▶ ${c.letter}`);b.setAttribute('aria-pressed','false');buttons.push(b);b.addEventListener('click',async()=>{if(currentAudio&&currentAudio!==audio){currentAudio.pause()}if(active===c.letter){if(audio.paused){try{await audio.play()}catch(e){selected.textContent='Press Play in the audio player.'}}else{audio.pause()}return}const token=++selectionToken;audio.pause();audio.src=c.audio;audio.load();const resetAtStart=()=>{if(token===selectionToken){try{audio.currentTime=0}catch(_){}}};audio.addEventListener('loadedmetadata',resetAtStart,{once:true});resetAtStart();active=c.letter;currentAudio=audio;buttons.forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false')});b.classList.add('active');b.setAttribute('aria-pressed','true');selected.textContent=`Now listening to ${c.letter}, from the beginning.`;try{await audio.play()}catch(e){selected.textContent=`Selected ${c.letter} at 0:00. Press Play in the player.`}});options.append(b)});
  card.append(options,audio,selected);
- const fields=el('div','columns');addSelect(fields,g,'winner','🏆 Best / winner ');addSelect(fields,g,'loser','👎 Weakest / loser ');card.append(fields);
+ const fields=el('div','columns');addSelect(fields,g,'winner','🏆 Best / winner ');addSelect(fields,g,'loser','👎 Weakest / loser ');card.append(fields);const uncertainLabel=el('label','tiny');const uncertain=el('input');uncertain.type='checkbox';uncertain.checked=!!states[g.id].uncertain;uncertain.setAttribute('aria-label',g.title+' too close to call');uncertain.addEventListener('change',()=>{states[g.id].uncertain=uncertain.checked;if(uncertain.checked){states[g.id].winner='';states[g.id].loser='';fields.querySelectorAll('select').forEach(x=>x.value='');}persist();feedback()});uncertainLabel.append(uncertain,document.createTextNode(' Too close to call / I cannot hear a clear difference'));card.append(uncertainLabel);
  const notesLabel=el('label','', 'What sounds better or worse? (tone, compression, sibilance, width, reverb, delay, artifacts)');const notes=el('textarea');notes.placeholder='Example: B is cleaner, C has better reverb, A is too harsh.';notes.value=states[g.id].notes;notes.addEventListener('input',()=>{states[g.id].notes=notes.value;persist();feedback()});notesLabel.append(notes);card.append(notesLabel);
  const controls=el('div','btnrow');const show=el('button','alt',states[g.id].revealed?'Hide identities':'Reveal identities');const identity=el('div','identity');identity.textContent=g.clips.map(c=>`${c.letter} — ${c.identity}${c.kind==='reference'?' [original reference]':''}`).join('\n');identity.classList.toggle('visible',!!states[g.id].revealed);show.addEventListener('click',()=>{states[g.id].revealed=!states[g.id].revealed;identity.classList.toggle('visible',states[g.id].revealed);show.textContent=states[g.id].revealed?'Hide identities':'Reveal identities';persist();feedback()});controls.append(show);card.append(controls,identity);root.append(card)
 });
-const status=document.getElementById('status');document.getElementById('generate').onclick=()=>{feedback();status.textContent='Summary refreshed.'};document.getElementById('copy').onclick=async()=>{const text=feedback().results.map(x=>`${x.vocal}: ${x.winner||'?'} beats ${x.loser||'?'}; notes: ${x.notes||'none'}`).join('\n');try{await navigator.clipboard.writeText(text);status.textContent='Feedback copied. Paste it into the ChatGPT conversation.'}catch(e){const ta=document.getElementById('feedbackText');ta.focus();ta.select();status.textContent='Select and copy the highlighted summary (Ctrl+C).'}};
+const status=document.getElementById('status');document.getElementById('generate').onclick=()=>{feedback();status.textContent='Summary refreshed.'};document.getElementById('copy').onclick=async()=>{const text=feedback().results.map(x=>`${x.vocal}: ${x.uncertain?'too close to call':((x.winner||'?')+' beats '+(x.loser||'?'))}; notes: ${x.notes||'none'}`).join('\n');try{await navigator.clipboard.writeText(text);status.textContent='Feedback copied. Paste it into the ChatGPT conversation.'}catch(e){const ta=document.getElementById('feedbackText');ta.focus();ta.select();status.textContent='Select and copy the highlighted summary (Ctrl+C).'}};
 document.getElementById('export').onclick=()=>{const b=new Blob([JSON.stringify(feedback(),null,2)],{type:'application/json'});const a=el('a');a.href=URL.createObjectURL(b);a.download='SKELLY_LISTENING_WINNERS_LOSERS.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),3000);status.textContent='Feedback JSON downloaded.'};
 feedback();
 </script></body></html>'''
@@ -195,9 +257,11 @@ def main() -> None:
     parser.add_argument("--target-lufs", type=float, default=-18.0)
     parser.add_argument("--ceiling-dbtp", type=float, default=-1.2)
     parser.add_argument("--seed", type=int, default=None, help="deterministic QA only; omit for private random labels")
+    parser.add_argument("--append-from", type=Path, help="reuse existing private HTML clips and their letter mapping")
     args = parser.parse_args()
     stats = make_lab(args.manifest, args.output, target_lufs=args.target_lufs,
-                     ceiling_dbtp=args.ceiling_dbtp, seed=args.seed)
+                     ceiling_dbtp=args.ceiling_dbtp, seed=args.seed,
+                     append_from=args.append_from)
     print(json.dumps({k: v for k, v in stats.items() if k != 'audits'}, indent=2))
 
 
