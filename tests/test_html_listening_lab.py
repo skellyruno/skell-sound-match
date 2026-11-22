@@ -90,16 +90,16 @@ def test_append_reuses_previous_blind_letters_and_audio_without_reencoding(tmp_p
     assert two["clips"] == 4 and two["new_clips"] == 2
     assert two["session_id"] != one["session_id"]
     import re
-    old = re.search(r"const LAB = (.*?);\nconst states", first.read_text(), re.S)
-    new = re.search(r"const LAB = (.*?);\nconst states", second.read_text(), re.S)
+    old = re.search(r"const LAB = (.*?);\nconst states", first.read_text(encoding='utf-8'), re.S)
+    new = re.search(r"const LAB = (.*?);\nconst states", second.read_text(encoding='utf-8'), re.S)
     assert old and new
     a, b = json.loads(old.group(1)), json.loads(new.group(1))
     assert a["groups"][0] == b["groups"][0]
     assert a["groups"][0]["clips"][0]["audio"] == b["groups"][0]["clips"][0]["audio"]
-    assert "audio.currentTime=0" in second.read_text()
-    assert "Switching keeps the current time" not in second.read_text()
-    assert "skelly-blind-feedback-v3-reference-outside-" in second.read_text()
-    assert "Unsure / not ready to choose" in second.read_text()
+    assert "audio.currentTime=0" in second.read_text(encoding='utf-8')
+    assert "Switching keeps the current time" not in second.read_text(encoding='utf-8')
+    assert "skelly-blind-feedback-v3-reference-outside-" in second.read_text(encoding='utf-8')
+    assert "Unsure / not ready to choose" in second.read_text(encoding='utf-8')
 
 
 def test_append_rejects_duplicate_round_and_malformed_lab(tmp_path):
@@ -109,7 +109,7 @@ def test_append_rejects_duplicate_round_and_malformed_lab(tmp_path):
     with pytest.raises(ValueError, match="unique"):
         make_lab(src, tmp_path/"duplicate.html", append_from=first)
     bogus = tmp_path/"bogus.html"
-    bogus.write_text("<p>not the generator output</p>")
+    bogus.write_text("<p>not the generator output</p>",encoding="utf-8")
     with pytest.raises(ValueError, match="does not contain"):
         make_lab(src, tmp_path/"other.html", append_from=bogus)
 
@@ -137,7 +137,7 @@ def test_externalize_fast_html_preserves_blind_session_and_lossless_audio(tmp_pa
     assert 'data:audio/flac;base64,' not in text
     assert 'skelly-blind-feedback-v3-reference-outside-' in text
     from re import search, S
-    a=json.loads(search(r'const LAB = (.*?);\nconst states',full.read_text(),S).group(1))
+    a=json.loads(search(r'const LAB = (.*?);\nconst states',full.read_text(encoding='utf-8'),S).group(1))
     b=json.loads(search(r'const LAB = (.*?);\nconst states',text,S).group(1))
     assert a['session_id']==b['session_id']
     assert [c['identity'] for c in a['groups'][0]['clips']]==[c['identity'] for c in b['groups'][0]['clips']]
@@ -178,14 +178,14 @@ def test_remix_lab_preserves_exact_all_candidate_letters_and_audio(tmp_path):
     make_lab(src, older, seed=22)
     newer = tmp_path / "newer.html"
     result = remix_lab(older, newer)
-    old_doc = json.loads(re.search(r"const LAB = (.*?);\nconst states", older.read_text(), re.S).group(1))
-    new_doc = json.loads(re.search(r"const LAB = (.*?);\nconst states", newer.read_text(), re.S).group(1))
+    old_doc = json.loads(re.search(r"const LAB = (.*?);\nconst states", older.read_text(encoding='utf-8'), re.S).group(1))
+    new_doc = json.loads(re.search(r"const LAB = (.*?);\nconst states", newer.read_text(encoding='utf-8'), re.S).group(1))
     assert result["clips"] == 2
     assert old_doc == new_doc
-    assert 'ORIGINAL / SOURCE REFERENCES' in newer.read_text()
-    assert 'reference_outside_voting:true' in newer.read_text()
-    assert 'const choices=candidates(g)' in newer.read_text() or 'choices=candidates(g)' in newer.read_text()
-    assert 'score.setAttribute' in newer.read_text()
+    assert 'ORIGINAL / SOURCE REFERENCES' in newer.read_text(encoding='utf-8')
+    assert 'reference_outside_voting:true' in newer.read_text(encoding='utf-8')
+    assert 'const choices=candidates(g)' in newer.read_text(encoding='utf-8') or 'choices=candidates(g)' in newer.read_text(encoding='utf-8')
+    assert 'score.setAttribute' in newer.read_text(encoding='utf-8')
     with pytest.raises(FileExistsError):
         remix_lab(older, newer)
 
@@ -194,9 +194,20 @@ def test_new_lab_clips_reference_cannot_be_winner_even_with_single_candidate(tmp
     src=fixture(tmp_path)
     out=tmp_path/'lab.html'
     make_lab(src,out,seed=42)
-    s=out.read_text()
+    s=out.read_text(encoding='utf-8')
     assert "const isReference=c=>c.kind==='reference'||c.kind==='reference-stage';" in s
     assert "const allowed=new Set(candidates(g).map(c=>c.letter));" in s
     assert "allowed.has(st.winner)?st.winner:''" in s
     assert 'choices.length>=2' in s
     assert "One candidate: no forced winner/loser" in s
+
+
+def test_generated_html_test_reads_use_explicit_utf8():
+    """Windows cp1252 must never decode our generated unicode HTML."""
+    import ast
+    source = Path(__file__).read_text(encoding="utf-8")
+    tree = ast.parse(source)
+    calls = [node for node in ast.walk(tree) if isinstance(node, ast.Call)
+             and isinstance(node.func, ast.Attribute) and node.func.attr == "read_text"]
+    assert calls
+    assert all(any(kw.arg == "encoding" for kw in call.keywords) for call in calls)
