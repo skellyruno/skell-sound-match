@@ -3,6 +3,7 @@
 Continue existing research without waiting for new owner ratings. Preserve every historical champion and failed experiment.
 
 1. Reconstruct Angelic/Zaam multi-voice chorus and stereo tails; separate modulation from delay/reverb using isolated stage prints. Current nonlinear/static/periodic trials remain insufficient.
+   Angelic R7 stereo-input echo identification failed heldout wet error (1.0203). Preserve stereo stage inputs; do not mono-collapse the +6.33 dB side/mid no-delay print or assume subtraction isolates delay from independently modulated renders.
 2. Reconstruct Wobbly chorus/flanger/phaser/Panagement as time-varying stages. The train-selected 0.4 Hz filter is real modulation research but failed heldout quality gates. Do not substitute static EQ or promote the rejected render.
 3. Muffle: retain R6C filtered/effects candidate, then identify moving Love Philter/Flangus and convolution texture. Its modulation remains incomplete.
 4. Speakerz: main R5C is better aligned; reconstruct stereo from the full-effects and corresponding separated print. Mono main width multiplication cannot recover absent side content. Keep full/stereo cards unverified until a complete candidate passes.

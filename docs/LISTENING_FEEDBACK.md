@@ -1,5 +1,13 @@
 # Listening feedback and current experimental versions
 
+## R7 Angelic stereo-delay investigation
+
+The original Angelic no-delay print has side/mid energy about +6.33 dB. Collapsing that stage to mono loses substantial spatial information. A new causal two-input/two-output echo fitter preserves cross-channel routing and selects echo/repeat/ridge parameters using nested training validation. Its synthetic cross-channel echo regression passes on held-out samples and frozen independent-input replay.
+
+The real Angelic stage trial selected a first echo around 923.76 ms, but unseen wet-relative RMS error was 1.0203 (worse than zero reconstructed wet). It is REJECTED and excluded from the listening lab. The difference between separate modulated prints cannot be assumed to be isolated delay; changing modulation state is a possible confound, not a verified explanation. No original effect state, native setting or full Angelic recreation is claimed.
+
+GitHub Python test workflow for commit `b01860be837872689b51d0dda53272935eeef01e` completed SUCCESS. This confirmation does not cover later R7 source until its own exact-head checks complete. FL Studio inspection was attempted but blocked by an app-approval timeout; no native editor/settings verification occurred.
+
 **Owner feedback:** No new listening results submitted. Earlier Round 2/3 observations are preserved in their existing documents. Do not infer approval from numeric improvements.
 
 ## Main and gate experiments
