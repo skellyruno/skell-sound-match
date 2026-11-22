@@ -80,6 +80,20 @@ ID is the persistence key. Friendly browser/host names for 43 and 46 are **Alche
 4. **Licensing**: Skell Preset README describes a Studio Chorus port from GPL-3.0-or-later code; resolve compliant release packaging/source obligations before commercial/public distribution. Also review the provenance and public-access scope of historical Sound Match archive artifacts before merging PR #2.
 5. **PR hygiene**: preserve every source/host identity and successful work. Keep unverified work draft. No force merge, no history rewrite, and no automatic experimental preset promotion.
 
+## Four separate vocal reference collections (user clarification 2026-11-22)
+The owner is building **four distinct vocal sound-matching targets**, not one interchangeable dataset. Keep each performance/chain's original dry, REC, MAIN, FX-only, full-wet, trial, and preset evidence labeled separately. Do not compare across songs as if they were same-take dry/wet pairs.
+
+| Target | Intake status | Scope and verification |
+|---|---|---|
+| **Deuce** | Existing archive/research | Original Deuce REC→MAIN references and offline v2.5 preferred sound. Native Skell Preset factory 46 remains a trial; a *new independent Deuce performance* transfer pair is still needed. |
+| **Alchemist** | Existing archive/research | Original seven-slot MAIN.fst and REC-printed/main processed reference. Factory 43 protected. Separate historical controlled trials are not owner-approved. |
+| **Speakerz** | New upload, 2026-11-22: `sound matching.zip` | Nine WAV stage prints (dry/main and effect variations), reported 24 s stereo PCM24/44.1 kHz. Identified as its *own* target, not an independent Deuce test. Uploaded audio remains private. |
+| **Hop Out** | New upload, 2026-11-22: `HOP OUT MAIN REV.zip` | Six WAV stage prints (dry-main, delay, reverb, chorus, combined variations), reported 51.4 s stereo PCM24/44.1 kHz. Identified as its *own* target, not an independent Deuce test. Uploaded audio remains private. |
+
+**Intake convention:** register each as `target_id` = `deuce`, `alchemist`, `speakerz`, or `hop_out`, with `take_id`, `stage_role`, `source_zip`, SHA-256, format, exact sample count, alignment, and source-provenance confidence. Do not confuse separate per-effect exports with the original full MAIN reference. Claim stage matching only for verified same-performance pairs; reserve owner approval for actual auditioned, native plugin candidates.
+
+The November 22 Speakerz/Hop Out upload measurements come from a separate private analysis and have not been incorporated as raw files into this public repository. They do not establish Deuce v2.5 generalization.
+
 ## Incoming files — private, repeatable intake protocol
 - Accept **batches of ZIPs or directories** containing WAV/FLAC, FLP, FST, Skell Preset packages, screenshots and optional project notes. Inspect in a private workspace. Never add raw vocals, proprietary states, original FLPs, or binary presets to the public repository by default.
 - Enumerate archive members with size/decompression guards; compute SHA-256 for every retained candidate; index nested archives and embedded offline-player audio with their origin paths. Reuse cached evidence by content hash and record prior run provenance.
