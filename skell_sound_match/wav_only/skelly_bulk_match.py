@@ -469,6 +469,9 @@ def cli():
     sub=parser.add_subparsers(dest='action',required=True)
     scan=sub.add_parser('scan',help='inventory ZIP(s) or folder(s) incrementally; no originals changed')
     scan.add_argument('inputs',type=Path,nargs='+');scan.add_argument('--workspace',type=Path,required=True)
+    fst=sub.add_parser('fst-catalog',help='safely catalog FL Studio .fst effect labels from a ZIP')
+    fst.add_argument('zip_file',type=Path)
+    fst.add_argument('--output',type=Path,required=True)
     fit=sub.add_parser('fit',help='run main vocal matched-EQ/dynamics fit on all eligible targets')
     fit.add_argument('--workspace',type=Path,required=True);fit.add_argument('--target',action='append')
     fit.add_argument('--effects',action='store_true',help='also train time-invariant stage models (slow)')
@@ -485,6 +488,17 @@ def cli():
     many.add_argument('--recipe-root',type=Path,required=True,help='PRIVATE folder with reports/ recipes/; never committed')
     many.add_argument('--from-catalog',action='store_true',help='also use each target dry source from prior scan')
     args=parser.parse_args()
+    if args.action=='fst-catalog':
+        from .flstudio_preset_catalog import inspect_zip
+        if args.output.exists():
+            raise FileExistsError('Refusing to overwrite a preset catalog')
+        if args.output.resolve()==args.zip_file.resolve():
+            raise ValueError('Input/output collision')
+        report=inspect_zip(args.zip_file)
+        args.output.parent.mkdir(parents=True,exist_ok=True)
+        args.output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf8')
+        print(json.dumps({'fst_count':report['fst_count'],'report':str(args.output)}))
+        return
     if args.action=='apply-many':
         print(json.dumps(apply_many(args.workspace,args.sources,args.presets,args.output_dir,args.from_catalog,args.recipe_root),indent=2));return
     if args.action=='apply-main':print(json.dumps(apply_saved_recipe(args.input,args.recipe,args.output),indent=2));return

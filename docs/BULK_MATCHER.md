@@ -75,6 +75,16 @@ The command writes `A.flac`, `B.flac`, `LISTENING_SESSION.md`, and `answer_key.j
 
 This prepares reproducible A/B material for owner review; it **does not** independently validate sonic accuracy or imply plugin release readiness.
 
+## Optional .fst inventory from an incoming ZIP
+
+If any batch includes native FL Studio `.fst` files, extract **metadata only** to a private report. This reads known UTF-16LE effect labels in their observed serialized order; it does **not** claim exact plugin settings, enable/bypass flags, third-party VST licensing or the full DAW mixer graph.
+
+```powershell
+python -m skell_sound_match.wav_only.skelly_bulk_match fst-catalog C:\SkellyPrivate\uploads\club.zip --output C:\SkellyPrivate\match-work\club_fst_catalog.json
+```
+
+Original `.fst`, `.flp`, vocals, models, private paths and binary plugin state never enter public Git. Reports record SHA-256 fingerprints and effect-name lists only. The separate `scan` command continues to inventory audio and skip unchanged ZIPs.
+
 ## Many presets, one repeatable review loop
 
 1. Upload ZIPs with any combination of dry, main-only, full-effects, isolated delay/reverb/chorus, `.fst/.flp` if ever available, and notes. The tooling does **not require** the original project or preset.
