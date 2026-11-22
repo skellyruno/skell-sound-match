@@ -1,5 +1,7 @@
 # Skell Sound Match 🩻
 
+**Bulk WAV-only matching:** [`docs/BULK_MATCHER.md`](docs/BULK_MATCHER.md) explains private ZIP intake, automatic per-preset training/holdout, deduplication, replay on new dry vocals, and confidential model handling. This is offline experimental research, not released VST3 DSP.
+
 Offline sound-matching research, source archive and reproducible comparison tools for Skelly.
 
 **New agents: read docs/SOUND_MATCHING_HANDOFF_2026-11-20.md first.** It records the approved Deuce v2.5 offline sound, Alchemist source chain and current native trials, the separate Skell Master Deuce Match work, exact branches/PRs, tests and next actions.

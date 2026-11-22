@@ -20,3 +20,11 @@ reports/private/
 *.pth
 *.onnx
 *.flp
+*.npz
+*.sqlite3
+*.sqlite3-shm
+*.sqlite3-wal
+private_workspace/
+local_sound_archive/
+private-recipe-root/
+private_models/
