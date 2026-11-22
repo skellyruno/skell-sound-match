@@ -158,3 +158,13 @@ def test_externalize_refuses_existing_audio_folder(tmp_path):
     (tmp_path/'light_audio').mkdir()
     with pytest.raises(FileExistsError):
         externalize_lab(full,tmp_path/'light.html')
+
+
+def test_switching_back_to_paused_round_keeps_global_audio_owner(tmp_path):
+    # Regression: a same-letter resume must claim currentAudio, or clicking
+    # another round can leave two audios playing simultaneously.
+    src=fixture(tmp_path)
+    make_lab(src,tmp_path/'lab.html',seed=3)
+    rendered=(tmp_path/'lab.html').read_text(encoding='utf8')
+    assert "if(active===c.letter){currentAudio=audio;" in rendered
+    assert "if(currentAudio&&currentAudio!==audio){currentAudio.pause()}" in rendered
