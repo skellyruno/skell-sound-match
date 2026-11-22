@@ -98,8 +98,8 @@ def test_append_reuses_previous_blind_letters_and_audio_without_reencoding(tmp_p
     assert a["groups"][0]["clips"][0]["audio"] == b["groups"][0]["clips"][0]["audio"]
     assert "audio.currentTime=0" in second.read_text()
     assert "Switching keeps the current time" not in second.read_text()
-    assert "skelly-blind-feedback-v2-" in second.read_text()
-    assert "too close to call" in second.read_text().lower()
+    assert "skelly-blind-feedback-v3-reference-outside-" in second.read_text()
+    assert "Unsure / not ready to choose" in second.read_text()
 
 
 def test_append_rejects_duplicate_round_and_malformed_lab(tmp_path):
@@ -135,7 +135,7 @@ def test_externalize_fast_html_preserves_blind_session_and_lossless_audio(tmp_pa
     assert fast.stat().st_size<30_000
     text=fast.read_text(encoding='utf-8')
     assert 'data:audio/flac;base64,' not in text
-    assert 'skelly-blind-feedback-v2-' in text
+    assert 'skelly-blind-feedback-v3-reference-outside-' in text
     from re import search, S
     a=json.loads(search(r'const LAB = (.*?);\nconst states',full.read_text(),S).group(1))
     b=json.loads(search(r'const LAB = (.*?);\nconst states',text,S).group(1))
@@ -167,4 +167,36 @@ def test_switching_back_to_paused_round_keeps_global_audio_owner(tmp_path):
     make_lab(src,tmp_path/'lab.html',seed=3)
     rendered=(tmp_path/'lab.html').read_text(encoding='utf8')
     assert "if(active===c.letter){currentAudio=audio;" in rendered
-    assert "if(currentAudio&&currentAudio!==audio){currentAudio.pause()}" in rendered
+    assert "if(currentAudio&&currentAudio!==audio)currentAudio.pause();" in rendered
+
+
+def test_remix_lab_preserves_exact_all_candidate_letters_and_audio(tmp_path):
+    from skell_sound_match.wav_only.html_listening_lab import remix_lab
+    import re
+    src = fixture(tmp_path)
+    older = tmp_path / "older.html"
+    make_lab(src, older, seed=22)
+    newer = tmp_path / "newer.html"
+    result = remix_lab(older, newer)
+    old_doc = json.loads(re.search(r"const LAB = (.*?);\nconst states", older.read_text(), re.S).group(1))
+    new_doc = json.loads(re.search(r"const LAB = (.*?);\nconst states", newer.read_text(), re.S).group(1))
+    assert result["clips"] == 2
+    assert old_doc == new_doc
+    assert 'ORIGINAL / SOURCE REFERENCES' in newer.read_text()
+    assert 'reference_outside_voting:true' in newer.read_text()
+    assert 'const choices=candidates(g)' in newer.read_text() or 'choices=candidates(g)' in newer.read_text()
+    assert 'score.setAttribute' in newer.read_text()
+    with pytest.raises(FileExistsError):
+        remix_lab(older, newer)
+
+
+def test_new_lab_clips_reference_cannot_be_winner_even_with_single_candidate(tmp_path):
+    src=fixture(tmp_path)
+    out=tmp_path/'lab.html'
+    make_lab(src,out,seed=42)
+    s=out.read_text()
+    assert "const isReference=c=>c.kind==='reference'||c.kind==='reference-stage';" in s
+    assert "const allowed=new Set(candidates(g).map(c=>c.letter));" in s
+    assert "allowed.has(st.winner)?st.winner:''" in s
+    assert 'choices.length>=2' in s
+    assert "One candidate: no forced winner/loser" in s

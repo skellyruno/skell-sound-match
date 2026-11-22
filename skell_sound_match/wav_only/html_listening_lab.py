@@ -216,38 +216,138 @@ main{max-width:1060px;margin:0 auto;padding:28px 17px 60px}.eyebrow{font-size:12
 button,select,textarea{font:inherit;color:var(--text);background:#1b2824;border:1px solid #496153;border-radius:7px}button{cursor:pointer;padding:9px 13px}button:hover{border-color:#bbff68}button.active{background:#263f2c;border:2px solid var(--bright);padding:8px 12px}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--bright);outline-offset:2px}
 .options{display:flex;gap:8px;flex-wrap:wrap;margin:17px 0}audio{width:100%;margin:8px 0 6px}label{display:block;font-size:13px;color:var(--muted);margin:10px 0 5px}select{padding:9px;min-width:155px;max-width:100%}.columns{display:grid;grid-template-columns:1fr 1fr;gap:12px}.columns>*{min-width:0}textarea{width:100%;min-height:70px;resize:vertical;padding:10px;background:#111b17}
 .btnrow{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.btnrow .alt{background:#101916;color:#b7cbc0} .reveal{font-size:12px;color:#a6dca0}.identity{border:1px dashed #3c4c3f;border-radius:7px;padding:10px;font-size:12px;white-space:pre-wrap;color:#c1d6ba;display:none}.identity.visible{display:block}.control{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.control strong{font-size:13px;color:#c7dacb}.quickjump{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 6px}.quickjump a{color:#d5ecd5;text-decoration:none;font-size:12px;background:#12201a;border:1px solid #344d3e;border-radius:6px;padding:6px 9px}.quickjump a:hover,.quickjump a:focus-visible{border-color:var(--bright)}.review-progress{font-size:13px;color:var(--bright);margin:7px 0 12px}.tiny{font-size:12px;color:var(--muted)}#feedbackText{height:170px;white-space:pre-wrap}footer{color:#9caf9d;font-size:13px;margin-top:30px}#status{color:var(--bright)}
+.reference-pane{border:1px solid #45624c;background:#11251c;border-radius:10px;padding:11px 13px;margin:14px 0 9px}.reference-pane strong{font-size:12px;color:var(--bright);letter-spacing:.06em}.reference-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.reference-buttons button{background:#173422;color:#e8ffe0;border-color:#568159}.reference-buttons button.active{background:#315f37}.candidates-heading{font-size:12px;letter-spacing:.1em;color:#d4e9cb;margin:16px 0 5px}.score-note{font-size:13px;color:#b4c9b6}.issue-grid{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0 3px}.issue-chip{display:inline-flex;align-items:center;gap:5px;margin:0;padding:5px 8px;border:1px solid #355244;border-radius:6px;font-size:12px;background:#101c17;color:#d7e8d7}.issue-chip input{accent-color:#baff7c}.single-rating{margin:8px 0 3px}.single-rating label{display:flex;flex-direction:column;align-items:flex-start;gap:6px}.single-rating select{display:block;min-width:230px;max-width:100%}.columns label select{display:block;margin-top:6px}.reference-note{font-size:11px;color:#b9cfc0;margin-top:5px}.issue-label{font-size:12px;color:#d0e2d0;margin-top:12px}
 @media(max-width:600px){.columns{grid-template-columns:1fr}.card{padding:14px}} 
 </style></head><body><main>
-<header><div class="eyebrow">SKELLY / SOUND MATCH</div><h1>BLIND LISTENING LAB</h1><p>Switch A/B/C to replay each version <strong>from the beginning</strong>. Choose a winner, or mark sounds too close to call. Export your notes when done.</p><p class="info">Offline only · embedded audio · no uploads · level-matched within each comparison · source identities remain hidden until reveal</p></header>
+<header><div class="eyebrow">SKELLY / SOUND MATCH</div><h1>BLIND LISTENING LAB</h1><p><strong>ORIGINAL is your reference, never a voting choice.</strong> Compare the candidate letters against it. Switching any audio starts from 0:00. Rate how close it sounds, then pick winners only when there are multiple candidates.</p><p class="info">Offline · private embedded audio · matched levels within each round · originals are always separate from candidate votes</p></header>
 <nav class="quickjump" id="jump" aria-label="Jump to listening round"></nav><p class="review-progress" id="progress"></p>
 <div id="groups"></div><section class="card"><h2>Send your winners & losers</h2><p>Export the completed feedback, or copy the text summary and paste it into our chat. You can listen again and change any vote.</p><div class="btnrow"><button id="copy">Copy feedback</button><button id="export">Download feedback JSON</button><button id="generate" class="alt">Refresh summary</button></div><p id="status" role="status"></p><textarea id="feedbackText" aria-label="Copyable listening results" readonly></textarea></section>
-<footer>Historical Deuce MP3 origins remain lossy even though comparison clips are FLAC. Same-take offline research does not establish independent transfer, exact FL Studio settings, or a verified native VST3. A peak check uses 4× reconstruction, not certified BS.1770 metering.</footer>
+<footer>Comparison votes exclude original/reference clips. A match rating is subjective and not a native plugin validation. Historical Deuce MP3 origins remain lossy even though comparison clips are FLAC. Same-take offline research does not establish independent transfer, exact FL Studio settings, or a verified native VST3. A peak check uses 4× reconstruction, not certified BS.1770 metering.</footer>
 </main><script>
 const LAB = /*__PRIVATE_GROUP_DATA__*/;
 const states={};
 let currentAudio=null;
 const root=document.getElementById('groups');
-const storageKey='skelly-blind-feedback-v2-'+LAB.session_id;
+// New version prevents reference votes from an old HTML being reused as candidate votes.
+const storageKey='skelly-blind-feedback-v3-reference-outside-'+LAB.session_id;
 const loadState=()=>{try{return JSON.parse(localStorage.getItem(storageKey)||'{}')}catch(_){return {}}};
 const saved=loadState();
+const ISSUE_TAGS=['Too bright','Too dark / muffled','Needs upfront presence','Too quiet / weak','Compression wrong','Stereo / width wrong','Delay / reverb wrong','Modulation / movement missing','Gating / noise','Artifacts / harshness'];
 function persist(){try{localStorage.setItem(storageKey,JSON.stringify(states))}catch(_){}}
 function el(tag,cls,text){const a=document.createElement(tag);if(cls)a.className=cls;if(text!==undefined)a.textContent=text;return a}
-function feedback(){const result={schema:'skelly.blind-listening.feedback.v2',session_id:LAB.session_id,results:LAB.groups.map(g=>({vocal:g.title,group_id:g.id,winner:states[g.id]?.uncertain?'':states[g.id]?.winner||'',loser:states[g.id]?.uncertain?'':states[g.id]?.loser||'',uncertain:!!states[g.id]?.uncertain,notes:states[g.id]?.notes||'',revealed:!!states[g.id]?.revealed}))};document.getElementById('feedbackText').value=result.results.map(r=>`${r.vocal}: ${r.uncertain?'TOO CLOSE TO CALL':('WINNER '+(r.winner||'?')+', LOSER '+(r.loser||'?'))}${r.notes?' — '+r.notes:''}`).join('\n');document.getElementById('progress').textContent=`${result.results.filter(r=>r.uncertain||r.winner||r.loser||r.notes).length}/${LAB.groups.length} rounds reviewed`;return result}
-function addSelect(parent,g,field,caption){const lab=el('label','',caption);const select=el('select');select.setAttribute('aria-label',g.title+' '+caption);[['','Not chosen'],...g.clips.map(c=>[c.letter,c.letter])].forEach(([v,t])=>{const opt=el('option','',t);opt.value=v;select.append(opt)});select.value=states[g.id][field]||'';select.addEventListener('change',()=>{states[g.id][field]=select.value;if(select.value){states[g.id].uncertain=false;const check=parent.parentElement.querySelector('input[type=checkbox]');if(check)check.checked=false;const opposite=field==='winner'?'loser':'winner';if(states[g.id][opposite]===select.value){states[g.id][opposite]='';const other=parent.querySelectorAll('select')[field==='winner'?1:0];if(other)other.value='';}}persist();feedback()});lab.append(select);parent.append(lab)}
+const isReference=c=>c.kind==='reference'||c.kind==='reference-stage';
+const candidates=g=>g.clips.filter(c=>!isReference(c));
+function feedback(){
+ const result={schema:'skelly.blind-listening.feedback.v3',session_id:LAB.session_id,reference_outside_voting:true,
+ results:LAB.groups.map(g=>{
+  const st=states[g.id]||{};
+  const allowed=new Set(candidates(g).map(c=>c.letter));
+  const winner=st.uncertain?'':(allowed.has(st.winner)?st.winner:'');
+  const loser=st.uncertain?'':(allowed.has(st.loser)?st.loser:'');
+  return {vocal:g.title,group_id:g.id,reference:'ORIGINAL',candidate_letters:[...allowed],
+   winner,loser,match_rating:st.match_rating||'',issues:st.issues||[],
+   uncertain:!!st.uncertain,notes:st.notes||'',revealed:!!st.revealed};
+ })};
+ const summary=result.results.map(r=>{
+  const verdict=r.candidate_letters.length===1?'Candidate '+r.candidate_letters[0]+', match '+(r.match_rating||'?')+'/5':
+     'WINNER '+(r.winner||'?')+', LOSER '+(r.loser||'?')+', match '+(r.match_rating||'?')+'/5';
+  return `${r.vocal}: ${r.uncertain?'UNSURE · ':''}${verdict} | issues: ${r.issues.join(', ')||'none'}${r.notes?' — '+r.notes:''}`;
+ }).join('\n');
+ document.getElementById('feedbackText').value=summary;
+ document.getElementById('progress').textContent=`${result.results.filter(r=>r.uncertain||r.winner||r.loser||r.match_rating||r.notes||r.issues.length).length}/${LAB.groups.length} rounds reviewed`;
+ return result;
+}
+function addSelect(parent,g,field,caption,eligible){
+ const lab=el('label','',caption),select=el('select');select.setAttribute('aria-label',g.title+' '+caption);
+ [['','Not chosen'],...eligible.map(c=>[c.letter,c.letter])].forEach(([v,t])=>{const o=el('option','',t);o.value=v;select.append(o)});
+ select.value=states[g.id][field]||'';
+ select.addEventListener('change',()=>{
+  states[g.id][field]=select.value;
+  if(select.value){states[g.id].uncertain=false;const check=parent.parentElement.querySelector('input[type=checkbox][data-uncertain]');if(check)check.checked=false;
+    const opposite=field==='winner'?'loser':'winner';if(states[g.id][opposite]===select.value){states[g.id][opposite]='';const other=parent.querySelectorAll('select')[field==='winner'?1:0];if(other)other.value='';}}
+  persist();feedback();
+ });lab.append(select);parent.append(lab);
+}
 LAB.groups.forEach((g,index)=>{
- states[g.id]={winner:'',loser:'',notes:'',uncertain:false,revealed:false,...saved[g.id]};
- const card=el('section','card');card.id=`round-${index+1}`;const jump=el('a','',`${index+1} · ${g.title.split(' · ')[0]}`);jump.href=`#round-${index+1}`;document.getElementById('jump').append(jump);const top=el('div','top');const block=el('div');block.append(el('h2','',`${index+1}. ${g.title}`),el('p','',g.note));top.append(block,el('span','flag',`${g.clips.length} versions · ${g.duration}s`));card.append(top);
- const options=el('div','options');const audio=el('audio');audio.controls=true;audio.preload='none';audio.setAttribute('aria-label',g.title+' synchronized audio player');const selected=el('p','tiny','Select a version. Each different letter starts at 0:00.');
- let active=null,selectionToken=0;const buttons=[];g.clips.forEach(c=>{const b=el('button','',`▶ ${c.letter}`);b.setAttribute('aria-pressed','false');buttons.push(b);b.addEventListener('click',async()=>{if(currentAudio&&currentAudio!==audio){currentAudio.pause()}if(active===c.letter){currentAudio=audio;if(audio.paused){try{await audio.play()}catch(e){selected.textContent='Press Play in the audio player.'}}else{audio.pause()}return}const token=++selectionToken;audio.pause();audio.src=c.audio;audio.load();const resetAtStart=()=>{if(token===selectionToken){try{audio.currentTime=0}catch(_){}}};audio.addEventListener('loadedmetadata',resetAtStart,{once:true});resetAtStart();active=c.letter;currentAudio=audio;buttons.forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false')});b.classList.add('active');b.setAttribute('aria-pressed','true');selected.textContent=`Now listening to ${c.letter}, from the beginning.`;try{await audio.play()}catch(e){selected.textContent=`Selected ${c.letter} at 0:00. Press Play in the player.`}});options.append(b)});
- card.append(options,audio,selected);
- const fields=el('div','columns');addSelect(fields,g,'winner','🏆 Best / winner ');addSelect(fields,g,'loser','👎 Weakest / loser ');card.append(fields);const uncertainLabel=el('label','tiny');const uncertain=el('input');uncertain.type='checkbox';uncertain.checked=!!states[g.id].uncertain;uncertain.setAttribute('aria-label',g.title+' too close to call');uncertain.addEventListener('change',()=>{states[g.id].uncertain=uncertain.checked;if(uncertain.checked){states[g.id].winner='';states[g.id].loser='';fields.querySelectorAll('select').forEach(x=>x.value='');}persist();feedback()});uncertainLabel.append(uncertain,document.createTextNode(' Too close to call / I cannot hear a clear difference'));card.append(uncertainLabel);
- const notesLabel=el('label','', 'What sounds better or worse? (tone, compression, sibilance, width, reverb, delay, artifacts)');const notes=el('textarea');notes.placeholder='Example: B is cleaner, C has better reverb, A is too harsh.';notes.value=states[g.id].notes;notes.addEventListener('input',()=>{states[g.id].notes=notes.value;persist();feedback()});notesLabel.append(notes);card.append(notesLabel);
- const controls=el('div','btnrow');const show=el('button','alt',states[g.id].revealed?'Hide identities':'Reveal identities');const identity=el('div','identity');identity.textContent=g.clips.map(c=>`${c.letter} — ${c.identity}${c.kind==='reference'?' [original reference]':''}`).join('\n');identity.classList.toggle('visible',!!states[g.id].revealed);show.addEventListener('click',()=>{states[g.id].revealed=!states[g.id].revealed;identity.classList.toggle('visible',states[g.id].revealed);show.textContent=states[g.id].revealed?'Hide identities':'Reveal identities';persist();feedback()});controls.append(show);card.append(controls,identity);root.append(card)
+ const refs=g.clips.filter(isReference),choices=candidates(g),allowed=new Set(choices.map(c=>c.letter));
+ const prior=saved[g.id]||{};
+ states[g.id]={winner:'',loser:'',match_rating:'',issues:[],notes:'',uncertain:false,revealed:false,...prior};
+ for(const f of ['winner','loser'])if(!allowed.has(states[g.id][f]))states[g.id][f]='';
+ if(!Array.isArray(states[g.id].issues))states[g.id].issues=[];
+ if(!['','1','2','3','4','5'].includes(String(states[g.id].match_rating)))states[g.id].match_rating='';
+ const card=el('section','card');card.id=`round-${index+1}`;
+ const jump=el('a','',`${index+1} · ${g.title.split(' · ')[0]}`);jump.href=`#round-${index+1}`;document.getElementById('jump').append(jump);
+ const top=el('div','top'),block=el('div');block.append(el('h2','',`${index+1}. ${g.title}`),el('p','',g.note));top.append(block,el('span','flag',`${choices.length} candidate${choices.length===1?'':'s'} · ${g.duration}s`));card.append(top);
+ const audio=el('audio');audio.controls=true;audio.preload='none';audio.setAttribute('aria-label',g.title+' comparison audio');
+ const selected=el('p','tiny','Select ORIGINAL or a candidate. Every switch restarts at 0:00.');
+ const buttons=[];let active=null,selectionToken=0;
+ function createPlayButton(c,caption,container){
+  const b=el('button','',caption);b.type='button';b.setAttribute('aria-pressed','false');buttons.push(b);
+  b.addEventListener('click',async()=>{
+   if(currentAudio&&currentAudio!==audio)currentAudio.pause();
+   if(active===c.letter){currentAudio=audio;if(audio.paused){try{await audio.play()}catch(e){selected.textContent='Press Play in the player.'}}else audio.pause();return}
+   const token=++selectionToken;audio.pause();audio.src=c.audio;audio.load();
+   const resetAtStart=()=>{if(token===selectionToken){try{audio.currentTime=0}catch(_){}}};
+   audio.addEventListener('loadedmetadata',resetAtStart,{once:true});resetAtStart();active=c.letter;currentAudio=audio;
+   buttons.forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false')});b.classList.add('active');b.setAttribute('aria-pressed','true');
+   selected.textContent=`Now playing ${caption.replace('▶ ','')} from the beginning.`;
+   try{await audio.play()}catch(e){selected.textContent=`Selected ${caption} at 0:00. Press Play in the player.`}
+  });container.append(b);
+ }
+ if(refs.length){
+  const refBox=el('div','reference-pane');refBox.append(el('strong','', 'ORIGINAL / SOURCE REFERENCES — NOT IN THE VOTE'));
+  const refBtns=el('div','reference-buttons');
+  refs.forEach(c=>createPlayButton(c,c.kind==='reference'?'▶ ORIGINAL':'▶ SOURCE CONTEXT',refBtns));
+  refBox.append(refBtns,el('div','reference-note','Use these as the sound targets or source context. Only candidate letters below can win or lose.'));
+  card.append(refBox);
+ }
+ card.append(el('div','candidates-heading','CANDIDATES — COMPARE AGAINST ORIGINAL'));
+ const opts=el('div','options');choices.forEach(c=>createPlayButton(c,'▶ '+c.letter,opts));card.append(opts,audio,selected);
+ if(choices.length>=2){const fields=el('div','columns');addSelect(fields,g,'winner','🏆 Closest candidate',choices);addSelect(fields,g,'loser','👎 Weakest candidate',choices);card.append(fields)}
+ else {card.append(el('p','score-note','One candidate: no forced winner/loser. Rate how closely it matches ORIGINAL.'));}
+ const single=el('div','single-rating'),ratingLabel=el('label','', 'How close to the original is the best/current candidate?');const score=el('select');score.setAttribute('aria-label',g.title+' similarity rating');
+ [['','Not rated'],['1','1 / 5 · Very far'],['2','2 / 5 · Far'],['3','3 / 5 · Getting close'],['4','4 / 5 · Close'],['5','5 / 5 · Nearly exact']].forEach(([v,t])=>{const option=el('option','',t);option.value=v;score.append(option)});score.value=states[g.id].match_rating||'';
+ score.addEventListener('change',()=>{states[g.id].match_rating=score.value;persist();feedback()});ratingLabel.append(score);single.append(ratingLabel);card.append(single);
+ const uncertainLabel=el('label','tiny'),uncertain=el('input');uncertain.type='checkbox';uncertain.dataset.uncertain='1';uncertain.checked=!!states[g.id].uncertain;uncertain.setAttribute('aria-label',g.title+' not sure yet');
+ uncertain.addEventListener('change',()=>{states[g.id].uncertain=uncertain.checked;if(uncertain.checked){states[g.id].winner='';states[g.id].loser='';card.querySelectorAll('.columns select').forEach(s=>s.value='')}persist();feedback()});
+ uncertainLabel.append(uncertain,document.createTextNode(' Unsure / not ready to choose'));card.append(uncertainLabel);
+ card.append(el('div','issue-label','What is missing? (optional · choose multiple)'));
+ const issueGrid=el('div','issue-grid');ISSUE_TAGS.forEach(tag=>{const lab=el('label','issue-chip'),box=el('input');box.type='checkbox';box.checked=states[g.id].issues.includes(tag);
+  box.addEventListener('change',()=>{const values=new Set(states[g.id].issues);if(box.checked)values.add(tag);else values.delete(tag);states[g.id].issues=[...values];persist();feedback()});lab.append(box,document.createTextNode(tag));issueGrid.append(lab)});card.append(issueGrid);
+ const notesLabel=el('label','', 'Notes: what should I fix?');const notes=el('textarea');notes.placeholder='Example: B needs more upfront presence, but less top-end boost.';notes.value=states[g.id].notes;
+ notes.addEventListener('input',()=>{states[g.id].notes=notes.value;persist();feedback()});notesLabel.append(notes);card.append(notesLabel);
+ const controls=el('div','btnrow'),show=el('button','alt',states[g.id].revealed?'Hide identities':'Reveal candidate identities'),identity=el('div','identity');
+ identity.textContent=g.clips.map(c=>`${isReference(c)?'ORIGINAL / SOURCE CONTEXT':c.letter} — ${c.identity}${c.kind==='reference'?' [original reference]':''}`).join('\n');
+ identity.classList.toggle('visible',!!states[g.id].revealed);show.addEventListener('click',()=>{states[g.id].revealed=!states[g.id].revealed;identity.classList.toggle('visible',states[g.id].revealed);show.textContent=states[g.id].revealed?'Hide identities':'Reveal candidate identities';persist();feedback()});
+ controls.append(show);card.append(controls,identity);root.append(card);
 });
-const status=document.getElementById('status');document.getElementById('generate').onclick=()=>{feedback();status.textContent='Summary refreshed.'};document.getElementById('copy').onclick=async()=>{const text=feedback().results.map(x=>`${x.vocal}: ${x.uncertain?'too close to call':((x.winner||'?')+' beats '+(x.loser||'?'))}; notes: ${x.notes||'none'}`).join('\n');try{await navigator.clipboard.writeText(text);status.textContent='Feedback copied. Paste it into the ChatGPT conversation.'}catch(e){const ta=document.getElementById('feedbackText');ta.focus();ta.select();status.textContent='Select and copy the highlighted summary (Ctrl+C).'}};
-document.getElementById('export').onclick=()=>{const b=new Blob([JSON.stringify(feedback(),null,2)],{type:'application/json'});const a=el('a');a.href=URL.createObjectURL(b);a.download='SKELLY_LISTENING_WINNERS_LOSERS.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),3000);status.textContent='Feedback JSON downloaded.'};
+const status=document.getElementById('status');
+document.getElementById('generate').onclick=()=>{feedback();status.textContent='Summary refreshed.'};
+document.getElementById('copy').onclick=async()=>{const summary=`SESSION ${LAB.session_id}\nORIGINAL is never a voting option.\n`+document.getElementById('feedbackText').value;try{await navigator.clipboard.writeText(summary);status.textContent='Feedback copied. Paste it into the chat.'}catch(e){const ta=document.getElementById('feedbackText');ta.focus();ta.select();status.textContent='Select and copy the highlighted summary (Ctrl+C).'}};
+document.getElementById('export').onclick=()=>{const b=new Blob([JSON.stringify(feedback(),null,2)],{type:'application/json'});const a=el('a');a.href=URL.createObjectURL(b);a.download='SKELLY_LISTENING_FEEDBACK_CANDIDATES_ONLY.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),3000);status.textContent='Feedback JSON downloaded.'};
 feedback();
 </script></body></html>'''
+
+
+def remix_lab(source_html: Path, output_html: Path) -> dict:
+    """Rebuild a trusted private listening lab with the latest UI only.
+
+    Reuses all private FLAC bytes and every original A/B letter. Neither DSP nor
+    loudness is altered. This avoids a costly re-encode or changing older votes.
+    """
+    if output_html.exists():
+        raise FileExistsError(f"Refusing to overwrite: {output_html}")
+    groups, audio_bytes = _read_prior_lab(source_html)
+    data = {"schema": SCHEMA, "session_id": _session_fingerprint(groups), "groups": groups}
+    escaped = json.dumps(data, ensure_ascii=True).replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
+    html = _TEMPLATE.replace("/*__PRIVATE_GROUP_DATA__*/", escaped)
+    output_html.parent.mkdir(parents=True, exist_ok=True)
+    output_html.write_text(html, encoding="utf-8")
+    return {"schema": SCHEMA, "groups": len(groups),
+            "clips": sum(len(group["clips"]) for group in groups),
+            "session_id": data["session_id"], "audio_bytes": audio_bytes,
+            "html_bytes": output_html.stat().st_size,
+            "html_sha256": hashlib.sha256(output_html.read_bytes()).hexdigest()}
 
 
 def externalize_lab(source_html: Path, output_html: Path) -> dict:
@@ -299,15 +399,24 @@ def externalize_lab(source_html: Path, output_html: Path) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("manifest", type=Path, help="private JSON manifest of groups and clips")
+    parser.add_argument("manifest", type=Path, nargs="?", help="private manifest or previous lab for --remix/--externalize")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--target-lufs", type=float, default=-18.0)
     parser.add_argument("--ceiling-dbtp", type=float, default=-1.2)
     parser.add_argument("--seed", type=int, default=None, help="deterministic QA only; omit for private random labels")
     parser.add_argument("--append-from", type=Path, help="reuse existing private HTML clips and their letter mapping")
     parser.add_argument("--externalize", action="store_true", help="convert existing private HTML into small HTML plus local FLAC assets")
+    parser.add_argument("--remix", action="store_true", help="rebuild HTML UI from existing private HTML without re-encoding audio")
     args = parser.parse_args()
-    if args.externalize:
+    if args.manifest is None:
+        parser.error("Manifest or previous HTML is required")
+    if args.remix and args.externalize:
+        parser.error("Use --remix or --externalize, not both")
+    if args.remix:
+        if args.append_from is not None:
+            parser.error("--remix and --append-from are separate operations")
+        stats = remix_lab(args.manifest, args.output)
+    elif args.externalize:
         if args.append_from is not None:
             parser.error("--externalize and --append-from are separate operations")
         stats = externalize_lab(args.manifest, args.output)

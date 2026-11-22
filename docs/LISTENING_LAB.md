@@ -78,3 +78,20 @@ The output folder contains `LISTEN.html` and `LISTEN_audio/round_001_A_<hash>.fl
 The browser interface, random labels and **session ID** are preserved exactly between the self-contained and fast versions. Each FLAC asset is a byte-for-byte copy of the previously embedded clip, not a second DSP render or another loudness adjustment. It rejects existing destination files/folders and invalid/corrupt source HTML. Continue appending to the *self-contained* source HTML, then regenerate a fresh, non-overwriting fast package when new rounds arrive.
 
 Verification on the private 2026-11-22 12-round lab: ~19 KB HTML, 35 independent 44.1 kHz stereo FLAC assets (~50.9 MB), all existing 7 round/23-clip mappings preserved, WAV/FLAC decode and estimated 4× peak guards passed. This is browser-loading optimization, **not a new sonic match or a native VST3/UI validation**. Local Chromium rejected file:// and localhost navigation in the test harness; desktop/mobile screenshots tested actual generated UI through synthetic content, and one desktop capture of the large actual HTML succeeded. Device-local external-FLAC playback is still subject to owner-browser verification.
+
+
+## Round 3 UX: reference is never a voting candidate (2026-11-22)
+
+The owner's preference is **one self-contained offline HTML**, not multiple alternative HTML/ZIP exports. Each round has a separate **ORIGINAL / SOURCE REFERENCES** control area. Both `reference` and `reference-stage` clips are excluded from the winner and loser dropdowns even if their older randomized letters happen to be A or B. The reference remains playable with the same start-from-zero behavior as candidates. Example: Club Gate B was original gated print, C ungated raw; only A is the reconstructed candidate.
+
+When only **one candidate** exists, the page hides nonsensical best/worst choices and asks for a **1–5 match rating**; with multiple candidates, the optional best/worst choices only list candidate letters. All rounds also have clear issue tags (presence, brightness, stereo, modulation, gate, etc.), an uncertain option and notes. The exported JSON uses `skelly.blind-listening.feedback.v3`, names the original as `ORIGINAL`, includes `candidate_letters`, and cannot export a reference as winner/loser. Votes are stored under a new v3 namespace, deliberately not importing legacy invalid reference votes.
+
+For *already generated trusted private HTML* to update just the UI without changing any letter/audio mapping or re-encoding audio:
+
+```powershell
+python -m skell_sound_match.wav_only.html_listening_lab C:\SkellyPrivate\listening\older.html --remix --output C:\SkellyPrivate\listening\new-ui.html
+```
+
+Or add a new batch to an older lab using the existing `--append-from` workflow. **Do not store the private input lab or the generated HTML in public Git**; only this generator/tests/documentation belongs here.
+
+Test evidence: 12 local Python generator tests; actual Chromium rendering and reference→candidate switching validated with a synthetic in-memory 3-group/FLAC fixture on desktop and 390 px mobile, no page errors or horizontal overflow. Chromium in this chat's environment blocked opening local file URLs and localhost pages directly, so **the complete 70 MB real-audio HTML was verified through FLAC decodes/sha checks rather than claimed as independently browser-played**. An additional 13th Speakerz voice-tone trial was added after the first 12 groups; it is not owner-approved or validated on a new vocal take.
