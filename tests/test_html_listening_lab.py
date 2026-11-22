@@ -18,7 +18,7 @@ def fixture(tmp_path):
                            "clips": [{"label": "original", "path": "a.wav", "kind": "reference"},
                                      {"label": "trial", "path": "b.wav"}]}]}
     path = tmp_path / "manifest.json"
-    path.write_text(json.dumps(payload))
+    path.write_text(json.dumps(payload),encoding="utf-8")
     return path
 
 
@@ -26,7 +26,7 @@ def test_build_embeds_audio_and_hides_direct_paths(tmp_path):
     src=fixture(tmp_path)
     dest=tmp_path/"lab.html"
     result=make_lab(src,dest,seed=1234)
-    html=dest.read_text()
+    html=dest.read_text(encoding="utf-8")
     assert result["groups"]==1 and result["clips"]==2
     assert "data:audio/flac;base64," in html
     assert "a.wav" not in html and "b.wav" not in html
@@ -41,35 +41,35 @@ def test_no_overwrite_and_mismatch(tmp_path):
     make_lab(src,out)
     with pytest.raises(FileExistsError):
         make_lab(src,out)
-    payload=json.loads(src.read_text())
+    payload=json.loads(src.read_text(encoding="utf-8"))
     payload['groups'][0]['clips'][1]['path']='a.wav'
     payload['groups'][0]['id']='test'
     payload['groups'].append(payload['groups'][0])
-    src.write_text(json.dumps(payload))
+    src.write_text(json.dumps(payload),encoding="utf-8")
     with pytest.raises(ValueError, match="unique"):
         make_lab(src,tmp_path/"new.html")
 
 
 def test_missing_input_and_out_of_bounds(tmp_path):
     src=fixture(tmp_path)
-    payload=json.loads(src.read_text())
+    payload=json.loads(src.read_text(encoding="utf-8"))
     payload['groups'][0]['start']=2.5
-    src.write_text(json.dumps(payload))
+    src.write_text(json.dumps(payload),encoding="utf-8")
     with pytest.raises(ValueError, match="Insufficient"):
         make_lab(src,tmp_path/"new.html")
     payload['groups'][0]['start']=0
     payload['groups'][0]['clips'][0]['path']='missing.wav'
-    src.write_text(json.dumps(payload))
+    src.write_text(json.dumps(payload),encoding="utf-8")
     with pytest.raises((FileNotFoundError, RuntimeError)):
         make_lab(src,tmp_path/"new.html")
 
 
 def test_manifest_escape(tmp_path):
     src=fixture(tmp_path)
-    payload=json.loads(src.read_text())
+    payload=json.loads(src.read_text(encoding="utf-8"))
     payload['groups'][0]['title']='A </script><script>alert(1)</script>'
-    src.write_text(json.dumps(payload))
+    src.write_text(json.dumps(payload),encoding="utf-8")
     result=make_lab(src,tmp_path/"new.html")
-    html=(tmp_path/"new.html").read_text()
+    html=(tmp_path/"new.html").read_text(encoding="utf-8")
     assert '</script><script>alert(1)' not in html
     assert '\\u003c/script\\u003e' in html
