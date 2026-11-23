@@ -14,7 +14,7 @@ from pathlib import Path
 from .vocal_knob_search import Window, run_files
 
 SCHEMA = "skelly.vocal-knob-batch.v1"
-ENGINE_REVISION = "knob-optimizer-v1-with-stereo-phase-and-heldout-guards"
+ENGINE_REVISION = "knob-optimizer-v2-emitted-audio-integrity"
 
 
 def _file_hash(path: Path) -> str:
@@ -72,9 +72,14 @@ def process_batch(manifest_path: Path, private_output: Path) -> dict:
             report = out / "trial_report.json"
             if report.is_file():
                 prior = json.loads(report.read_text(encoding="utf-8"))
+                render_name = prior.get("render_name", "")
+                if not render_name or Path(render_name).name != render_name:
+                    raise ValueError("Invalid cached render name")
+                render_path = out / render_name
                 if prior.get("source_sha256") == inputs["source_sha256"] and \
                         prior.get("reference_sha256") == inputs["reference_sha256"] and \
-                        (out / prior.get("render_name", "")).is_file():
+                        render_path.is_file() and \
+                        prior.get("render_sha256") == _file_hash(render_path):
                     result["cached"].append({"id": name, "path": str(report),
                                              "status": prior.get("status")})
                     continue

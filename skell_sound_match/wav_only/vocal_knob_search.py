@@ -70,6 +70,8 @@ def _check_stereo(x: np.ndarray) -> np.ndarray:
 def _validate_pair(source: np.ndarray, target: np.ndarray, sr: int,
                    train: Window, holdout: Window, pairing: dict) -> tuple[np.ndarray, np.ndarray]:
     x, y = _check_stereo(source), _check_stereo(target)
+    if not all(math.isfinite(v) for v in (train.start, train.end, holdout.start, holdout.end)):
+        raise ValueError("Window bounds must be finite")
     if sr < 32000 or sr > 192000 or x.shape != y.shape:
         raise ValueError("Same sample rate and exact frame count are required")
     if not isinstance(pairing, dict) or pairing.get("same_take") is not True:
@@ -119,8 +121,11 @@ def _features(audio: np.ndarray, sr: int, window: Window) -> dict:
     rms = math.sqrt(float(np.mean(x ** 2)) + 1e-14)
     mid_rms = math.sqrt(float(np.mean(mid ** 2)) + 1e-14)
     side_rms = math.sqrt(float(np.mean(side ** 2)) + 1e-14)
+    centered = x - np.mean(x, axis=0)
+    norm = math.sqrt(float(np.sum(centered[:, 0] ** 2) * np.sum(centered[:, 1] ** 2)))
+    correlation = float(np.sum(centered[:, 0] * centered[:, 1]) / norm) if norm > 1e-12 else 0.0
     return {"bands_db": bands_db, "env_db": 20 * np.log10(env + 1e-10),
-            "rms_db": 20 * math.log10(rms),
+            "rms_db": 20 * math.log10(rms), "lr_correlation": correlation,
             "side_mid_db": max(-40., 20 * math.log10(side_rms / mid_rms)),
             "crest_db": 20 * math.log10(max(float(np.max(np.abs(x))), 1e-12) / rms)}
 
@@ -136,7 +141,8 @@ def _score(ref: dict, candidate: dict) -> dict:
     weighted = .42 * band + .32 * env + .18 * min(width, 20.) + .08 * crest
     return {"score": round(weighted, 6), "band_mae_db": round(band, 6),
             "envelope_mae_db": round(env, 6), "width_error_db": round(width, 6),
-            "crest_error_db": round(crest, 6), "gain_to_match_db": round(gain, 6)}
+            "crest_error_db": round(crest, 6), "gain_to_match_db": round(gain, 6),
+            "lr_correlation_error": abs(ref["lr_correlation"] - candidate["lr_correlation"])}
 
 
 def render(source: np.ndarray, sr: int, params: dict[str, float], *, effects: bool = False) -> np.ndarray:
@@ -248,6 +254,7 @@ def optimize(source: np.ndarray, target: np.ndarray, sr: int, *,
     # loudness, stereo image and missing broad timbre are not negotiable.
     level_ok = abs(trial_holdout["gain_to_match_db"]) <= 2.0
     width_ok = trial_holdout["width_error_db"] <= 6.0
+    phase_ok = trial_holdout["lr_correlation_error"] <= .2
     timbre_ok = trial_holdout["band_mae_db"] <= 4.5
     dynamics_ok = trial_holdout["envelope_mae_db"] <= 5.0
     train_ok = (tr["score"] <= baseline["score"] * .99 and
@@ -260,17 +267,17 @@ def optimize(source: np.ndarray, target: np.ndarray, sr: int, *,
     envelope_ok = trial_holdout["envelope_mae_db"] <= max(
         original_holdout["envelope_mae_db"] * 1.12, original_holdout["envelope_mae_db"] + .2)
     safe = bool(train_ok and hold_ok and band_ok and envelope_ok and peak_ok
-                and level_ok and width_ok and timbre_ok and dynamics_ok)
+                and level_ok and width_ok and phase_ok and timbre_ok and dynamics_ok)
     why = "HELDOUT_PASS_EXPERIMENTAL" if safe else (
         "REJECTED_LOUDNESS_STEREO_OR_CHARACTER" if not (
-            level_ok and width_ok and timbre_ok and dynamics_ok) else
+            level_ok and width_ok and phase_ok and timbre_ok and dynamics_ok) else
         "REJECTED_HELDOUT_OR_ENVELOPE" if train_ok and peak_ok else
         "REJECTED_TRAIN_OR_PEAK")
     return Trial(params, baseline, tr, original_holdout, trial_holdout,
                  safe, count, why)
 
 
-def stereo_phase_profile(audio: np.ndarray) -> dict:
+def stereo_phase_profile(audio: np.ndarray, sr: int | None = None) -> dict:
     """Diagnose when a source-only chain cannot reproduce an antiphase target.
 
     Reports LR correlation and stereo-to-mono fold-down loss without claiming
@@ -286,10 +293,30 @@ def stereo_phase_profile(audio: np.ndarray) -> dict:
     full_rms = math.sqrt(float(np.mean(x*x)) + 1e-18)
     mid_rms = math.sqrt(float(np.mean(mid*mid)) + 1e-18)
     side_rms = math.sqrt(float(np.mean(side*side)) + 1e-18)
-    return {"lr_correlation": round(corr, 6),
+    result = {"lr_correlation": round(corr, 6),
             "side_mid_db": round(20 * math.log10(side_rms / mid_rms), 4),
             "mono_fold_down_loss_db": round(20 * math.log10(mid_rms / full_rms), 4),
             "strong_antiphase": bool(corr <= -.25)}
+    if sr is not None:
+        if not 32000 <= sr <= 192000:
+            raise ValueError("Unsupported phase-profile sample rate")
+        window = round(sr * .2)
+        values = []
+        floor = max(float(np.mean(x * x)) * .01, 1e-10)
+        for start in range(0, len(x) - window + 1, window):
+            block = x[start:start + window]
+            if float(np.mean(block * block)) < floor:
+                continue
+            block = block - np.mean(block, axis=0)
+            norm = math.sqrt(float(np.sum(block[:, 0] ** 2) * np.sum(block[:, 1] ** 2)))
+            if norm > 1e-12:
+                values.append(float(np.sum(block[:, 0] * block[:, 1]) / norm))
+        result["active_200ms_correlation"] = {
+            "windows": len(values), "minimum": min(values) if values else None,
+            "maximum": max(values) if values else None,
+            "median": float(np.median(values)) if values else None,
+        }
+    return result
 
 
 def fif_ears_signal_snapshot(audio: np.ndarray, sr: int) -> dict:
@@ -339,9 +366,19 @@ def run_files(source_path: Path, target_path: Path, output_dir: Path, *,
     render_audio *= 10 ** (trim / 20)
     path = output_dir / "experimental_candidate.wav"
     sf.write(path, render_audio, sr, subtype="PCM_24")
+    emitted, emitted_sr = sf.read(path, dtype="float64", always_2d=True)
+    emitted_score = _score(_features(target, sr, holdout), _features(emitted, sr, holdout))
+    emitted_peak = estimate_true_peak_db(emitted)
+    emitted_ok = (emitted_sr == sr and np.isfinite(emitted).all()
+                  and abs(emitted_score["gain_to_match_db"]) <= 2.0
+                  and emitted_peak <= -1.47)
     result = {
         "schema": "skelly.offline-knob-trial.v1", "approved": False,
-        "status": trial.reason, "listening_eligible": trial.accepted_for_listening,
+        "status": trial.reason if emitted_ok else "REJECTED_EMITTED_AUDIO_SAFETY_OR_LEVEL",
+        "listening_eligible": bool(trial.accepted_for_listening and emitted_ok),
+        "emitted_holdout": emitted_score,
+        "emitted_peak_dbtp": emitted_peak,
+        "render_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
         "source_sha256": hashlib.sha256(source_path.read_bytes()).hexdigest(),
         "reference_sha256": hashlib.sha256(target_path.read_bytes()).hexdigest(),
         "pairing": pairing, "sample_rate": sr,
@@ -356,9 +393,9 @@ def run_files(source_path: Path, target_path: Path, output_dir: Path, *,
         "third_party_model_used": False,
         "validation_scope": "same_take_holdout_not_independent_performance",
         "stereo_phase": {
-            "source": stereo_phase_profile(source),
-            "reference": stereo_phase_profile(target),
-            "candidate": stereo_phase_profile(render_audio),
+            "source": stereo_phase_profile(source, sr),
+            "reference": stereo_phase_profile(target, sr),
+            "candidate": stereo_phase_profile(render_audio, sr),
         },
     }
     result["requires_antiphase_reconstruction"] = bool(

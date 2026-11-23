@@ -175,6 +175,32 @@ def test_phase_audit_flags_antiphase_stereo_and_fold_down_loss():
     assert a['mono_fold_down_loss_db']==pytest.approx(0.0,abs=.001)
 
 
+def test_nonfinite_window_is_rejected():
+    with pytest.raises(ValueError,match='finite'):
+        optimize(tone(),tone(),SR,pairing=PAIR,train=Window(float('nan'),.8),holdout=Window(1.1,1.8),budget=8)
+
+
+def test_phase_profile_detects_changing_channel_relationship():
+    from skell_sound_match.wav_only.vocal_knob_search import stereo_phase_profile
+    x=tone(2.)
+    x[:,1]=x[:,0]
+    x[SR:,1]*=-1
+    profile=stereo_phase_profile(x,SR)['active_200ms_correlation']
+    assert profile['windows']==10
+    assert profile['minimum']<-.99 and profile['maximum']>.99
+
+
+def test_full_render_trim_rechecks_actual_listening_level(tmp_path):
+    x=tone();x[round(2.04*SR)]=[4.,4.]
+    ref=render(x,SR,kw()|{'air_db':2.})
+    src=tmp_path/'source.wav';target=tmp_path/'target.wav'
+    sf.write(src,x,SR,subtype='FLOAT');sf.write(target,ref,SR,subtype='FLOAT')
+    result=run_files(src,target,tmp_path/'private',pairing=PAIR,train=Window(.2,.9),holdout=Window(1.2,1.9),budget=8)
+    assert not result['listening_eligible']
+    assert abs(result['emitted_holdout']['gain_to_match_db'])>2
+    assert result['status']=='REJECTED_EMITTED_AUDIO_SAFETY_OR_LEVEL'
+
+
 def test_report_marks_missing_antiphase_without_claiming_accuracy(tmp_path):
     x=tone(2)
     src=tmp_path/'mono.wav';ref=tmp_path/'spatial.wav'

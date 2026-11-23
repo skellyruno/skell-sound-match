@@ -1,3 +1,5 @@
+> **Codex audit, Nov 23:** Fixed emitted-audio eligibility after peak trim, cached-render hash verification and nonfinite window rejection. Added a separate correlation quality gate and active-window stereo diagnostics. All nine target references were measured. Local focused tests 33 passed, 1 optional Pedalboard runtime test skipped, Python wheel built. Protected owner choices remain current. [Audit and next sound tasks](CODEX_INTEGRATION_AUDIT_2026-11-23.md).
+
 ## Next tasks after vox_cloner + fif-ears audit (Nov 23)
 
 - Fix genuine time-varying **stereo phase/modulation** for all Club adlibs (original LR correlation Muffle −0.399, Angelic −0.623, Wobbly −0.510, Zaam −0.703); don't substitute arbitrary stereo width or a channel polarity flip for the actual effect, and measure mono fold-down.

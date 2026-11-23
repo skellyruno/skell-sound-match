@@ -49,6 +49,17 @@ def test_incomplete_pair_is_reported_not_guessed(tmp_path):
     assert not result['processed']
 
 
+def test_tampered_cached_audio_is_blocked(tmp_path):
+    manifest=tmp_path/'pairs.json'
+    manifest.write_text(json.dumps(_make(tmp_path)))
+    out=tmp_path/'private_results'
+    result=process_batch(manifest,out)
+    report_path=__import__('pathlib').Path(result['processed'][0]['path'])
+    (report_path.parent/'experimental_candidate.wav').write_bytes(b'tampered')
+    result=process_batch(manifest,out)
+    assert result['blocked'] and not result['cached'] and not result['processed']
+
+
 def test_path_injection_and_duplicate_identity_rejected(tmp_path):
     doc=_make(tmp_path)
     doc['pairs'][0]['id']='../../danger'
