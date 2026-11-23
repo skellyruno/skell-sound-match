@@ -33,3 +33,12 @@ private_models/
 # The reusable HTML generator lives in Python; never commit generated pages.
 *.html
 *.htm
+
+# Generated offline knob trials and private source provenance
+knob_cache/
+knob_trials/
+verified_pairs.json
+trial_report.json
+latest_batch_index.json
+fif_ears_signal_only.json
+experimental_candidate.wav
