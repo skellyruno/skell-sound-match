@@ -1,3 +1,5 @@
+> **Fresh challenger batch, Nov 23:** New moving-delay spatial trials were rendered across all nine targets. Muffle and Zaam pass the complete-chain screening and improve measured scores against recovered exact R5 survivor excerpts, with identities confirmed by owner session 04ef2153d69dda2e7051355a. Other targets remain rejected or reference-blocked. Protected selections retain their status. Full local suite 255 passed/1 optional skip, followed by 3 targeted spatial tests. [Measurements and continuation](FRESH_SPATIAL_CHALLENGERS_2026-11-23.md).
+
 > **Codex audit, Nov 23:** Fixed emitted-audio eligibility after peak trim, cached-render hash verification and nonfinite window rejection. Added a separate correlation quality gate and active-window stereo diagnostics. All nine target references were measured. Local focused tests 33 passed, 1 optional Pedalboard runtime test skipped, Python wheel built. Protected owner choices remain current. [Audit and next sound tasks](CODEX_INTEGRATION_AUDIT_2026-11-23.md).
 
 ## Owner feedback remains protected while generic knob candidates are rejected (Nov 23)
