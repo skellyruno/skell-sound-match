@@ -1,3 +1,5 @@
+> **NEW OWNER FEEDBACK RECEIVED — R5 battle, 2026-11-22:** 9 groups, session `04ef2153d69dda2e7051355a`. Winning candidate IDs and survivor/elimination decisions are preserved in [OWNER_BATTLE_RESULTS_R5_2026-11-22.md](OWNER_BATTLE_RESULTS_R5_2026-11-22.md). Deuce ORIGINAL reportedly lacks the desired effects; do not call its C preference a sound-match approval. The older 'no owner results' text below is historical.
+
 # Listening feedback and current experimental versions
 
 ## R7 Angelic stereo-delay investigation

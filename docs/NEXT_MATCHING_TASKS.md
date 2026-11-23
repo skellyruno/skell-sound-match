@@ -1,3 +1,5 @@
+> **Owner R5 priorities (2026-11-22):** FIRST fix Deuce ORIGINAL/reference stage reported missing effects; do not score against mismatched originals. Freeze Club Gate B, Muffle A, Hop Out C as relative winners; preserve Deuce C provisionally only. Retain Alchemist B/C and Zaam A/B, and all three Angelic/Wobbly/Speakerz attempts where no elimination was chosen. Target Angelic missing spatial FX, Muffle excessive delay/missing FX, Wobbly vibrato/Panagement-style modulation, Zaam brightness/echoes, Speakerz upfront body. **Never invent an elimination or count a tie as approval.** [Exact battle register](OWNER_BATTLE_RESULTS_R5_2026-11-22.md).
+
 # Next matching tasks
 
 Continue existing research without waiting for new owner ratings. Preserve every historical champion and failed experiment.
