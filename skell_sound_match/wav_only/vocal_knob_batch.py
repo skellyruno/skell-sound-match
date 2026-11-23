@@ -14,7 +14,7 @@ from pathlib import Path
 from .vocal_knob_search import Window, run_files
 
 SCHEMA = "skelly.vocal-knob-batch.v1"
-ENGINE_REVISION = "knob-optimizer-v2-emitted-audio-integrity"
+ENGINE_REVISION = "knob-optimizer-v3-shared-envelope-floor"
 
 
 def _file_hash(path: Path) -> str:

@@ -134,7 +134,12 @@ def _score(ref: dict, candidate: dict) -> dict:
     # Match integrated loudness before comparing shape, like A/B playback.
     gain = ref["rms_db"] - candidate["rms_db"]
     band = float(np.mean(np.abs(candidate["bands_db"] + gain - ref["bands_db"])))
-    env = float(np.mean(np.abs(candidate["env_db"] + gain - ref["env_db"])))
+    # A fixed extraction floor shifts when gain is applied in feature space.
+    # Clamp both envelopes at the same reference-relative noise floor so digital
+    # silence cannot earn a better dynamics score from a mere gain change.
+    floor = ref["rms_db"] - 80.
+    env = float(np.mean(np.abs(np.maximum(candidate["env_db"] + gain, floor)
+                               - np.maximum(ref["env_db"], floor))))
     width = abs(candidate["side_mid_db"] - ref["side_mid_db"])
     crest = abs(candidate["crest_db"] - ref["crest_db"])
     # All values in dB; width error is clamped so mono targets don't blow up.

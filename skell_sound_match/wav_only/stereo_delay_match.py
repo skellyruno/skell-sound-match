@@ -43,3 +43,27 @@ def render(source,sr,model):
     for c in range(2):
         for d in range(2):z[:,d]+=signal.fftconvolve(x[:,c],h[:,c,d])[:len(x)]
     return z
+
+
+def extend_decay(model, echo_samples, fitted_repeats, total_repeats=16):
+    """Continue a measured geometric echo decay without fitting future audio.
+
+    Infer decay from train-derived tap energies, preserving the final measured
+    cross-channel tap shape. No feedback is asserted to be an original setting.
+    """
+    h=np.asarray(model['impulse'],dtype=float)
+    if h.ndim!=3 or h.shape[1:]!=(2,2) or not np.isfinite(h).all():
+        raise ValueError('Invalid stereo impulse')
+    if not isinstance(echo_samples,int) or echo_samples<=32 or not 2<=fitted_repeats<=total_repeats<=32:
+        raise ValueError('Invalid echo extension bounds')
+    if len(h)!=echo_samples*fitted_repeats+17:
+        raise ValueError('Impulse does not match declared fitted echoes')
+    energies=np.array([np.linalg.norm(h[k*echo_samples-16:k*echo_samples+17]) for k in range(1,fitted_repeats+1)])
+    if np.any(energies<1e-12):
+        raise ValueError('Insufficient measured echo energy')
+    feedback=float(np.clip(np.exp(np.polyfit(np.arange(len(energies)),np.log(energies),1)[0]),0,.95))
+    extended=np.zeros((echo_samples*total_repeats+17,2,2));extended[:len(h)]=h
+    last=h[fitted_repeats*echo_samples-16:fitted_repeats*echo_samples+17]
+    for k in range(fitted_repeats+1,total_repeats+1):
+        extended[k*echo_samples-16:k*echo_samples+17]=last*feedback**(k-fitted_repeats)
+    return {**model,'impulse':extended},{'train_inferred_feedback':feedback,'fitted_repeats':fitted_repeats,'total_repeats':total_repeats}
