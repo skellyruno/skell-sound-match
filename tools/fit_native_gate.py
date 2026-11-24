@@ -6,7 +6,7 @@ import pathlib
 import numpy as np
 from scipy.optimize import differential_evolution
 from scipy.signal import resample_poly
-from native_gate_common import NativeRenderer, audio_snapshot, digest, training_trim
+from native_gate_common import NativeRenderer, audio_snapshot, digest, training_trim, verify_gate_pairing
 
 ENGINE_REVISION = '92b03b753c59583b6b6063228c2d630ef94daf59'
 
@@ -32,6 +32,7 @@ def fit(renderer, raw, target, report, maxiter=6):
                          max(np.mean(s[m].astype(np.float64) ** 2), 1e-10))
                    for m in (mask, ~mask) if m.any())
 
+    pairing = verify_gate_pairing(x[:n], y[:n])
     trim = training_trim(x[:n], y[:n])
     results = []
     base = [-46, 2, 25, 40, 4]
@@ -61,7 +62,7 @@ def fit(renderer, raw, target, report, maxiter=6):
     engine.check_identity()
     if digest(raw) != raw_hash or digest(target) != target_hash:
         raise ValueError('Source or target changed during fitting')
-    out = dict(schema='skell.native-gate-fit.v1', fit_revision='quiet-trim-and-render-integrity-v2',
+    out = dict(schema='skell.native-gate-fit.v1', fit_revision='gate-pairing-v3', pairing_verification=pairing,
                expected_core_revision=ENGINE_REVISION, renderer_version='club-gate-v1', input_db=0,
                block_size=256, raw_sha256=raw_hash, target_sha256=target_hash, renderer_sha256=engine.sha256,
                sample_rate=sr, frames=len(x), train_frames=n, selection='train prefix only; later same-take diagnostic',

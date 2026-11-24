@@ -43,6 +43,14 @@ def test_audio_snapshot_hashes_exact_decoded_bytes(common, tmp_path):
     assert np.max(data) > 0
 
 
+def test_pairing_rejects_equal_length_wrong_or_shifted_take(common):
+    rng=np.random.default_rng(42);source=rng.normal(0,.1,(8000,2))
+    assert common.verify_gate_pairing(source,source*1.2)['waveform_cosine']==pytest.approx(1)
+    for target in (rng.normal(0,.1,source.shape),np.roll(source,16,axis=0),-source):
+        with pytest.raises(ValueError,match='pairing'):
+            common.verify_gate_pairing(source,target)
+
+
 @pytest.mark.parametrize('fault', ['length', 'nan_samples', 'frames', 'latency', 'timing', 'binary'])
 def test_renderer_rejects_bad_transport_and_changed_binary(common, tmp_path, monkeypatch, fault):
     executable = tmp_path / 'renderer'; executable.write_bytes(b'trusted executable')

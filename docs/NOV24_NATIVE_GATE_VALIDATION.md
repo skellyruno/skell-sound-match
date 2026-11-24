@@ -4,6 +4,7 @@ Continues Sound Match draft PR #2 from b8f39ed. Shared DSP remains the exact Ske
 
 ## Fixed root causes
 
+- Follow-up pairing guard: equal-length files are no longer enough for gate fitting. Loud shared TRAIN samples must show strongly aligned amplitude-only waveforms; shifted, unrelated and inverted synthetic takes are rejected. The supplied real raw/gate pair measures 0.999925 cosine similarity over 60,078 active frames. This diagnostic does not establish archive provenance and is deliberately not applied to EQ/modulated wet stages. The fit table below predates this preflight guard; its DSP and optimizer remain unchanged. The current guard passed the real pair separately and is exercised by the actual native quiet-fit/replay test.
 - The previous fixed >0.05 training mask was empty for quiet vocals, forcing an arbitrary -24 dB trim. Calibration now adapts to available signal level; digital silence and non-positive aligned target gain fail explicitly. A quiet +6.0206 dB synthetic target recovers that trim through the actual Windows native fitter.
 - Binary identity is checked before/after version and each render. Source/target hashes bind the bytes actually decoded, and changed files are rejected before completing a report or replay.
 - Fitting and replay now share exact native output-byte/frame validation, finite sample/metadata checks, zero declared transport latency, parameter bounds and renderer version verification. Truncated/extra output, invalid frame metadata, nonfinite timing, fractional finish settings and invalid blocks are rejected.

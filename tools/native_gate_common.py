@@ -35,6 +35,26 @@ def training_trim(source, target):
     return float(np.clip(20 * np.log10(gain), -24, 24))
 
 
+def verify_gate_pairing(source, target):
+    """Reject wrong/shifted gate prints using loud shared training samples.
+
+    A waveform diagnostic for amplitude-only gating, not proof of archive
+    provenance or permission to apply this test to EQ/modulated effect stages.
+    """
+    a, b = np.asarray(source, dtype=float), np.asarray(target, dtype=float)
+    if a.shape != b.shape or a.ndim != 2 or a.shape[1] != 2 or not np.isfinite(a).all() or not np.isfinite(b).all():
+        raise ValueError('Invalid gate pairing geometry')
+    p, q = np.max(abs(a), axis=1), np.max(abs(b), axis=1)
+    mask = (p > max(float(p.max()) * .2, 1e-7)) & (q > max(float(q.max()) * .2, 1e-7))
+    if np.count_nonzero(mask) < 128:
+        raise ValueError('Insufficient shared active signal for gate pairing')
+    a, b = a[mask], b[mask]
+    cosine = float(np.sum(a * b) / np.sqrt(np.sum(a * a) * np.sum(b * b)))
+    if not np.isfinite(cosine) or cosine < .98:
+        raise ValueError('Gate source/reference waveform pairing is unverified')
+    return {'scope':'amplitude-only gate, training prefix','active_frames':int(mask.sum()),'waveform_cosine':cosine}
+
+
 class NativeRenderer:
     def __init__(self, executable, expected_hash=None):
         self.path = Path(executable).resolve()
