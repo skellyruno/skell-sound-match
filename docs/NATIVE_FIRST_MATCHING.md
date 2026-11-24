@@ -1,3 +1,5 @@
+> **Nov 24 native validation:** Fixed quiet-vocal calibration and native render identity/geometry checks. Pinned SkellCore gate CLI and C++ tests built on Windows with warnings as errors; actual native fit/replay, four-rate block checks and 302 Python tests passed (1 optional skip). This does not approve a replacement for owner Gate B or verify the VST3 wrapper. [Exact evidence and remaining work](NOV24_NATIVE_GATE_VALIDATION.md).
+
 # Native-first Sound Match migration
 
 Owner decision: do not create a separate DSP repo. SkellCore is the canonical implementation, Sound Match orchestrates optimization and listening, and plugins consume pinned shared DSP. Keep all historical listening winners, private IRs and original references intact. Existing offline approvals are not automatically native approvals.

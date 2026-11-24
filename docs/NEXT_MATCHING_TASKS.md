@@ -1,3 +1,12 @@
+> **Nov 24 native validation:** Fixed quiet-vocal calibration and native render identity/geometry checks. Pinned SkellCore gate CLI and C++ tests built on Windows with warnings as errors; actual native fit/replay, four-rate block checks and 302 Python tests passed (1 optional skip). This does not approve a replacement for owner Gate B or verify the VST3 wrapper. [Exact evidence and remaining work](NOV24_NATIVE_GATE_VALIDATION.md).
+
+## Nov 24 native-first continuation
+
+1. Validate full Skell Preset wrapper equivalence to the pinned C++ renderer and separately compare the approved Gate B artifact. Keep experimental finish OFF by default; no factory replacement.
+2. Migrate actual authorized Muffle/Wobbly stereo IRs into canonical SkellCore convolution, preserving sample rates/channel routing, and validate latency/block schedules/CPU. IR extraction is verified; native convolution is not yet implemented.
+3. Preserve latest owner picks, rebuild Angelic no-delay reverb and full delay separately, continue Zaam repeats and real Speakerz delay-level control. Do not substitute cancellation/EQ for verified wet-send control.
+4. Recover exact Deuce v2.5 recreation; keep the disputed original distinct. Add independent paired performance before promotion.
+
 > **Current continuation, Nov 23:** Six genuinely fresh experimental challengers (Alchemist, Angelic, Muffle, Zaam, Hop Out, Club MIC Gate) pass two measured sections after fixing silence-floor scoring and reconstructing missing tails. One private nine-target HTML has 30 audited clips; Deuce and Speakerz ranking remain blocked, Wobbly retains unresolved R5 attempts. Local suite 262 passed / 1 optional skip; wheel and simulated-DOM transport/export tests passed. Actual browser/FL Studio/native validation remains unverified. [Exact versions, results and next tasks](SIX_CHALLENGERS_AND_LAB_2026-11-23.md).
 
 > **Fresh challenger batch, Nov 23:** New moving-delay spatial trials were rendered across all nine targets. Muffle and Zaam pass the complete-chain screening and improve measured scores against recovered exact R5 survivor excerpts, with identities confirmed by owner session 04ef2153d69dda2e7051355a. Other targets remain rejected or reference-blocked. Protected selections retain their status. Full local suite 255 passed/1 optional skip, followed by 3 targeted spatial tests. [Measurements and continuation](FRESH_SPATIAL_CHALLENGERS_2026-11-23.md).
