@@ -1,3 +1,5 @@
+> **Nov 24 additional intake verified:** Five new archives and the original intake package are locally verified. 34 recordings registered privately alongside existing work; 10 provisional source families / 29 stage comparisons retained in a private verified overlay. Previous review fields preserved. Native fitting on these new sources is still pending. [Consolidated intake and continuation](NOV24_VERIFIED_ADDITIONAL_REFERENCE_INTAKE.md).
+
 > **Nov 24 native validation:** Fixed quiet-vocal calibration and native render identity/geometry checks. Pinned SkellCore gate CLI and C++ tests built on Windows with warnings as errors; actual native fit/replay, four-rate block checks and 302 Python tests passed (1 optional skip). This does not approve a replacement for owner Gate B or verify the VST3 wrapper. [Exact evidence and remaining work](NOV24_NATIVE_GATE_VALIDATION.md).
 
 ## Nov 24 native-first continuation
