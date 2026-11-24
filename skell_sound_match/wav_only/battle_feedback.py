@@ -26,6 +26,9 @@ def validate_and_plan(payload: dict[str, Any], reference_issues: set[str] | None
     reference_issues requires explicit evidence from an audit/user report; it is
     not inferred from text. A flagged round never becomes approved by a vote.
     """
+    if isinstance(payload, dict) and payload.get("schema") == "skelly.sound-battle-feedback.v2":
+        from .battle_feedback_v2 import validate_v2
+        return validate_v2(payload, reference_issues)
     if not isinstance(payload, dict) or payload.get("schema") != SCHEMA:
         raise ValueError("Unrecognized battle feedback schema")
     session = _required_string(payload.get("session_id"), "session_id")
@@ -111,7 +114,7 @@ def to_markdown(plan: dict[str, Any]) -> str:
            "", "| Preset | Preferred | Eliminated | Surviving candidate identities | Next step |",
            "|---|---|---|---|---|"]
     for g in plan["groups"]:
-        label = g["winner_letter"] or "not voted"
+        label = g["winner_letter"] or (f"{g['rating']}/5 similarity" if g.get("rating") is not None else "not voted")
         pref = f"{label}: `{g['winner_identity']}`" if g["winner_identity"] else label
         drop = f"{g['eliminated_letter']}: `{g['eliminated_identity']}`" if g["eliminated_identity"] else "none"
         out.append("| " + " | ".join([_md(g["preset"]), _md(pref), _md(drop),

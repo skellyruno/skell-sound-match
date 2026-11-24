@@ -20,6 +20,7 @@ def test_battle_transport_tie_and_blocked_votes(tmp_path):
     uri='data:audio/flac;base64,AA=='
     groups=[{'id':str(i),'title':'Test','note':'','reference':uri,'reviewable':i==0,'candidates':[{'letter':l,'identity':str(i)+l,'audio':uri} for l in 'ABC']} for i in range(2)]
     groups.append({'id':'single','title':'One','note':'','reference':uri,'reviewable':True,'candidates':[{'letter':'A','identity':'new','audio':uri}]})
+    groups.append({'id':'pair','title':'Pair','note':'','reference':uri,'reviewable':True,'candidates':[{'letter':l,'identity':'pair'+l,'audio':uri} for l in 'AB']})
     path=tmp_path/'test.html';write_lab({'groups':groups},path)
     script=r'''
 const fs=require('fs'),vm=require('vm'),assert=require('assert');
@@ -36,5 +37,6 @@ nodes.get('dropB').onclick();assert.equal(run('state().winner'),'');nodes.get('v
 assert(nodes.get('voteA').disabled);nodes.get('voteA').onclick();assert.equal(run('state().winner'),'');
 assert.equal(run('feedback().results[0].submitted'),true);assert.equal(run('feedback().results[0].candidate_versions[0].identity'),'0A');assert.equal(run('feedback().results[1].reviewable'),false);
 run('show(2)');assert(nodes.get('b').disabled);assert(nodes.get('voteA').hidden);nodes.get('rating').value='4';nodes.get('rating').onchange();nodes.get('next').onclick();assert.equal(run('feedback().results[2].rating'),4);assert.equal(run('feedback().results[2].winner'),'');assert.equal(run('feedback().results[2].survivors.length'),1);
+assert.equal(run('n'),3);assert(nodes.get('dropA').hidden);assert(nodes.get('dropA').disabled);nodes.get('voteA').onclick();nodes.get('dropB').onclick();nodes.get('next').onclick();assert.equal(run('feedback().results[3].submitted'),true);assert.equal(run('feedback().results[3].eliminate'),'');assert.equal(run('feedback().results[3].survivors.length'),2);
 '''
     subprocess.run(['node','-e',script,str(path)],check=True,capture_output=True,text=True)

@@ -36,6 +36,10 @@ def write_lab(doc, output):
     fingerprint = hashlib.sha256()
     for group in groups:
         candidates = group['candidates']
+        group.setdefault('reviewable', bool(candidates))
+        group.setdefault('verification', 'EXPERIMENTAL - not independently validated' if candidates else 'UNVERIFIED - reference only')
+        if not candidates and group['reviewable']:
+            raise ValueError('Reference-only group cannot be reviewable')
         if len(candidates) > 3 or [c['letter'] for c in candidates] != list('ABC'[:len(candidates)]):
             raise ValueError('Up to three consecutive candidate letters required')
         if len({c['identity'] for c in candidates}) != len(candidates):
@@ -45,6 +49,7 @@ def write_lab(doc, output):
                 raise ValueError('Self-contained FLAC required')
         group['reference_sha256'] = hashlib.sha256(group['reference'].encode('ascii')).hexdigest()
         for candidate in candidates:
+            candidate.setdefault('status', 'EXPERIMENTAL_UNVERIFIED')
             candidate['sha256'] = hashlib.sha256(candidate['audio'].encode('ascii')).hexdigest()
         fingerprint.update(json.dumps(group, sort_keys=True).encode('utf-8'))
     doc = {**doc, 'session_id': fingerprint.hexdigest()[:24]}
