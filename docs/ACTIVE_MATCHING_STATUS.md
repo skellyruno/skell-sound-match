@@ -1,3 +1,5 @@
+> **Nov 24 continuity:** exact heads checked for Sound Match, SkellCore, Skell Flang and Skell Preset drafts; prior CI passed. Private checkpoint integrity checker added, 12 tests passed locally. Alchemist 84 bounded brightness trials chose unchanged anchors; mild darker B retained as experiment only. [Cross-chat handoff](NOV24_CONTINUITY_AND_ALCHEMIST.md).
+
 > **Nov 24 saved-order partial chains:** supplied Bank, embedded-IR Convolver and frozen EQ privately validated; recovered Angelic Bank precedes Flangus/Reeverb2. Muffle saved-order partial chain and nested slot-blend screen pass diagnostic gates; Angelic partial chain passes, Zaam/Wobbly regress on waveform or band. No complete preset promotion. [Evidence and missing slots](NOV24_BANK_CONVOLVER_EQ_CHAIN_RESEARCH.md).
 
 > **Nov 24 Delay 2/3:** private portable engines/codec/renderer tested; 28 saved records (18 distinct). Zaam original Delay 2 and Muffle Delay 3 identified; Angelic uses Delay Bank, source still needed. UP native saved raw delay near-exact on nonrail samples but unsafe gain; Overtime Skellian/distortion pass stage gates. [Details and remaining gates](NOV24_DELAY_2_3_NATIVE_INTAKE.md).
