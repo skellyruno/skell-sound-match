@@ -1,3 +1,5 @@
+> **Audio-only main vocal R3:** independent compressor 665 fit evaluations; Deuce later RMS residual 23.18% -> 2.38% vs gain-only, historical normalized isolated stage. 495 reference-only main-style evaluations, 32 independent source checks, 18 raw peak failures; no production promotion. [Main R3 and external tool research](NOV24_AUDIO_ONLY_MAIN_R3.md).
+
 > **Audio-only R2:** 388 guarded transfer evaluations and 180 paired-gate training evaluations. Plan/Overtime new holdout sources; no production recipe promoted. Independent causal gate reduces original same-take quiet normalized MSE 94% vs gain-only. [R2 evidence and limits](NOV24_AUDIO_ONLY_DYNAMICS_R2.md).
 
 > **Nov 24 audio-only transfer:** owner requires independent matching without original dry/FST/source. Added two-source unpaired profile fitting and paired sparse echo identification. Seven of nine improve composite on two withheld raw performances, not listening-approved; gate/temporal metrics and peak limits still open. Angelic B isolated preferred; Muffle none win. [Method and evidence](NOV24_AUDIO_ONLY_TRANSFER.md).
