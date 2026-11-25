@@ -35,7 +35,9 @@ def verify(path):
             if not isinstance(f, dict):
                 raise ValueError("invalid manifest record")
             n, size, digest = f.get('path'), f.get('bytes'), f.get('sha256')
-            if (not _safe_name(n) or n == MANIFEST or n in seen
+            if not _safe_name(n):
+                raise ValueError("unsafe manifest path")
+            if (n == MANIFEST or n in seen
                     or type(size) is not int or size < 0 or not isinstance(digest, str)
                     or re.fullmatch(r'[0-9a-f]{64}', digest) is None):
                 raise ValueError("invalid or duplicate manifest record")

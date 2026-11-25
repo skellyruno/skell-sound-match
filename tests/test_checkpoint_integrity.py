@@ -36,3 +36,9 @@ def test_duplicate_case(tmp_path):
 def test_bad_manifest(tmp_path, records):
     with pytest.raises(ValueError):
         verify(archive(tmp_path, [('a', b'x')], records))
+
+
+def test_normalized_member_still_rejects_unsafe_manifest(tmp_path):
+    records=[{'path':'a\\b','bytes':1,'sha256':hashlib.sha256(b'x').hexdigest()}]
+    with pytest.raises(ValueError,match='unsafe manifest path'):
+        verify(archive(tmp_path,[('a/b',b'x')],records))
