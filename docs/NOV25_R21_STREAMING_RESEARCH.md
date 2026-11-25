@@ -1,0 +1,9 @@
+# R21 streaming correction research — 2026-11-25
+
+Independent fixed-settings C++17 rendering implementation of the R19 generic correction equations, not native FL or Skell Preset equivalence. 24 local synthetic checks passed at 44.1, 48, 96 and 192 kHz; zero intercepted C++ new calls in processing, identical tested block partitions and reset/replay, neutral passthrough. 54 private recipe/excerpt parity comparisons against the Python model had maximum absolute difference 1.79e-7; 12 additional private real-audio cross-rate cases passed. No private audio, states, fitted parameter values or original vendor source in Git.
+
+All 57 stage entries reviewed: 54 renderable, 2 near-identical, 1 blocked by reference quality. 162 train-side settings trials; 8 numerical continuous-history improvements over the R19 correction, 13 further passes versus the source-stage baseline. Reused recordings and previously examined excerpts are not independent validation. Processed upstream stage inputs cannot establish a complete dry-to-vocal chain. Preserve all prior listening selections, no factory promotion.
+
+Skell Preset audit: PR #96 exact head 722588ed533c5f76a32c19efe9c4f9e7368c73a8, package schema v2 with 16 slots and 16 normalized parameters; 45 existing effect types. Role mapping is not parameter/DSP equivalence. Keep the private transfer ledger outside production presets; do not change any published effect IDs or factory states. The research module supports fixed settings only. prepare/reset and allocation must be managed outside live processing; no live parameter smoothing, JUCE build, actual VST3 host performance or FL Studio parity verified. JUCE retrieval remains blocked.
+
+Local reproduction: `cd native/research && g++ -std=c++17 -O2 -Wall -Wextra -Werror -Wno-mismatched-new-delete -ffp-contract=off test_stream_correction.cpp -o stream_test && ./stream_test`.
