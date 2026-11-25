@@ -25,6 +25,16 @@ jobs:
         run: python -m pip install -e ".[test]"
       - name: Test
         run: python -m pytest -q
+      - name: Test portable FL state interchange and meter history
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          set -euo pipefail
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror native/research/test_fl_raw_state.cpp -o /tmp/skell-state-test
+          /tmp/skell-state-test
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror native/research/test_dynamics_peak_history.cpp -o /tmp/skell-history-test
+          /tmp/skell-history-test
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror native/research/state_inspect.cpp -o /tmp/skell-state-inspect
       - name: Fetch pinned public Maximus reference for isolated research test
         if: runner.os == 'Linux'
         uses: actions/checkout@v5
