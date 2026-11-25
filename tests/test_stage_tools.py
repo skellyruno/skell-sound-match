@@ -1,9 +1,6 @@
-import sys
-from pathlib import Path
-sys.path.insert(0,str(Path(__file__).parent))
 import pytest
 import numpy as np
-from stage_tools import GateSettings,EchoSettings,gate,echo
+from skell_sound_match.stage_tools import GateSettings,EchoSettings,gate,echo
 @pytest.mark.parametrize('rate',[44100,48000,96000,192000])
 def test_gate(rate):
     rng=np.random.default_rng(2);x=(rng.normal(size=(rate//2,2))*.025).astype(np.float32);x[rate//5:rate//4]*=5
