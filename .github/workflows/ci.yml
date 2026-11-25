@@ -48,6 +48,8 @@ jobs:
           test "$(git hash-object "$root/src/engine/MEnv.h")" = 9a090404fb0fed04764b9b563258a32380a34229
           g++ -std=c++17 -O2 -Wall -Wextra -Werror -ffp-contract=off -I"$root/src" native/research/test_maximus_reference.cpp native/research/MaximusAllocationProbe.cpp -o /tmp/skell-maximus-test
           /tmp/skell-maximus-test
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -ffp-contract=off -I"$root/src" native/research/test_maximus_aligned.cpp native/research/MaximusAllocationProbe.cpp -o /tmp/skell-maximus-aligned-test
+          /tmp/skell-maximus-aligned-test
       - name: Preserve exact public research headers for local DSP work
         if: runner.os == 'Linux'
         uses: actions/upload-artifact@v6
