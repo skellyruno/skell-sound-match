@@ -4,10 +4,8 @@
 #include <new>
 #include <limits>
 #include <vector>
-static bool tracking=false;static size_t allocations=0;
-void* operator new(size_t n){if(tracking)++allocations;if(auto p=std::malloc(n?n:1))return p;throw std::bad_alloc();}
-void operator delete(void* p)noexcept{std::free(p);}
-void operator delete(void* p,size_t)noexcept{std::free(p);}
+extern bool tracking;
+extern std::size_t allocations;
 using namespace skellmatch::maximus;
 static Settings testState(int os){
     Settings s{};s.oversampling=os;

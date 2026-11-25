@@ -46,7 +46,7 @@ jobs:
           root=.research-deps/skell-studio/plugins/ml-plasma/vendor/gridline
           test "$(git hash-object "$root/src/packs/dynamics/maximus_ref.h")" = 9cfffcc95ac8459090ab3f69fccc6e4ca02abf16
           test "$(git hash-object "$root/src/engine/MEnv.h")" = 9a090404fb0fed04764b9b563258a32380a34229
-          g++ -std=c++17 -O2 -Wall -Wextra -Werror -ffp-contract=off -I"$root/src" native/research/test_maximus_reference.cpp -o /tmp/skell-maximus-test
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -ffp-contract=off -I"$root/src" native/research/test_maximus_reference.cpp native/research/MaximusAllocationProbe.cpp -o /tmp/skell-maximus-test
           /tmp/skell-maximus-test
       - name: Preserve exact public research headers for local DSP work
         if: runner.os == 'Linux'
