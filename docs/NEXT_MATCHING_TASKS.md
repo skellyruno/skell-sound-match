@@ -1,3 +1,5 @@
+> **Audio-only R4 external comparator:** 117 train evaluations across nine main tones; Speakerz and UP pass conservative excerpt screening, seven rejected, two raw peak failures. PyTorch paired diagnostic corroborates R3 compressor advantage on historical excerpt. 50 focused local tests; 44 lossless previews; real Chromium playback/reset verified. No new owner approvals or preset promotion; private checkpoint recovered from Library. [R4 method, results and continuity](NOV24_AUDIO_ONLY_MAIN_R4.md).
+
 > **Audio-only main vocal R3:** independent compressor 665 fit evaluations; Deuce later RMS residual 23.18% -> 2.38% vs gain-only, historical normalized isolated stage. 495 reference-only main-style evaluations, 32 independent source checks, 18 raw peak failures; no production promotion. [Main R3 and external tool research](NOV24_AUDIO_ONLY_MAIN_R3.md).
 
 > **Audio-only R2:** 388 guarded transfer evaluations and 180 paired-gate training evaluations. Plan/Overtime new holdout sources; no production recipe promoted. Independent causal gate reduces original same-take quiet normalized MSE 94% vs gain-only. [R2 evidence and limits](NOV24_AUDIO_ONLY_DYNAMICS_R2.md).

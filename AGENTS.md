@@ -124,3 +124,6 @@
 - Provide a concise handoff for a new chat containing the project, repository, branch, latest commit, completed work, test results, outstanding failures, and next priorities.
 - Preserve important technical decisions and approved UI designs.
 - Make the handoff detailed enough to continue development without repeating earlier work.
+
+## Sound Match cross-chat continuity
+Check the user's Library for the latest private Sound Match checkpoint and listening lab before restarting or asking for files already supplied. Verify hashes and exact GitHub branch/head/CI; preserve prior artifacts and owner decisions. Update the existing draft PR with tested nonprivate code and documentation, and leave private audio, proprietary DSP, fitted models and listening HTML outside Git. Record blockers explicitly.
