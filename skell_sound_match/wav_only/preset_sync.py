@@ -91,7 +91,7 @@ def artist(root,artist_id,name,cover=None):
         h=digest(data);atomic(root/'artwork'/f'{h}.png',data);a['cover_sha']=h
     put(root/'catalog.json',c)
 
-def stage(root,preset_id,artist_id,name,category,source,approved=False):
+def stage(root,preset_id,artist_id,name,category,source,approved=False,pair=None):
     preset_id=key(preset_id);artist_id=key(artist_id);name=label(name,72)
     if category not in ('main','adlib'):raise ValueError('invalid category')
     c=catalog(root)
@@ -99,6 +99,7 @@ def stage(root,preset_id,artist_id,name,category,source,approved=False):
     d=package(source);raw=Path(source).read_bytes();h=digest(raw)
     e=c['presets'].setdefault(preset_id,{'artist_id':artist_id,'name':name,'category':category,'revisions':[]})
     if e['artist_id']!=artist_id:raise ValueError('stable preset belongs to another artist')
+    if pair is not None:e['pair']=key(pair)
     e.update(name=name,category=category);old=next((r for r in e['revisions'] if r['sha256']==h),None)
     if old is None:e['revisions'].append({'sha256':h,'status':'approved' if approved else 'trial'})
     elif approved:old['status']='approved'
@@ -139,6 +140,7 @@ def publish(root,library,preset_id,revision=None,trial=False):
     sidecar(library/'ArtistTags.txt',k,label(a['name']))
     sidecar(library/'LibraryOrganization.txt','type:'+k,e['category'])
     sidecar(library/'LibraryOrganization.txt','title:'+k,label(e['name'],72)+(' [Trial]' if trial else ''))
+    if e.get('pair'):sidecar(library/'LibraryOrganization.txt','pair:'+k,key(e['pair']))
     if a.get('cover_sha') and not dest.with_suffix('.png').exists() and not dest.with_suffix('.jpg').exists():
         ah=a['cover_sha']
         if not isinstance(ah,str) or not HEX.fullmatch(ah):raise ValueError('invalid artwork identity')
@@ -148,14 +150,34 @@ def publish(root,library,preset_id,revision=None,trial=False):
     if not dest.exists() or digest(dest.read_bytes())!=h:atomic(dest,raw)
     m['installed'][channel]={'sha256':h,'file':name};put(manifest,m);return dest
 
+def verify(root):
+    """Verify the complete immutable catalog before any install writes."""
+    c=catalog(root);count=0
+    for aid,a in c['artists'].items():
+        key(aid);label(a['name'])
+    for pid,e in c['presets'].items():
+        key(pid);key(e['artist_id']);label(e['name'],72)
+        if e['artist_id'] not in c['artists'] or e['category'] not in ('main','adlib'):raise ValueError('invalid catalog entry')
+        if e.get('pair'):key(e['pair'])
+        seen=set()
+        for r in e['revisions']:
+            h=r['sha256']
+            if not HEX.fullmatch(h) or h in seen or r['status'] not in ('trial','approved'):raise ValueError('invalid revision identity')
+            seen.add(h);f=root/'revisions'/pid/(h+'.skellpreset');package(f)
+            if digest(f.read_bytes())!=h:raise ValueError('revision checksum mismatch')
+            count+=1
+        if e.get('latest') and e['latest'] not in seen:raise ValueError('latest not present')
+    return {'presets':len(c['presets']),'revisions':count,'loadable':sum(bool(e.get('latest')) for e in c['presets'].values())}
+
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--catalog',type=Path,required=True);sub=p.add_subparsers(dest='cmd',required=True)
     a=sub.add_parser('artist');a.add_argument('id');a.add_argument('name');a.add_argument('--cover',type=Path)
-    a=sub.add_parser('stage');a.add_argument('id');a.add_argument('artist');a.add_argument('name');a.add_argument('category',choices=['main','adlib']);a.add_argument('package',type=Path);a.add_argument('--approved-native',action='store_true')
+    a=sub.add_parser('stage');a.add_argument('id');a.add_argument('artist');a.add_argument('name');a.add_argument('category',choices=['main','adlib']);a.add_argument('package',type=Path);a.add_argument('--approved-native',action='store_true');a.add_argument('--pair')
     a=sub.add_parser('publish');a.add_argument('id');a.add_argument('--library',type=Path,default=Path(os.environ.get('APPDATA',Path.home()/'.config'))/'Skell Audio'/'Skell-Preset');a.add_argument('--revision');a.add_argument('--trial',action='store_true')
-    sub.add_parser('list');a=p.parse_args();root=a.catalog
+    sub.add_parser('list');sub.add_parser('verify');a=p.parse_args();root=a.catalog
     if a.cmd=='artist':artist(root,a.id,a.name,a.cover)
-    elif a.cmd=='stage':print(stage(root,a.id,a.artist,a.name,a.category,a.package,a.approved_native))
+    elif a.cmd=='stage':print(stage(root,a.id,a.artist,a.name,a.category,a.package,a.approved_native,a.pair))
     elif a.cmd=='publish':print(publish(root,a.library,a.id,a.revision,a.trial))
+    elif a.cmd=='verify':print(json.dumps(verify(root),indent=2))
     else:print(json.dumps(catalog(root),indent=2))
 if __name__=='__main__':main()

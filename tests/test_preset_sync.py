@@ -53,3 +53,12 @@ def test_bad_package(tmp_path,change):
  p=fixture(tmp_path/'a.skellpreset');d=json.loads(zipfile.ZipFile(p).read('preset.json'));change(d)
  with zipfile.ZipFile(p,'w') as z:z.writestr('preset.json',json.dumps(d))
  with pytest.raises(ValueError):s.package(p)
+
+def test_pair_and_preflight(tmp_path):
+ c,l,p,h=init(tmp_path);s.stage(c,'free_main','skellyruno','Free Main','main',p,pair='free');assert s.verify(c)=={'presets':1,'revisions':1,'loadable':1};dest=s.publish(c,l,'free_main',trial=True);o=l/'LibraryOrganization.txt';assert 'pair:user:'+dest.name.lower()+'\tfree' in o.read_text();o.write_text(o.read_text().replace('\tfree\n','\tcustom\n'));s.publish(c,l,'free_main',trial=True);assert '\tcustom\n' in o.read_text()
+ f=c/'revisions'/'free_main'/f'{h}.skellpreset';fixture(f,-5)
+ with pytest.raises(ValueError):s.verify(c)
+
+def test_verify_missing_latest(tmp_path):
+ c,l,p,h=init(tmp_path);v=s.catalog(c);v['presets']['free_main']['latest']='0'*64;s.put(c/'catalog.json',v)
+ with pytest.raises(ValueError):s.verify(c)

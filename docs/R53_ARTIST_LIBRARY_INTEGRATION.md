@@ -1,0 +1,9 @@
+# R53 native artist-library integration (2026-11-26)
+
+The user's matching presets belong to their personal artist library, not the factory program table. Reuse the existing Skell Preset library bridge and stable trial IDs. Pair the main and full variants through optional pair metadata. Verify immutable revisions before installing. Never overwrite local edits, production presets, automation IDs or project state.
+
+Private research: 33 hash-verified dry/reference pairs; 2,002 parameter evaluations including a corrected parallel-return rescreen. 35 loadable trial packages (33 source-pair chains plus two reconstructed historical native recipes), 38 immutable revisions. 21 previously unavailable native chains; three existing chains updated following guards, nine retained. 27 of 33 final native candidates score below their gain-only dry baseline. Repeated later-region screens are retrospective, not independent performance validation. All settings, private source identities, feedback, audio and proprietary state remain outside Git.
+
+Verification: 15 local bridge tests passed; two isolated installs of all 35 completed with zero conflicts, 35 artist tags and 35 pair/type tags. Cached real Quick4 renderer 074553c2bddf17513b86f791cc10fab241995b0f captured 175 scenes with zero reported errors; artist directory count visually inspected (35 unassigned, 20 main/15 adlib, separate synthetic QA entries). Native portable adapter compiled against cached source 3452420ce069ea64b58906ea731cde180a205188. Full wrapper equivalence, latest Windows VST3, FL Studio and listening approval are not verified. No production promotion.
+
+Use `preset_sync.py --catalog PATH verify` to preflight. `stage ... --pair stable_pair_id` writes optional pair metadata while preserving prior local metadata. Keep the two draft project PRs unmerged until full host verification.
