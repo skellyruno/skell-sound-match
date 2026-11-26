@@ -1,0 +1,9 @@
+# R37 opt-in vocal study adapters
+
+The supplied Gemini Doubler, Reeverb-based RVerb substitute, Facet static EQ/Waves sections and Prism C4/C6 were built as private native study libraries. SkellCore draft PR 47 adds WetReturn and an optional local adapter CMake hook. Existing SkellAir, ClassicDeEsser and AlignedSpectralPitchFormant remain unchanged. No proprietary/source uploads, private parameter tables, binaries, recordings or fitted recipes in Git.
+
+The offline Python adapter exposes six routes: doubler, rverb, waves_eq, facet_eq, c6, wet_return. It requires an explicit trust flag and SHA256 of locally compiled libraries. C6 returns declared latency; no host PDC claim. Build and recipe documentation are in the private R37 checkpoint. No automatic processing, no automatic presets or external sidechain parity claim.
+
+Local checks: 20 native rate/block comparisons at 32–192 kHz; 54 WetReturn checks across six rates plus sanitizer; 7 adapter rejection tests; 12 real excerpt route comparisons on Myers and Overtime with exact 127/512 output agreement. 34 Nobody dub/reverb return fits rejected; retain previous winners. 78 EQ/C6 trials on historical R35-picked vocals, three challenger renders cleared the internal metric gates: Wait 6.304 to 5.610, Overtime 1.887 to 1.489, Zaam 4.343 to 3.861. These are same-take offline trials, not independent performance or original-plugin parity, and do not replace approved sounds. R35 selections: Wait/Plan/Overtime/Hop Out/Muffle C, Zaam B, Wobbly no winner. Preserve all historical candidates.
+
+Full FabFilter state imports, dynamic/spectral/linear-phase EQ, other FabFilter processors, exact Fresh Air/DeEsser/AlterBoy recreation, API EQ table integration, real routing and Windows/DAW validation are incomplete. No JUCE acquisition locally due DNS. Do not merge unverified changes.
