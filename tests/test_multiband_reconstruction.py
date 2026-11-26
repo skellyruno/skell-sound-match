@@ -41,3 +41,9 @@ def test_invalid():
     with pytest.raises(ValueError):render_energy(b,np.ones((4,2))*100)
     with pytest.raises(ValueError):render_dynamic(b,np.ones((4,2,4))*100,sr)
     with pytest.raises(ValueError):active_partition(x,x[:-1],sr)
+
+
+def test_long_padded_export():
+    sr=44100;x=np.zeros((round(51.4*sr),2),'f');x[:3*sr]=tone(sr);t=x.copy();t[3*sr:4*sr]=tone(sr,1)*.1
+    end,a,b=active_partition(x,t,sr);assert 4*sr<=end<5*sr and a==int(.45*(3*sr)) and b==int(.7*(3*sr))
+    with pytest.raises(ValueError):split_bands(x,sr)

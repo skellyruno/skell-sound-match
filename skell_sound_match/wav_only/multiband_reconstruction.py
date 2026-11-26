@@ -8,10 +8,10 @@ from scipy import signal
 from scipy.optimize import lsq_linear
 
 
-def _audio(x, rate):
+def _audio(x, rate, *, max_frames=1920000):
     x = np.asarray(x, dtype=np.float32)
     if (not np.isfinite(rate) or int(rate) != rate or not 32000 <= rate <= 192000
-            or x.ndim != 2 or x.shape[1] != 2 or not 1 <= len(x) <= 1920000
+            or x.ndim != 2 or x.shape[1] != 2 or not 1 <= len(x) <= max_frames
             or not np.isfinite(x).all() or np.max(np.abs(x)) > 4):
         raise ValueError('invalid bounded stereo audio or sample rate')
     return x
@@ -23,7 +23,9 @@ def active_partition(source, reference, rate):
     Reject inadequate source or reference activity. Does not time-shift or prove
     recording identity. Full original files stay intact. Return crop end, a, b.
     """
-    x,t = _audio(source, rate), _audio(reference, rate)
+    x,t = _audio(source, rate, max_frames=12000000), _audio(reference, rate, max_frames=12000000)
+    if len(x)>60*rate or len(t)>60*rate:
+        raise ValueError('activity scan exceeds 60 seconds')
     if x.shape != t.shape:
         raise ValueError('different recording geometry')
     hop = round(rate*.01)
@@ -37,6 +39,8 @@ def active_partition(source, reference, rate):
             raise ValueError('insufficient activity')
         return int((active[-1]+1)*hop)
     end=last(x); length=min(len(x),max(end,last(t))+round(.25*rate))
+    if length>1920000:
+        raise ValueError('active span exceeds render budget')
     a,b=int(.45*end),int(.7*end)
     for z in (x,t):
         for w in (z[:a],z[a:b],z[b:length]):
