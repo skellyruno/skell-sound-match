@@ -1,0 +1,11 @@
+# R43 — Overtime C owner selection, expanded DSP intake
+
+Owner explicitly selected R42 C. Exact master WAV, chosen MP3 audition, chosen PCM24 WAV audition verified against R42 identities; lossless samples agree within one float32/PCM24 step after the recorded common gain. Preserve R42 C without modifying the master or factory state; Free B also remains protected. No claim of independent-performance accuracy.
+
+New source bundle identifies itself as AGPL-3.0; retain original privately, and verify compatibility and obligations before any production integration. Complete Air component format documented: 2530 bytes, little-endian header (1, 2522), two normalized finite controls and trim. New bounded inspector uses an explicitly supplied component, not arbitrary wrapper scanning; 8 local tests passed. Two actual wrapper component matches independently confirm previously inferred values. Preserve previous wrapper parser separately; no automatic state writes.
+
+Private standalone SSL E/G channel with supplied dynamics and G EQ tables, and Fruity Phaser built C++17 with warnings as errors. 15 rate/block comparisons (32, 44.1, 48, 96, 192 kHz; blocks 127/512) sample-exact on synthetic fixed settings. E/G neutral identity also tested. Actual Overtime SSL settings executed on dry vocal; no isolated reference. Native shim biquad used; 4K not exposed. No exact vendor parity or shipping plugin integration. Phaser default probe only, no original isolated Phaser reference.
+
+Overtime reconstructed from dry using actual state with SSL EQ-only, 50% dynamics blend, and full dynamics; 18 train/validation-selected bounded EQ calibration trials. Best held-out composite for each dynamics blend: 0.526956, 0.532546, 0.538651 respectively. R42 C 0.526956. The new dynamics trial does not improve the approved candidate. Retain original C. No new listening request or replacement.
+
+VoiceShift.cpp and VocalPitch.h now supplied; VocalPitch implementation and oversampler dependencies remain. DelphiMath header only, implementation remains missing. Flanger excerpts do not provide the full standalone core; L1 still not verified. AGPL source, actual settings, recordings and hashes remain private. Local JUCE fetch DNS blocked (not relevant to offline matching). No new VST3, full core integration, DAW validation or merge.
