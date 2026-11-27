@@ -46,7 +46,7 @@ def package(path):
     if not isinstance(s,list) or len(s)!=16 or {x.get('slotId') for x in s}!=set(range(16)):raise ValueError('invalid rack slots')
     if 'macros' in g and (len(g['macros'])!=8 or not all(number(v,0,1) for v in g['macros'])):raise ValueError('invalid macros')
     for x in s:
-        if type(x.get('slotId')) is not int or type(x.get('type')) is not int or not 0<=x['type']<45 or x['type']==12 or type(x.get('enabled')) is not bool or not number(x.get('wet'),0,1) or len(x.get('params',[]))!=16 or not all(number(v,0,1) for v in x['params']):raise ValueError('invalid/native-only slot')
+        if type(x.get('slotId')) is not int or type(x.get('type')) is not int or not 0<=x['type']<46 or x['type']==12 or type(x.get('enabled')) is not bool or not number(x.get('wet'),0,1) or len(x.get('params',[]))!=16 or not all(number(v,0,1) for v in x['params']):raise ValueError('invalid/native-only slot')
         if x['slotId']>=count and x['enabled']:raise ValueError('enabled hidden slot')
         if 'eqQ' in x and (len(x['eqQ'])!=8 or not all(number(v,0,1) for v in x['eqQ'])):raise ValueError('invalid EQ Q')
         for k,lo,hi in [('eqLowCut',0,1),('eqHighCut',0,1),('duckDepth',0,1),('duckThreshold',-60,-12),('duckRelease',50,1500),('duckAttack',2,80),('limitAttack',0,3),('limitRelease',5,500)]:

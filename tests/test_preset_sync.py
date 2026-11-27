@@ -62,3 +62,11 @@ def test_pair_and_preflight(tmp_path):
 def test_verify_missing_latest(tmp_path):
  c,l,p,h=init(tmp_path);v=s.catalog(c);v['presets']['free_main']['latest']='0'*64;s.put(c/'catalog.json',v)
  with pytest.raises(ValueError):s.verify(c)
+
+@pytest.mark.parametrize('module,valid',[(44,True),(45,True),(46,False),(12,False)])
+def test_phase_native_registry_boundary(tmp_path,module,valid):
+ p=fixture(tmp_path/'phase.skellpreset');d=json.loads(zipfile.ZipFile(p).read('preset.json'));d['chain'][0].update(type=module)
+ with zipfile.ZipFile(p,'w') as z:z.writestr('preset.json',json.dumps(d))
+ if valid:s.package(p)
+ else:
+  with pytest.raises(ValueError):s.package(p)
