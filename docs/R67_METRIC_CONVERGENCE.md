@@ -1,0 +1,9 @@
+# R67 conditional metric-aware convergence
+
+70% milestone requires 24/33 at unchanged composite <=1.000 at both rates and passing peak/stress checks. NOT MET. Eight checkpoint-backed qualifiers (24.2%); nine including reported-only R64 Wait Main (27.3%). Sixteen within 2.000. R62 actual plugin bank unchanged.
+
+252 completed trials, 16 complete reports, 15 safe. Frozen-seed spectral residuals, ensemble fitting, static direct metric optimization, input-conditioned gain and band-conditional gain. Four safe improvements: Wait Full 1.035593 -> 0.992401; Wait Main 1.123434 -> 1.120722 (worse than unavailable R64 reported result); Plan Full 1.477265 -> 1.345535; Overtime Full 1.481621 -> 1.407871. Nobody Main 1.441280 failed peak safety; no promotion.
+
+Wait Full saved coefficient replay reproduced scores 0.985982815 / 0.992401282, nominal peaks -2.133745 / -2.118473 dBTP, +6 dB stress -2.100623 / -2.092056 dBTP. Offline centered FIR, SRC and conditional gain, not measured host latency or CPU. Training earlier 45%, internal selection next 25%, refit through 70%, final 30% retrospective same-take evaluation. Previously fitted bases and repeated retrospective checks are not independent generalization evidence. No target samples at inference.
+
+R66 archive and all 13 Quick4 kit hashes verified. 72 local tests passed including nine new checkpoint validator tests. All 16 new report/recipe pairs validated; validator rejects missing, corrupted, inconsistent and wrong-source checkpoints. Existing runners save completed report atomically; validator is available to resume orchestration, not a guarantee against session limits. Prior exact-head CI 46027870602 passed. New CI separate. No private audio/models in Git, no new listening lab, installer, UI work, plugin bank promotion, Windows VST3 or FL Studio verification. Keep draft.
