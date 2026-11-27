@@ -18,7 +18,7 @@ def response(f,sr,params,widths,kinds):
             if kind==3:
                 den=np.array([A+1+d+beta,-2*((A-1)+(A+1)*cs),A+1+d-beta]);b=A*np.array([A+1-d+beta,2*((A-1)-(A+1)*cs),A+1-d-beta])
             else:
-                den=np.array([A+1-d+beta,2*((A-1)-(A+1)*cs),A+1-d-beta]);b=A*np.array([A+1+d+beta,-2*((A-1)+(A+1)*cs),A+1+d+beta])
+                den=np.array([A+1-d+beta,2*((A-1)-(A+1)*cs),A+1-d-beta]);b=A*np.array([A+1+d+beta,-2*((A-1)+(A+1)*cs),A+1+d-beta])
         h*=(b[0]+b[1]*z+b[2]*z2)/(den[0]+den[1]*z+den[2]*z2)
     return h
 
