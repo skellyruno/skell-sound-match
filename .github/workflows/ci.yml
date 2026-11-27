@@ -35,6 +35,15 @@ jobs:
           g++ -std=c++17 -O2 -Wall -Wextra -Werror native/research/test_dynamics_peak_history.cpp -o /tmp/skell-history-test
           /tmp/skell-history-test
           g++ -std=c++17 -O2 -Wall -Wextra -Werror native/research/state_inspect.cpp -o /tmp/skell-state-inspect
+      - name: Test streaming IR and allocation invariants
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          set -euo pipefail
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror native/research/test_partitioned_ir.cpp -o /tmp/skell-ir-test
+          /tmp/skell-ir-test
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror native/research/test_ir_alloc.cpp native/research/IRAllocationProbe.cpp -o /tmp/skell-ir-allocation-test
+          /tmp/skell-ir-allocation-test
       - name: Fetch pinned public Maximus reference for isolated research test
         if: runner.os == 'Linux'
         uses: actions/checkout@v5
