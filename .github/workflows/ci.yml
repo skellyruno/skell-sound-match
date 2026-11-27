@@ -44,6 +44,13 @@ jobs:
           /tmp/skell-ir-test
           g++ -std=c++17 -O2 -Wall -Wextra -Werror native/research/test_ir_alloc.cpp native/research/IRAllocationProbe.cpp -o /tmp/skell-ir-allocation-test
           /tmp/skell-ir-allocation-test
+      - name: Test asymmetric compressor gain curve
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          set -euo pipefail
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror native/research/test_asymmetric_gain_curve.cpp -o /tmp/skell-gain-curve-test
+          /tmp/skell-gain-curve-test
       - name: Fetch pinned public Maximus reference for isolated research test
         if: runner.os == 'Linux'
         uses: actions/checkout@v5
