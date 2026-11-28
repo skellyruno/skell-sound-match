@@ -1,0 +1,44 @@
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+.env
+private_audio/
+local_models/
+reports/private/
+*.wav
+*.mp3
+*.flac
+*.aiff
+*.fst
+*.vst3
+*.zip
+*.pt
+*.pth
+*.onnx
+*.flp
+*.npz
+*.sqlite3
+*.sqlite3-shm
+*.sqlite3-wal
+private_workspace/
+local_sound_archive/
+private-recipe-root/
+private_models/
+
+# Private offline listening pages may EMBED entire owner vocal recordings.
+# The reusable HTML generator lives in Python; never commit generated pages.
+*.html
+*.htm
+
+# Generated offline knob trials and private source provenance
+knob_cache/
+knob_trials/
+verified_pairs.json
+trial_report.json
+latest_batch_index.json
+fif_ears_signal_only.json
+experimental_candidate.wav

@@ -1,0 +1,72 @@
+{
+  "status": "audit_only_not_sound_approval",
+  "sample_rate": 44100,
+  "frame_count": 1878768,
+  "channel_count": 2,
+  "modified_sample_fraction": 0.003811,
+  "modified_sample_duration_seconds": 0.1624,
+  "event_count": 3,
+  "events": [
+    {
+      "start_seconds": 0.41426,
+      "end_seconds": 0.46601,
+      "edited_duration_ms": 51.746,
+      "reference_active_fraction_in_edit": 0.9487,
+      "edited_trial_minus_base_rms_db": -14.668,
+      "local_reference_error": {
+        "champion_rms_error_dbfs": -19.8802,
+        "trial_rms_error_dbfs": -20.0569,
+        "trial_minus_champion_db": -0.1768
+      },
+      "local_evidence": "inconclusive"
+    },
+    {
+      "start_seconds": 25.52349,
+      "end_seconds": 25.58392,
+      "edited_duration_ms": 60.431,
+      "reference_active_fraction_in_edit": 0.7876,
+      "edited_trial_minus_base_rms_db": -25.635,
+      "local_reference_error": {
+        "champion_rms_error_dbfs": -19.6048,
+        "trial_rms_error_dbfs": -20.0927,
+        "trial_minus_champion_db": -0.488
+      },
+      "local_evidence": "inconclusive"
+    },
+    {
+      "start_seconds": 41.04732,
+      "end_seconds": 41.10864,
+      "edited_duration_ms": 61.315,
+      "reference_active_fraction_in_edit": 0.7944,
+      "edited_trial_minus_base_rms_db": -19.308,
+      "local_reference_error": {
+        "champion_rms_error_dbfs": -23.6208,
+        "trial_rms_error_dbfs": -23.7444,
+        "trial_minus_champion_db": -0.1236
+      },
+      "local_evidence": "inconclusive"
+    }
+  ],
+  "whole_clip_reference_error": {
+    "champion_rms_error_dbfs": -16.6586,
+    "trial_rms_error_dbfs": -16.6606,
+    "trial_minus_champion_db": -0.0021
+  },
+  "reference_active_error": {
+    "champion_rms_error_dbfs": -16.3309,
+    "trial_rms_error_dbfs": -16.333,
+    "trial_minus_champion_db": -0.0021
+  },
+  "reference_quiet_error": {
+    "champion_rms_error_dbfs": -57.2229,
+    "trial_rms_error_dbfs": -57.223,
+    "trial_minus_champion_db": -0.0001
+  },
+  "active_fraction": 0.9273,
+  "recommended_decision": "keep_current_champion_until_blind_listening",
+  "limitations": [
+    "The event positions and metrics come from the same reference recording.",
+    "Audio differences outside short edits can dominate perceived character.",
+    "No automatic champion promotion or inference from reference audio is permitted."
+  ]
+}

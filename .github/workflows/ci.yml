@@ -1,0 +1,93 @@
+name: Python test suite
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+concurrency:
+  group: skell-sound-match-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  # Only superseded PR runs auto-cancel; protect main, release and manual runs.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+jobs:
+  core:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ['3.11']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install core and test requirements
+        run: python -m pip install -e ".[test]"
+      - name: Test
+        run: python -m pytest -q
+      - name: Test portable FL state interchange and meter history
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          set -euo pipefail
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror native/research/test_fl_raw_state.cpp -o /tmp/skell-state-test
+          /tmp/skell-state-test
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror native/research/test_dynamics_peak_history.cpp -o /tmp/skell-history-test
+          /tmp/skell-history-test
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror native/research/state_inspect.cpp -o /tmp/skell-state-inspect
+      - name: Test streaming IR and allocation invariants
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          set -euo pipefail
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror native/research/test_partitioned_ir.cpp -o /tmp/skell-ir-test
+          /tmp/skell-ir-test
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror native/research/test_ir_alloc.cpp native/research/IRAllocationProbe.cpp -o /tmp/skell-ir-allocation-test
+          /tmp/skell-ir-allocation-test
+      - name: Test asymmetric compressor gain curve
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          set -euo pipefail
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror native/research/test_asymmetric_gain_curve.cpp -o /tmp/skell-gain-curve-test
+          /tmp/skell-gain-curve-test
+      - name: Fetch pinned public Maximus reference for isolated research test
+        if: runner.os == 'Linux'
+        uses: actions/checkout@v5
+        with:
+          repository: skellyruno/skell-studio
+          ref: bc857c1808378410420cdd40d8585b0be6fbfbb4
+          path: .research-deps/skell-studio
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            plugins/ml-plasma/vendor/gridline/src/packs/dynamics/maximus_ref.h
+            plugins/ml-plasma/vendor/gridline/src/engine/MEnv.h
+            plugins/ml-plasma/vendor/gridline/LICENSE
+      - name: Compile and test the isolated Maximus reference
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=.research-deps/skell-studio/plugins/ml-plasma/vendor/gridline
+          test "$(git hash-object "$root/src/packs/dynamics/maximus_ref.h")" = 9cfffcc95ac8459090ab3f69fccc6e4ca02abf16
+          test "$(git hash-object "$root/src/engine/MEnv.h")" = 9a090404fb0fed04764b9b563258a32380a34229
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -ffp-contract=off -I"$root/src" native/research/test_maximus_reference.cpp native/research/MaximusAllocationProbe.cpp -o /tmp/skell-maximus-test
+          /tmp/skell-maximus-test
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -ffp-contract=off -I"$root/src" native/research/test_maximus_aligned.cpp native/research/MaximusAllocationProbe.cpp -o /tmp/skell-maximus-aligned-test
+          /tmp/skell-maximus-aligned-test
+          g++ -std=c++17 -O2 -Wall -Wextra -Werror -ffp-contract=off native/research/test_detuned_send.cpp native/research/MaximusAllocationProbe.cpp -o /tmp/skell-detuned-send-test
+          /tmp/skell-detuned-send-test
+      - name: Preserve exact public research headers for local DSP work
+        if: runner.os == 'Linux'
+        uses: actions/upload-artifact@v6
+        with:
+          name: Maximus-reference-public-source-bc857c1
+          path: |
+            .research-deps/skell-studio/plugins/ml-plasma/vendor/gridline/src/packs/dynamics/maximus_ref.h
+            .research-deps/skell-studio/plugins/ml-plasma/vendor/gridline/src/engine/MEnv.h
+            .research-deps/skell-studio/plugins/ml-plasma/vendor/gridline/LICENSE
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+

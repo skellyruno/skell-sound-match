@@ -1,0 +1,9 @@
+# R68 local contextual and phase-aware repair
+
+70% requires 24/33 with unchanged composite <=1.000 at both rates and nominal <=-1 dBTP, full +6 dB stress <=0 dBTP. NOT MET. Eight checkpoint-backed qualifiers (24.2%); nine including reported-only R64 Wait Main (27.3%). Sixteen within 2.000. No new qualifier. R62 actual processor bank unchanged.
+
+319 completed trials, 29 complete reports, 28 peak-safe. All report and recipe digests/source identities verified. Offline nonlinear metric-aware gain, multiwindow correction, model fusion, quadrature phase, exact band FIR, harmonic and moving-delay bases, local PCA/ridge regression, peak repair and stereo finish. Five safe improvements in worst-rate error: Wait Main 1.120722 -> 1.074183; Myers Full 1.199914 -> 1.073325; Plan Full 1.345535 -> 1.175094; Overtime Full 1.407871 -> 1.331131; Nobody Main 1.482371 -> 1.471331. R64 Wait Main .933 remains reported-only. Preserve failed alternatives and prior winners.
+
+All five improved saved models rerendered at both rates with identical composite scores and four estimated peak measurements. Earlier 45% fit, next 25% selection, refit through 70%, final 30% retrospective same-take evaluation. Prior fitted bases and repeated retrospective comparisons are not independent generalization. No reference samples at replay. Centered STFT/FIR and fixed-rate SRC are offline; no measured real-time CPU/PDC, Windows VST3, FL Studio, overload distortion certification or independent-take verification.
+
+R67 archive and 13 Quick4 kit entries verified. All 22 search/replay jobs exited successfully. 88 local tests passed (72 prior and 16 new). R67 exact-head CI 46030541936 passed. Generic helpers are offline research utilities, not integrated into the actual plugin. No private audio/coefficients published. No listening lab or approved-bank changes. Keep draft; new CI separate.

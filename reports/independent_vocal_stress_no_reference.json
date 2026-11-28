@@ -1,0 +1,52 @@
+{
+  "scope": "independent vocal safety/streaming stress only; no original Deuce REC->MAIN processed reference",
+  "release_threshold_estimated_true_peak_dbtp_4x": -1,
+  "records": [
+    {
+      "source_role": "other_artist_stem",
+      "sample_rate_hz": 44100,
+      "duration_seconds": 88.49290249433106,
+      "channels": 2,
+      "processing": "fixed Deuce v2.5 presence-stage stress only; NOT a complete Deuce candidate",
+      "whole_vs_512_max_abs_error": 0,
+      "other_block_max_abs_errors": {
+        "1": 0,
+        "63": 0,
+        "127": 0,
+        "257": 0,
+        "1024": 0
+      },
+      "input_peak_dbtp_4x_estimate": -0.10333458599064327,
+      "trial_peak_dbtp_4x_estimate": -0.17748465323622548,
+      "sample_peak_out": 0.9769929791452292,
+      "stereo_shape_preserved": true,
+      "finite": true,
+      "release_gate": "FAIL: estimated 4x true peak exceeds -1 dBTP",
+      "deuce_matching_claim": false
+    },
+    {
+      "source_role": "alchemist_rec_printed_input_not_dry",
+      "sample_rate_hz": 44100,
+      "duration_seconds": 42.602448979591834,
+      "channels": 2,
+      "processing": "fixed Deuce v2.5 presence-stage stress only; NOT a complete Deuce candidate",
+      "whole_vs_512_max_abs_error": 0,
+      "other_block_max_abs_errors": {
+        "1": 0,
+        "63": 0,
+        "127": 0,
+        "257": 0,
+        "1024": 0
+      },
+      "input_peak_dbtp_4x_estimate": -1.7068309604105183,
+      "trial_peak_dbtp_4x_estimate": -1.686152058662491,
+      "sample_peak_out": 0.8012426604276276,
+      "stereo_shape_preserved": true,
+      "finite": true,
+      "release_gate": "PASS numerically, but not a Deuce performance or target",
+      "deuce_matching_claim": false
+    }
+  ],
+  "interpretation": "Neither record has a matching original Deuce REC->MAIN target; neither validates transfer accuracy.",
+  "no_automatic_promotion": true
+}

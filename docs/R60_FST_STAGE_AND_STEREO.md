@@ -1,0 +1,13 @@
+# R60 — saved mixer topology and guarded stereo calibration
+
+Owner supplied three newer mixer FST variants. Private FSTs, exact state values, audio and fitted settings remain out of Git. New variants cannot establish that archived reference prints used the same settings. No listening test, installer or production approval.
+
+Added independent read-only stage inventory parser. Supports observed legacy and modern mixer key layouts with strict explicit track/slot matching, bounded event lengths, duplicate and malformed row rejection. Does not load proprietary state or replace the existing importer. Seven synthetic parser tests passed locally.
+
+Actual native processor search: 960 evaluations (FST-guided topology, residual EQ/dynamics, stereo generation, gain and conservative peak rescue) across 32 non-gate recording pairs; 4 accepted, 29 retained including protected gate. R59 cached native processor, verified JUCE 8.0.12 kit, 13 checksum entries, R59 checkpoint 1070 file hashes verified. Same archived take and same 45/25/30 percent fitting/selection/retrospective guard regions; repeated rescue after veto is not independent validation.
+
+Mean 44.1 kHz 5.0325239037 -> 4.9859107043; mean 48 kHz 5.0522439875 -> 5.0000970708. Four revisions rechecked for waveform, tone, envelope, stereo, peak, reported latency and full recording +6 dB stress. Unchanged results carried forward. Worst nominal estimated true peaks -1.16679/-1.02113 dBTP at 44.1/48 kHz. Full recording stress 0/33 over full scale, worst -0.12575 dBTP. No increased reported latency. Uh Huh Base's 4.985 candidate failed components and headroom; bounded 8.414 candidate still failed waveform. Both existing Uh Huh versions retained. Exact formant, motion and dynamics parity remains unverified.
+
+Recovered existing owner-provided Flangus research engine from private continuity checkpoint; compiled local batch renderer. Exact eight-word saved state rendered on dry recordings at 64 and 512 samples with zero sample difference. Archived isolated Myers pre/post stage diagnostic was worse than bypass on composite metric (4.154 -> 6.483) despite recovering stereo energy, peak +0.046 dBTP. No substitution or parity claim. Mixer routing, gains and stage alignment need further examination. No raw DSP source or settings published here.
+
+Generation 60 private bank: 35 stable skellyruno entries, 142 immutable revisions, artwork and historical approvals preserved. Cached-source bank-enabled Linux VST3 and native editor rebuilt; embedded bank migration/identity tests passed. Real artist browser capture inspected. Windows/FL Studio, independent performance, and distortion/aliasing validation remain outstanding. Target below 1.5 remains unmet except the protected gate.

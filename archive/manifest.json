@@ -1,0 +1,1183 @@
+{
+  "version": 1,
+  "recordings_are_public_per_user_request": true,
+  "meaning": "Audio was exported as lossless 24-bit FLAC and compared sample-for-sample against the original PCM",
+  "projects": {
+    "deuce": {
+      "signal_flow": "dry -> recording preset -> main preset -> full combined target",
+      "approved_history": [
+        "v1.4",
+        "v1.7",
+        "v1.9 (15s player only)",
+        "D/Max (15s player only)",
+        "v2.5 (15-second player only; offline post-v2.3 candidate, not native VST3)"
+      ],
+      "listening_champion": "Deuce v2.5 Presence Repair (listener-preferred 15-second offline candidate); D/Max protected rollback baseline; v1.9 retained",
+      "known_limitations": [
+        "Full v1.9 and Max WAV not in available artifacts; 15s comparisons archived",
+        "Transfer curve and plugin algorithm emulation unverified"
+      ]
+    },
+    "alchemist": {
+      "signal_flow": "recorded input already has printed recording effects; main chain additional",
+      "listening_candidates": [
+        "v0.3",
+        "v0.7"
+      ],
+      "known_limitations": [
+        "Input is not untreated dry vocal"
+      ]
+    }
+  },
+  "assets": [
+    {
+      "path": "data/deuce/audio/dry.flac",
+      "original_name": "deuce test dry vocals.wav",
+      "original_sha256": "e8386b6e634a602e34ea49544e961bfb798b11c0801b5a4da165411a0f16fa3a",
+      "sha256": "62290a2faf0f467327a12d647b3cc75cacc41e22a52ffe05235f54354b18d2dd",
+      "sample_rate": 44100,
+      "channels": 2,
+      "sample_count": 826875,
+      "subtype": "PCM_24",
+      "bytes": 1387291,
+      "kind": "lossless_audio",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/audio/dry.flac"
+      }
+    },
+    {
+      "path": "data/deuce/audio/recording_only.flac",
+      "original_name": "deuce test record preset vocals.wav",
+      "original_sha256": "ff5cbeb52c0f4e35341d59bcef6060a1bab813ddea27786b21840c142b10c820",
+      "sha256": "1b6f02c484bd64e43202f4bfd0b7a210f6c628381c98d04ca09a1ff477fb4516",
+      "sample_rate": 44100,
+      "channels": 2,
+      "sample_count": 826875,
+      "subtype": "PCM_24",
+      "bytes": 1246411,
+      "kind": "lossless_audio",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/audio/recording_only.flac"
+      }
+    },
+    {
+      "path": "data/deuce/audio/main_only.flac",
+      "original_name": "deuce test main preset no rec preset.wav",
+      "original_sha256": "06d7743c0fb1a3cb822d77342537eb685c23b196fc298336ad85d5ed82c76913",
+      "sha256": "7192b6be9587a7c3638b6b837c43f1379c235527e3dcd39cd14d91250287a9a3",
+      "sample_rate": 44100,
+      "channels": 2,
+      "sample_count": 826875,
+      "subtype": "PCM_24",
+      "bytes": 2646603,
+      "kind": "lossless_audio",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/audio/main_only.flac"
+      }
+    },
+    {
+      "path": "data/deuce/audio/full_combined.flac",
+      "original_name": "deuce test main preset vocals.wav",
+      "original_sha256": "ead7acd89fa3579d6b4a36d04513d505d15be4238d1b4b4754a887d5d3555168",
+      "sha256": "23e12e8b3c36e8127a6ec6aa6778aedef677996df66e66c853d81c75b70465c5",
+      "sample_rate": 44100,
+      "channels": 2,
+      "sample_count": 826875,
+      "subtype": "PCM_24",
+      "bytes": 2464444,
+      "kind": "lossless_audio",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/audio/full_combined.flac"
+      }
+    },
+    {
+      "path": "data/deuce/presets/rec.fst",
+      "original_name": "rec deuce.fst",
+      "original_sha256": "068911190350164db40955c0f111711fecd9cc7e194d3edb35fba861fa013168",
+      "sha256": "068911190350164db40955c0f111711fecd9cc7e194d3edb35fba861fa013168",
+      "bytes": 1682,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/presets/rec.fst"
+      }
+    },
+    {
+      "path": "data/deuce/presets/main.fst",
+      "original_name": "main deuce.fst",
+      "original_sha256": "989b263f5b720a70b0d3cc24b1a4a6be914f6b80c599d0621f15232ff0999f17",
+      "sha256": "989b263f5b720a70b0d3cc24b1a4a6be914f6b80c599d0621f15232ff0999f17",
+      "bytes": 27414,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/presets/main.fst"
+      }
+    },
+    {
+      "path": "data/deuce/approved_history/v1_4.flac",
+      "original_name": "Deuce_v14_Contour_Trial.wav",
+      "original_sha256": "f63148197ef8993817b832a6f1e802c3372e3190df21fa8f35de0cd893a0b204",
+      "sha256": "2cf1650d79c0e4573472aa348279cf0ff96795a614fc45d8b3df1e4cb879364b",
+      "sample_rate": 44100,
+      "channels": 2,
+      "sample_count": 826875,
+      "subtype": "PCM_24",
+      "bytes": 1382370,
+      "kind": "lossless_audio",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/approved_history/v1_4.flac"
+      }
+    },
+    {
+      "path": "data/deuce/approved_history/v1_7.flac",
+      "original_name": "Deuce_v17_ConditionalPresence_EXPERIMENT.wav",
+      "original_sha256": "55ebc257cbabe1dc8e2a815dd4697f67b7a0668a9a34ef4b5170637fe6f52884",
+      "sha256": "b24d54727153079d85f38f23316b18babe91a2682e08c8d9a77d90c237eaf562",
+      "sample_rate": 44100,
+      "channels": 2,
+      "sample_count": 826875,
+      "subtype": "PCM_24",
+      "bytes": 1382446,
+      "kind": "lossless_audio",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/approved_history/v1_7.flac"
+      }
+    },
+    {
+      "path": "data/deuce/listening_comparisons/A_15s.flac",
+      "original_name": "A.flac",
+      "original_sha256": "aaa5c9a6b781f59360d51aaf0f0c94236162d6897f3aa8fe4dc84ddd08a13a71",
+      "sha256": "aaa5c9a6b781f59360d51aaf0f0c94236162d6897f3aa8fe4dc84ddd08a13a71",
+      "sample_rate": 44100,
+      "channels": 2,
+      "sample_count": 661500,
+      "subtype": "PCM_24",
+      "bytes": 1852385,
+      "kind": "lossless_audio",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/listening_comparisons/A_15s.flac"
+      }
+    },
+    {
+      "path": "data/deuce/listening_comparisons/D_15s.flac",
+      "original_name": "D.flac",
+      "original_sha256": "b9776aeedc6472cf9cff2e6e3b2cae67661e1617e41a0386f70f91f00a18aafa",
+      "sha256": "b9776aeedc6472cf9cff2e6e3b2cae67661e1617e41a0386f70f91f00a18aafa",
+      "sample_rate": 44100,
+      "channels": 2,
+      "sample_count": 661500,
+      "subtype": "PCM_24",
+      "bytes": 1217512,
+      "kind": "lossless_audio",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/listening_comparisons/D_15s.flac"
+      }
+    },
+    {
+      "path": "data/deuce/listening_comparisons/E_15s.flac",
+      "original_name": "E.flac",
+      "original_sha256": "db84e31e1f67b788006f55fbbec8c782f6e57005c818638ed4ea3f88d3921a91",
+      "sha256": "db84e31e1f67b788006f55fbbec8c782f6e57005c818638ed4ea3f88d3921a91",
+      "sample_rate": 44100,
+      "channels": 2,
+      "sample_count": 661500,
+      "subtype": "PCM_24",
+      "bytes": 1193617,
+      "kind": "lossless_audio",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/listening_comparisons/E_15s.flac"
+      }
+    },
+    {
+      "path": "data/alchemist/audio/input_rec_printed.flac",
+      "original_name": "alchemist test vocals no main effects.wav",
+      "original_sha256": "d38a8aa7aafe8cafd2b6822c3011a76358f9d4c22739be0d677ee9b923af22f8",
+      "sha256": "115c28f87f57fb13eaafce7e3c28a0fbaaba95c86bddaa89440b3c92d453d706",
+      "sample_rate": 44100,
+      "channels": 2,
+      "sample_count": 1878768,
+      "subtype": "PCM_24",
+      "bytes": 4006724,
+      "kind": "lossless_audio",
+      "storage": {
+        "type": "parts",
+        "parts": [
+          {
+            "repo_path": "archive/chunks/data/alchemist/audio/input_rec_printed.flac.part000",
+            "size": 1400000,
+            "sha256": "ff59296caf64d195deeaef4f24f22aef3d6f92b1513dc60965744acadea9115f"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/audio/input_rec_printed.flac.part001",
+            "size": 1400000,
+            "sha256": "e51f3a7548fe5971aee63695edb0e0998865881e67d930701cacae2d36141384"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/audio/input_rec_printed.flac.part002",
+            "size": 1206724,
+            "sha256": "c4ebcddd8893d05d49efbdb7a33cc8b9078350092c88e4c941d14f799b4c9d05"
+          }
+        ]
+      }
+    },
+    {
+      "path": "data/alchemist/audio/main_effects.flac",
+      "original_name": "alchemist test main effects on .wav",
+      "original_sha256": "04dbf0f2e0bfe2a5275121a15e7503abf384e03000a6b479948a644497710c0f",
+      "sha256": "e40d6abcb9b9a111c8a3be8be3445b21726c1d8b98e6e99e5a3613d6add4adbb",
+      "sample_rate": 44100,
+      "channels": 2,
+      "sample_count": 1878768,
+      "subtype": "PCM_24",
+      "bytes": 4716564,
+      "kind": "lossless_audio",
+      "storage": {
+        "type": "parts",
+        "parts": [
+          {
+            "repo_path": "archive/chunks/data/alchemist/audio/main_effects.flac.part000",
+            "size": 1400000,
+            "sha256": "76930bef9354c162ae7c42995b37c0302ae871d76f6bb5672a1521ea0d2ec3f6"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/audio/main_effects.flac.part001",
+            "size": 1400000,
+            "sha256": "a840bed7a590d6b5f45f70101f356939871b7267083cc8a1700173503dd376aa"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/audio/main_effects.flac.part002",
+            "size": 1400000,
+            "sha256": "cff96236b8479bdb9eca6988ac1f8a5060900ead050d016a13962322db1c7598"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/audio/main_effects.flac.part003",
+            "size": 516564,
+            "sha256": "b4bea70720176bd640e67cde465622fd6dc4e605cde749ef2b2763c543be5bb0"
+          }
+        ]
+      }
+    },
+    {
+      "path": "data/alchemist/audio/with_reverb_delay.flac",
+      "original_name": "alchemist test rev and del.wav",
+      "original_sha256": "710929855273576bbda2ddea0b3e3e5aa8fdbd830f2016a327d75e19ca0836c4",
+      "sha256": "bf974b0f5d3b8ee04979971df67f7e52a52468b098b0fa3587192f901fde8058",
+      "sample_rate": 44100,
+      "channels": 2,
+      "sample_count": 1878768,
+      "subtype": "PCM_24",
+      "bytes": 8453764,
+      "kind": "lossless_audio",
+      "storage": {
+        "type": "parts",
+        "parts": [
+          {
+            "repo_path": "archive/chunks/data/alchemist/audio/with_reverb_delay.flac.part000",
+            "size": 1400000,
+            "sha256": "ff38cb124033695ced92b553ce2f2a9d7f6adc0315f997aa29038c880678b106"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/audio/with_reverb_delay.flac.part001",
+            "size": 1400000,
+            "sha256": "d237a5cadce2350f3dfcd4a5171498e5a977bc7ee1fee5cd58f08fdc2368f60e"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/audio/with_reverb_delay.flac.part002",
+            "size": 1400000,
+            "sha256": "3444e2d95957f8b622cd993e435d9ffbb0dc52c442ee897636470fa6265d23c1"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/audio/with_reverb_delay.flac.part003",
+            "size": 1400000,
+            "sha256": "783cfb8aa426c5dcc3e16033aa727839c99ab0469424945f5390f9b9622161b6"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/audio/with_reverb_delay.flac.part004",
+            "size": 1400000,
+            "sha256": "596f2252956f42a71d3f5f662684dd1cd5594631b274274d811754c9fd55f450"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/audio/with_reverb_delay.flac.part005",
+            "size": 1400000,
+            "sha256": "dcc456a49dc42cf6d0fbd0e3b0749b7cf80a653748464aa51c05ac526dd0c7b7"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/audio/with_reverb_delay.flac.part006",
+            "size": 53764,
+            "sha256": "9a372915d171b3c7988323f36d9966b0807e9bb3a13349d23045f154a151f545"
+          }
+        ]
+      }
+    },
+    {
+      "path": "data/alchemist/audio/last_limiter_bypassed.flac",
+      "original_name": "alchemist test last limiter off.wav",
+      "original_sha256": "7043899b926e1f8c2b1865adc76126570d7a12f43ca7cc82cd44591df2296e13",
+      "sha256": "0aaef96e6117e3094619a1fa7c4b4020490be8ae7341efd7c5a321bdab0e788c",
+      "sample_rate": 44100,
+      "channels": 2,
+      "sample_count": 1878768,
+      "subtype": "PCM_24",
+      "bytes": 4715814,
+      "kind": "lossless_audio",
+      "storage": {
+        "type": "parts",
+        "parts": [
+          {
+            "repo_path": "archive/chunks/data/alchemist/audio/last_limiter_bypassed.flac.part000",
+            "size": 1400000,
+            "sha256": "74e332d83412500632b743a493fd013608553933c2917cc4dbdd302975fcfb07"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/audio/last_limiter_bypassed.flac.part001",
+            "size": 1400000,
+            "sha256": "d3f999b77db7ce594b78356db4dc41e784fdca795690c8f3d20be328af1cebfd"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/audio/last_limiter_bypassed.flac.part002",
+            "size": 1400000,
+            "sha256": "a1ac50d6f02015c1da65dbcaed097c30c23f6f9c407f396378cbaecc6d6bacbd"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/audio/last_limiter_bypassed.flac.part003",
+            "size": 515814,
+            "sha256": "bdabb6939810f1bcfaf10ef3fdad5274fbf0854dc7887256daef802cfc569c7a"
+          }
+        ]
+      }
+    },
+    {
+      "path": "data/alchemist/presets/MAIN.fst",
+      "original_name": "MAIN.fst",
+      "original_sha256": "66077b7a4e1695ab8817b6cbe74be7f098afa1fe8fee52ac4fa3e90065359424",
+      "sha256": "66077b7a4e1695ab8817b6cbe74be7f098afa1fe8fee52ac4fa3e90065359424",
+      "bytes": 12285,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/alchemist/presets/MAIN.fst"
+      }
+    },
+    {
+      "path": "data/alchemist/approved_history/v0_3_hybrid.flac",
+      "original_name": "Alchemist_Skelly_Hybrid_v03.wav",
+      "original_sha256": "761b13b5f15d794171c863fef090465828a5006b28b4a91f52ba44caf5309bfe",
+      "sha256": "7ff8de76b2bbed3245b9d22f0514ea03cc549d8cdb71cfc34a476e9d5b7c63a6",
+      "sample_rate": 44100,
+      "channels": 2,
+      "sample_count": 1878768,
+      "subtype": "PCM_24",
+      "bytes": 4447103,
+      "kind": "lossless_audio",
+      "storage": {
+        "type": "parts",
+        "parts": [
+          {
+            "repo_path": "archive/chunks/data/alchemist/approved_history/v0_3_hybrid.flac.part000",
+            "size": 1400000,
+            "sha256": "1964abb07e845ffdc22491e6c1afae1d7f124c8a3400e1e5765380ce270400a8"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/approved_history/v0_3_hybrid.flac.part001",
+            "size": 1400000,
+            "sha256": "1d3c59334f9bb06281e3dde572db524917574e02ae4d7fdee40c875e8786a5a3"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/approved_history/v0_3_hybrid.flac.part002",
+            "size": 1400000,
+            "sha256": "971ecd7a0a29f51ce01146d108acd5e31f93e6ec8cd1e0e38e8bcc0091a4042a"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/approved_history/v0_3_hybrid.flac.part003",
+            "size": 247103,
+            "sha256": "5b0bb8e406aad9548f998b1939cdfd929f23c6bbf25a8ba8f5874db1d7ebedbb"
+          }
+        ]
+      }
+    },
+    {
+      "path": "data/alchemist/approved_history/v0_7_refined.flac",
+      "original_name": "Alchemist_Refined_v07_EXPERIMENT.wav",
+      "original_sha256": "bc28d81cee1ab3e89af0d5abf38468d22ca95a2ae49670f663f5e3acd1dc89c8",
+      "sha256": "53c45277c1427845b9b2f31a43187c46336def9ebd05f12f6de899da0e3dd1ad",
+      "sample_rate": 44100,
+      "channels": 2,
+      "sample_count": 1878768,
+      "subtype": "PCM_24",
+      "bytes": 4486558,
+      "kind": "lossless_audio",
+      "storage": {
+        "type": "parts",
+        "parts": [
+          {
+            "repo_path": "archive/chunks/data/alchemist/approved_history/v0_7_refined.flac.part000",
+            "size": 1400000,
+            "sha256": "f3426f277df20c6d8a41090ab44e1c84aec171d790933bda30bdebefc4361f62"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/approved_history/v0_7_refined.flac.part001",
+            "size": 1400000,
+            "sha256": "1254e429cb0a45e90a9dfd0b05a0ffc2f9742e749cc80c5c2647059af6f41b48"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/approved_history/v0_7_refined.flac.part002",
+            "size": 1400000,
+            "sha256": "093bb88d1add208e59698af18dd826ea430ae0ba946e63263f24b2c46bc4f0b5"
+          },
+          {
+            "repo_path": "archive/chunks/data/alchemist/approved_history/v0_7_refined.flac.part003",
+            "size": 286558,
+            "sha256": "8f23e53cb3ece538fb6d1f28c47ad1254cc9c5d7334074b263041f63f50adbff"
+          }
+        ]
+      }
+    },
+    {
+      "path": "data/reports/max_quality_gate.json",
+      "original_name": "Champion_vs_Max_Quality_Gate.json",
+      "original_sha256": "6a33ca54772ba5f0f43d4dac83f268734b75f87232b8ba67af2dd934da010c5e",
+      "sha256": "6a33ca54772ba5f0f43d4dac83f268734b75f87232b8ba67af2dd934da010c5e",
+      "bytes": 6532,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/reports/max_quality_gate.json"
+      }
+    },
+    {
+      "path": "data/reports/onset_review.json",
+      "original_name": "D_vs_E_Onset_Review.json",
+      "original_sha256": "737f69fafa7243509215aa5ec88be73917fe35e49a25ab73e14ab4d89660a0fa",
+      "sha256": "737f69fafa7243509215aa5ec88be73917fe35e49a25ab73e14ab4d89660a0fa",
+      "bytes": 3560,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/reports/onset_review.json"
+      }
+    },
+    {
+      "path": "data/reports/alchemist_crosscheck.json",
+      "original_name": "Alchemist_Onset_Generalization_Audit.json",
+      "original_sha256": "dbcbc6b8caa601fcfd35a34f3a37670ea8802a24116aa9682de318ea25a8e7eb",
+      "sha256": "dbcbc6b8caa601fcfd35a34f3a37670ea8802a24116aa9682de318ea25a8e7eb",
+      "bytes": 2342,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/reports/alchemist_crosscheck.json"
+      }
+    },
+    {
+      "path": "data/reports/handoff_notes.md",
+      "original_name": "HANDOFF (1).md",
+      "original_sha256": "6a882025bf289af24a679cbdc2375669c264b6ea5f63ba37623feb9677dacb18",
+      "sha256": "6a882025bf289af24a679cbdc2375669c264b6ea5f63ba37623feb9677dacb18",
+      "bytes": 12058,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/reports/handoff_notes.md"
+      }
+    },
+    {
+      "path": "data/deuce/screenshots/20261114-112732.png",
+      "original_name": "image(20261114-112732).png",
+      "original_sha256": "124db69e8b6b259820ebd144f01640d426247bde17fa0f385b868115d32e29e0",
+      "sha256": "124db69e8b6b259820ebd144f01640d426247bde17fa0f385b868115d32e29e0",
+      "bytes": 278318,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/screenshots/20261114-112732.png"
+      }
+    },
+    {
+      "path": "data/deuce/screenshots/20261114-112739-1.png",
+      "original_name": "image(20261114-112739-1).png",
+      "original_sha256": "d0de91f0ff660e9163c30f8aa0807e0352430ec750624894f2a99e19a409e57f",
+      "sha256": "d0de91f0ff660e9163c30f8aa0807e0352430ec750624894f2a99e19a409e57f",
+      "bytes": 164554,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/screenshots/20261114-112739-1.png"
+      }
+    },
+    {
+      "path": "data/deuce/screenshots/20261114-112739.png",
+      "original_name": "image(20261114-112739).png",
+      "original_sha256": "bfa54abaf546eedb33ab693686f97aa9a31a36be47a33391e4d3fea0a4447d74",
+      "sha256": "bfa54abaf546eedb33ab693686f97aa9a31a36be47a33391e4d3fea0a4447d74",
+      "bytes": 121486,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/screenshots/20261114-112739.png"
+      }
+    },
+    {
+      "path": "data/deuce/screenshots/20261114-112756.png",
+      "original_name": "image(20261114-112756).png",
+      "original_sha256": "07f38abeeb57ab1963e4b62b816d9823b3363db11f659c02d50de47a1881021b",
+      "sha256": "07f38abeeb57ab1963e4b62b816d9823b3363db11f659c02d50de47a1881021b",
+      "bytes": 160196,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/screenshots/20261114-112756.png"
+      }
+    },
+    {
+      "path": "data/deuce/screenshots/20261114-112757.png",
+      "original_name": "image(20261114-112757).png",
+      "original_sha256": "19394cbf4e7da523d1e27f5e63bea238619b7b8be89f9107906808e7226a15fd",
+      "sha256": "19394cbf4e7da523d1e27f5e63bea238619b7b8be89f9107906808e7226a15fd",
+      "bytes": 5316,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/screenshots/20261114-112757.png"
+      }
+    },
+    {
+      "path": "data/deuce/screenshots/20261114-131520.png",
+      "original_name": "image(20261114-131520).png",
+      "original_sha256": "37e0fe9961dc3552b9f0f620c723303937f5a0a6bd2b442e198d6376552e77db",
+      "sha256": "37e0fe9961dc3552b9f0f620c723303937f5a0a6bd2b442e198d6376552e77db",
+      "bytes": 55561,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/screenshots/20261114-131520.png"
+      }
+    },
+    {
+      "path": "data/deuce/screenshots/20261114-131602.png",
+      "original_name": "image(20261114-131602).png",
+      "original_sha256": "c22527e5ab5dac8cbf391271b6721f6e3b2fc8b3464af5ecc0cd58902cbb6797",
+      "sha256": "c22527e5ab5dac8cbf391271b6721f6e3b2fc8b3464af5ecc0cd58902cbb6797",
+      "bytes": 766038,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/screenshots/20261114-131602.png"
+      }
+    },
+    {
+      "path": "data/deuce/screenshots/20261114-131556.png",
+      "original_name": "image(20261114-131556).png",
+      "original_sha256": "0536d885ac0f1643328a9160901980b311288da803b5bfcab99c7ec01775cdd1",
+      "sha256": "0536d885ac0f1643328a9160901980b311288da803b5bfcab99c7ec01775cdd1",
+      "bytes": 35439,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/screenshots/20261114-131556.png"
+      }
+    },
+    {
+      "path": "data/deuce/screenshots/20261114-131606.png",
+      "original_name": "image(20261114-131606).png",
+      "original_sha256": "f0d8600bb14fbb2f19221cfcda50229be277ac13e8c8a600945c32966e979548",
+      "sha256": "f0d8600bb14fbb2f19221cfcda50229be277ac13e8c8a600945c32966e979548",
+      "bytes": 251018,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/screenshots/20261114-131606.png"
+      }
+    },
+    {
+      "path": "data/deuce/screenshots/20261114-131606-1.png",
+      "original_name": "image(20261114-131606-1).png",
+      "original_sha256": "7ffa0ac9aea4e0eeae9747ce9e35e0266d6fedd86607567f935103c09cf5826a",
+      "sha256": "7ffa0ac9aea4e0eeae9747ce9e35e0266d6fedd86607567f935103c09cf5826a",
+      "bytes": 129271,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/screenshots/20261114-131606-1.png"
+      }
+    },
+    {
+      "path": "data/deuce/screenshots/20261114-131631.png",
+      "original_name": "image(20261114-131631).png",
+      "original_sha256": "8df5bc3ed259f39df4c1bae94724d24fa072c077d9dcf46ad7b1d018a219aba3",
+      "sha256": "8df5bc3ed259f39df4c1bae94724d24fa072c077d9dcf46ad7b1d018a219aba3",
+      "bytes": 913086,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/screenshots/20261114-131631.png"
+      }
+    },
+    {
+      "path": "data/deuce/screenshots/20261114-131635.png",
+      "original_name": "image(20261114-131635).png",
+      "original_sha256": "a073e358d6987831c1d170cf49d814a2b809519f0fc74257523d6c5cefb2275a",
+      "sha256": "a073e358d6987831c1d170cf49d814a2b809519f0fc74257523d6c5cefb2275a",
+      "bytes": 321205,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/screenshots/20261114-131635.png"
+      }
+    },
+    {
+      "path": "data/deuce/screenshots/20261114-131647.png",
+      "original_name": "image(20261114-131647).png",
+      "original_sha256": "785f1357d36ae1f885a03e3ce167ce725703c556667865d30ff010695edf3bb9",
+      "sha256": "785f1357d36ae1f885a03e3ce167ce725703c556667865d30ff010695edf3bb9",
+      "bytes": 776332,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/screenshots/20261114-131647.png"
+      }
+    },
+    {
+      "path": "data/deuce/screenshots/20261114-131647-1.png",
+      "original_name": "image(20261114-131647-1).png",
+      "original_sha256": "50140ad578670038dcfd7d604189b2d5155505143c478a15c7911292393ac273",
+      "sha256": "50140ad578670038dcfd7d604189b2d5155505143c478a15c7911292393ac273",
+      "bytes": 5272,
+      "kind": "original_asset",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/screenshots/20261114-131647-1.png"
+      }
+    },
+    {
+      "path": "data/deuce/research_models/Deuce_MainStage_TwoInput.json",
+      "original_name": "models/Deuce_MainStage_TwoInput.json",
+      "original_sha256": "515a2fdd1eb75270c52744810cea7046004b21a1e5e810bf6eb2adff5369c840",
+      "sha256": "515a2fdd1eb75270c52744810cea7046004b21a1e5e810bf6eb2adff5369c840",
+      "bytes": 162165,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_models/Deuce_MainStage_TwoInput.json"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_models/Deuce_v14_Contour_Model.json",
+      "original_name": "models/Deuce_v14_Contour_Model.json",
+      "original_sha256": "85956ffc0617dc05605eb5f26c7d610a8d85ee5628171c51ff05543c66062fe3",
+      "sha256": "85956ffc0617dc05605eb5f26c7d610a8d85ee5628171c51ff05543c66062fe3",
+      "bytes": 1877248,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_models/Deuce_v14_Contour_Model.json"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_models/Deuce_v17_ConditionalPresence.json",
+      "original_name": "models/Deuce_v17_ConditionalPresence.json",
+      "original_sha256": "b45909a6a18a64ee0c25119b504b7677f97466153bde291d3fadb574605f80c1",
+      "sha256": "b45909a6a18a64ee0c25119b504b7677f97466153bde291d3fadb574605f80c1",
+      "bytes": 764,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_models/Deuce_v17_ConditionalPresence.json"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_reports/Deuce_FST_Chain_Map.json",
+      "original_name": "reports/Deuce_FST_Chain_Map.json",
+      "original_sha256": "06d1afbe8505b6ae82605d4b821e684387a56f17a504eddeaedd4e09ba17df81",
+      "sha256": "06d1afbe8505b6ae82605d4b821e684387a56f17a504eddeaedd4e09ba17df81",
+      "bytes": 17585,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_reports/Deuce_FST_Chain_Map.json"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_reports/v17_audit.json",
+      "original_name": "reports/v17_audit.json",
+      "original_sha256": "c5fa0a014e7d55e0a4fbe67f99242d0acbe14749ea76304dd9a0adc1dcb5375e",
+      "sha256": "c5fa0a014e7d55e0a4fbe67f99242d0acbe14749ea76304dd9a0adc1dcb5375e",
+      "bytes": 6190,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_reports/v17_audit.json"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_reports/Checksums.json",
+      "original_name": "reports/Checksums.json",
+      "original_sha256": "5685bbd77666e21f80d63f3b7c0fb30ce863c8b10af6a2ef25a19aaed326691c",
+      "sha256": "5685bbd77666e21f80d63f3b7c0fb30ce863c8b10af6a2ef25a19aaed326691c",
+      "bytes": 4407,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_reports/Checksums.json"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/fst_inspector.py",
+      "original_name": "code/fst_inspector.py",
+      "original_sha256": "aeb3cfdbfa3478199ef242d5b5e109468478cca402bbd656d34305689cb973cb",
+      "sha256": "aeb3cfdbfa3478199ef242d5b5e109468478cca402bbd656d34305689cb973cb",
+      "bytes": 5831,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/fst_inspector.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/deuce_v14.py",
+      "original_name": "code/deuce_v14.py",
+      "original_sha256": "da7cb3dd30d7d742e10d16739060d3d89e18c7173bf8a59a3c2344fd953b480f",
+      "sha256": "da7cb3dd30d7d742e10d16739060d3d89e18c7173bf8a59a3c2344fd953b480f",
+      "bytes": 7079,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/deuce_v14.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/skelly_soundmatch_v08.py",
+      "original_name": "code/skelly_soundmatch_v08.py",
+      "original_sha256": "c3a6cff4587de58a718dc593c042908f94b462bd3088c7ae8490e1e3b4852edf",
+      "sha256": "c3a6cff4587de58a718dc593c042908f94b462bd3088c7ae8490e1e3b4852edf",
+      "bytes": 13154,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/skelly_soundmatch_v08.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/dual_input_main_calibrator.py",
+      "original_name": "code/dual_input_main_calibrator.py",
+      "original_sha256": "b7c8d3a189e29c888a40cfbe9a8f2c33e52f937fd595cb3238010fdaedf1b3b0",
+      "sha256": "b7c8d3a189e29c888a40cfbe9a8f2c33e52f937fd595cb3238010fdaedf1b3b0",
+      "bytes": 5833,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/dual_input_main_calibrator.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/deuce_contour_v09.py",
+      "original_name": "code/deuce_contour_v09.py",
+      "original_sha256": "8b889e1ea4920480206d6b86bcea7a14fb0a52301c9538da7d2cb2b905336a56",
+      "sha256": "8b889e1ea4920480206d6b86bcea7a14fb0a52301c9538da7d2cb2b905336a56",
+      "bytes": 8030,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/deuce_contour_v09.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/vocalmatch_v12.py",
+      "original_name": "code/vocalmatch_v12.py",
+      "original_sha256": "dc8d91f65449be68b78f178cd905bdbf5689d02c091fbe3470bc96a33f4b6d48",
+      "sha256": "dc8d91f65449be68b78f178cd905bdbf5689d02c091fbe3470bc96a33f4b6d48",
+      "bytes": 10126,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/vocalmatch_v12.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/test_tools.py",
+      "original_name": "code/test_tools.py",
+      "original_sha256": "ee3a3cf5a0301d6d7b71be52a55ba6742101ea472ad5979d9d0366bb901b7a04",
+      "sha256": "ee3a3cf5a0301d6d7b71be52a55ba6742101ea472ad5979d9d0366bb901b7a04",
+      "bytes": 2723,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/test_tools.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/audit_v17.py",
+      "original_name": "code/audit_v17.py",
+      "original_sha256": "f027434f50978ec80bc0ea27cf2cd26b05cedc811ca218912b80216d3b21a35a",
+      "sha256": "f027434f50978ec80bc0ea27cf2cd26b05cedc811ca218912b80216d3b21a35a",
+      "bytes": 7567,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/audit_v17.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/deuce_v17_voicing.py",
+      "original_name": "code/deuce_v17_voicing.py",
+      "original_sha256": "daf2c848ab3e05226f41f521fea5b0785e17d8a4d6f12dad60df83036cc40161",
+      "sha256": "daf2c848ab3e05226f41f521fea5b0785e17d8a4d6f12dad60df83036cc40161",
+      "bytes": 6797,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/deuce_v17_voicing.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/deuce_v13.py",
+      "original_name": "code/deuce_v13.py",
+      "original_sha256": "6935f9a3c9700f8ef44fd585272d8467e2230b9e1a1572f668b9a91d053e7df8",
+      "sha256": "6935f9a3c9700f8ef44fd585272d8467e2230b9e1a1572f668b9a91d053e7df8",
+      "bytes": 3340,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/deuce_v13.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/vocalmatch_v11.py",
+      "original_name": "code/vocalmatch_v11.py",
+      "original_sha256": "2fdff98ed9d34ba8ab18457de79dcd6f3c873cef5c8cb146766314fbeccde1a0",
+      "sha256": "2fdff98ed9d34ba8ab18457de79dcd6f3c873cef5c8cb146766314fbeccde1a0",
+      "bytes": 8742,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/vocalmatch_v11.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/vocalmatch_residual_v10.py",
+      "original_name": "code/vocalmatch_residual_v10.py",
+      "original_sha256": "5929fa0d15b293d83002c1de3a9bf762f4d41d64cf6c3a4ab64ea99b0d4eacbc",
+      "sha256": "5929fa0d15b293d83002c1de3a9bf762f4d41d64cf6c3a4ab64ea99b0d4eacbc",
+      "bytes": 10483,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/vocalmatch_residual_v10.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/deuce/research_code/stage_audit.py",
+      "original_name": "code/stage_audit.py",
+      "original_sha256": "1c8011e1074bd2c03bf6438be183354623be404155570eb2c95958d12a9500d7",
+      "sha256": "1c8011e1074bd2c03bf6438be183354623be404155570eb2c95958d12a9500d7",
+      "bytes": 3199,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/deuce/research_code/stage_audit.py"
+      },
+      "provenance_zip": "Skelly_Deuce_v1_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/alchemist/research_code/vocal_match_v07.py",
+      "original_name": "Skelly_Sound_Matching_v0_7/vocal_match_v07.py",
+      "original_sha256": "24c35f6c0812338ea5f06405ee0963ce0ae1b7b9f7bf264208b30ba5d5eb549d",
+      "sha256": "24c35f6c0812338ea5f06405ee0963ce0ae1b7b9f7bf264208b30ba5d5eb549d",
+      "bytes": 12654,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/alchemist/research_code/vocal_match_v07.py"
+      },
+      "provenance_zip": "Skelly_Sound_Matching_v0_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/alchemist/research_code/skelly_pipeline_v07.py",
+      "original_name": "Skelly_Sound_Matching_v0_7/skelly_pipeline_v07.py",
+      "original_sha256": "4cd7a29edaf1525000737ff85af2c4c52355716e55adca2e43bccc677cea49dd",
+      "sha256": "4cd7a29edaf1525000737ff85af2c4c52355716e55adca2e43bccc677cea49dd",
+      "bytes": 3636,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/alchemist/research_code/skelly_pipeline_v07.py"
+      },
+      "provenance_zip": "Skelly_Sound_Matching_v0_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/alchemist/research_code/vocal_match_skelly_v3.py",
+      "original_name": "Skelly_Sound_Matching_v0_7/vocal_match_skelly_v3.py",
+      "original_sha256": "ced84cbac5897329d6166d56a516ac0a8244716b5a7f16941c2812bf0c2984e2",
+      "sha256": "ced84cbac5897329d6166d56a516ac0a8244716b5a7f16941c2812bf0c2984e2",
+      "bytes": 72403,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/alchemist/research_code/vocal_match_skelly_v3.py"
+      },
+      "provenance_zip": "Skelly_Sound_Matching_v0_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/alchemist/research_code/phase_match_v04.py",
+      "original_name": "Skelly_Sound_Matching_v0_7/phase_match_v04.py",
+      "original_sha256": "d2df6c5da3791f9c336c5f754c424e2ff9318c3df8ba0449d857d3e008ee618c",
+      "sha256": "d2df6c5da3791f9c336c5f754c424e2ff9318c3df8ba0449d857d3e008ee618c",
+      "bytes": 16090,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/alchemist/research_code/phase_match_v04.py"
+      },
+      "provenance_zip": "Skelly_Sound_Matching_v0_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/alchemist/research_code/inspect_fst.py",
+      "original_name": "Skelly_Sound_Matching_v0_7/inspect_fst.py",
+      "original_sha256": "85e69cd377869a7d65f3ed6cea11e218c508c3cf3db7cfeee8e7d23045bed1bb",
+      "sha256": "85e69cd377869a7d65f3ed6cea11e218c508c3cf3db7cfeee8e7d23045bed1bb",
+      "bytes": 2191,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/alchemist/research_code/inspect_fst.py"
+      },
+      "provenance_zip": "Skelly_Sound_Matching_v0_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/alchemist/research_reports/SHA256_MANIFEST.json",
+      "original_name": "Skelly_Sound_Matching_v0_7/SHA256_MANIFEST.json",
+      "original_sha256": "27d58b3ddad0e32a79f3331d9d83b2967a3e15243e403905b66c8c81c9bd812d",
+      "sha256": "27d58b3ddad0e32a79f3331d9d83b2967a3e15243e403905b66c8c81c9bd812d",
+      "bytes": 1474,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/alchemist/research_reports/SHA256_MANIFEST.json"
+      },
+      "provenance_zip": "Skelly_Sound_Matching_v0_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/alchemist/research_reports/Alchemist_Refined_v07_report.json",
+      "original_name": "Skelly_Sound_Matching_v0_7/Alchemist/Alchemist_Refined_v07_report.json",
+      "original_sha256": "48f49fa0bf28f83e7eef1911afc0dd8d8df35b0f1a0d63da97765d47c8fb69f0",
+      "sha256": "48f49fa0bf28f83e7eef1911afc0dd8d8df35b0f1a0d63da97765d47c8fb69f0",
+      "bytes": 8006,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/alchemist/research_reports/Alchemist_Refined_v07_report.json"
+      },
+      "provenance_zip": "Skelly_Sound_Matching_v0_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/alchemist/research_reports/MAIN_FST_Structure.json",
+      "original_name": "Skelly_Sound_Matching_v0_7/Alchemist/MAIN_FST_Structure.json",
+      "original_sha256": "a768372b3ffcf273ac6c3b19ed4478dab8c7e7c82cf171feb59b397bd1ad32d5",
+      "sha256": "a768372b3ffcf273ac6c3b19ed4478dab8c7e7c82cf171feb59b397bd1ad32d5",
+      "bytes": 17090,
+      "kind": "historical_model_or_source",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/alchemist/research_reports/MAIN_FST_Structure.json"
+      },
+      "provenance_zip": "Skelly_Sound_Matching_v0_7_Complete.zip",
+      "status": "experimental_archive_not_native_release"
+    },
+    {
+      "path": "data/reports/deuce_timbre_audit.json",
+      "original_name": "deuce_timbre_audit.json",
+      "original_sha256": "96db90d021b0fad4be9a2f476950365fa3f98f7efadb2cb64f25f74dda5c3b22",
+      "sha256": "96db90d021b0fad4be9a2f476950365fa3f98f7efadb2cb64f25f74dda5c3b22",
+      "bytes": 17440,
+      "kind": "measurement_report",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/reports/deuce_timbre_audit.json"
+      },
+      "status": "objective_offline_report_not_listening_approval"
+    },
+    {
+      "path": "data/uncategorized_source_screenshots/20261114-013833.png",
+      "original_name": "image(20261114-013833).png",
+      "original_sha256": "97434dc8129b3617aa04cf613b79770d33d838d2b42c6ef08ccb3e66fe5f7ac1",
+      "sha256": "97434dc8129b3617aa04cf613b79770d33d838d2b42c6ef08ccb3e66fe5f7ac1",
+      "bytes": 38543,
+      "kind": "user_supplied_screenshot_unclassified",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/uncategorized_source_screenshots/20261114-013833.png"
+      },
+      "notes": "Original source screenshot; project association not verified"
+    },
+    {
+      "path": "data/uncategorized_source_screenshots/20261114-022836.png",
+      "original_name": "image(20261114-022836).png",
+      "original_sha256": "4bba77d724d5a11deafa59ebb90baea3c0bf34ebd6237716239ab410598fa089",
+      "sha256": "4bba77d724d5a11deafa59ebb90baea3c0bf34ebd6237716239ab410598fa089",
+      "bytes": 478793,
+      "kind": "user_supplied_screenshot_unclassified",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/uncategorized_source_screenshots/20261114-022836.png"
+      },
+      "notes": "Original source screenshot; project association not verified"
+    },
+    {
+      "path": "data/uncategorized_source_screenshots/20261114-022849.png",
+      "original_name": "image(20261114-022849).png",
+      "original_sha256": "0046bf5615ed193eefe5eec6ff0cdeb3217e33d50820a3395a62af0eceae67c7",
+      "sha256": "0046bf5615ed193eefe5eec6ff0cdeb3217e33d50820a3395a62af0eceae67c7",
+      "bytes": 487939,
+      "kind": "user_supplied_screenshot_unclassified",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/uncategorized_source_screenshots/20261114-022849.png"
+      },
+      "notes": "Original source screenshot; project association not verified"
+    },
+    {
+      "path": "data/uncategorized_source_screenshots/20261114-022943.png",
+      "original_name": "image(20261114-022943).png",
+      "original_sha256": "6d8621a978d23bb699617c667472ffd8f8294de4d2d0de4389aa2d3a0e7c8386",
+      "sha256": "6d8621a978d23bb699617c667472ffd8f8294de4d2d0de4389aa2d3a0e7c8386",
+      "bytes": 170793,
+      "kind": "user_supplied_screenshot_unclassified",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/uncategorized_source_screenshots/20261114-022943.png"
+      },
+      "notes": "Original source screenshot; project association not verified"
+    },
+    {
+      "path": "data/uncategorized_source_screenshots/20261114-023016.png",
+      "original_name": "image(20261114-023016).png",
+      "original_sha256": "da22769980bcdb6d3b0579a040d623fc6ee80d5cbaf4d3b4201ea5b6fca3ea31",
+      "sha256": "da22769980bcdb6d3b0579a040d623fc6ee80d5cbaf4d3b4201ea5b6fca3ea31",
+      "bytes": 495507,
+      "kind": "user_supplied_screenshot_unclassified",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/uncategorized_source_screenshots/20261114-023016.png"
+      },
+      "notes": "Original source screenshot; project association not verified"
+    },
+    {
+      "path": "data/uncategorized_source_screenshots/20261114-023038.png",
+      "original_name": "image(20261114-023038).png",
+      "original_sha256": "4aad7dbfe564bf2962af011fffc4833acf32e190c6a082c927707e77d84e3350",
+      "sha256": "4aad7dbfe564bf2962af011fffc4833acf32e190c6a082c927707e77d84e3350",
+      "bytes": 313242,
+      "kind": "user_supplied_screenshot_unclassified",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/uncategorized_source_screenshots/20261114-023038.png"
+      },
+      "notes": "Original source screenshot; project association not verified"
+    },
+    {
+      "path": "data/uncategorized_source_screenshots/20261114-023049.png",
+      "original_name": "image(20261114-023049).png",
+      "original_sha256": "51bcb8953833e190829bbc63b7472c0e30f3e1c8000ce2c71681339cfb1cfb90",
+      "sha256": "51bcb8953833e190829bbc63b7472c0e30f3e1c8000ce2c71681339cfb1cfb90",
+      "bytes": 131131,
+      "kind": "user_supplied_screenshot_unclassified",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/uncategorized_source_screenshots/20261114-023049.png"
+      },
+      "notes": "Original source screenshot; project association not verified"
+    },
+    {
+      "path": "data/uncategorized_source_screenshots/20261114-023135.png",
+      "original_name": "image(20261114-023135).png",
+      "original_sha256": "7bb64098e9fe382c0b97397932483c118a06046fdba9e6bc6aa8f58aea9b85f9",
+      "sha256": "7bb64098e9fe382c0b97397932483c118a06046fdba9e6bc6aa8f58aea9b85f9",
+      "bytes": 6948,
+      "kind": "user_supplied_screenshot_unclassified",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/uncategorized_source_screenshots/20261114-023135.png"
+      },
+      "notes": "Original source screenshot; project association not verified"
+    },
+    {
+      "path": "data/uncategorized_source_screenshots/20261114-063910.png",
+      "original_name": "image(20261114-063910).png",
+      "original_sha256": "d3673abd0cc0b64bb216967b51bb7d50f9fffb0159544150724f759879098320",
+      "sha256": "d3673abd0cc0b64bb216967b51bb7d50f9fffb0159544150724f759879098320",
+      "bytes": 44559,
+      "kind": "user_supplied_screenshot_unclassified",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/uncategorized_source_screenshots/20261114-063910.png"
+      },
+      "notes": "Original source screenshot; project association not verified"
+    },
+    {
+      "path": "data/uncategorized_source_screenshots/20261114-063919.png",
+      "original_name": "image(20261114-063919).png",
+      "original_sha256": "5c4691d523aad433bf36c800dfb1e039002497dc51d44da35ad3685ab9bbf03a",
+      "sha256": "5c4691d523aad433bf36c800dfb1e039002497dc51d44da35ad3685ab9bbf03a",
+      "bytes": 36142,
+      "kind": "user_supplied_screenshot_unclassified",
+      "storage": {
+        "type": "direct",
+        "repo_path": "archive/data/uncategorized_source_screenshots/20261114-063919.png"
+      },
+      "notes": "Original source screenshot; project association not verified"
+    }
+  ]
+}

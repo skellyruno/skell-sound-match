@@ -1,0 +1,32 @@
+# Nov 24 — supplied Delay Bank, Convolver and EQ: saved-order native partial chains
+
+Continues the existing nine-target program, not a new project. Skellay is a separate new-plugin request; do not replace Skell Delay. Previous exact-head Sound Match Python CI passed at 062580e. No new owner vote. Original source retained privately, no supplied DSP, private audio, raw state bytes, IRs or private recipe hashes published. Confirm source-specific rights before distribution; Skelly Licensing terms pending.
+
+## Engine evidence
+
+Isolated supplied Bank, Convolver and Parametric EQ from original mixer wrappers; missing dependencies explicitly restricted. Bank state versions 15/16 (792 bytes); validated saved state and options. Convolver RIFF embedded IR support only, missing WavPack decoder. Rebuilt original Muffle and Wobbly kernels (50,782 and 125,171 frames at 44.1 kHz), original normalization/EQ/IR preprocessing; no peak normalization substituted. Impulse-derived independent convolution checks against real gate input maximum abs difference 9.74e-7, RMS below 4.18e-8. EQ frozen non-linear-phase only: supplied mainLevel and linear-phase dependency absent; fixed main gain in this research subset, not automation equivalence. Recovered 15 named Convolver and 82 EQ records, 33 distinct EQ settings rendered at 32/44.1/48/96/192k. No general FLP parser or unsupported feature claims. Native GCC/Clang builds; repeated private sanitizer executable passed 20 saved-state rate renders, finite output, EQ SIMD reference check and invalid Bank length/tempo rejection. Offline bridge only, no callback allocation safety, host UI, VST3 or automation validation. JUCE pinned dependency fetch DNS blocked.
+
+## Angelic isolated stage
+
+Saved FST Bank slot 7 precedes Flangus slot 8 and Reeverb 2 slot 9. The existing no-delay printed input already includes downstream processing; applying Bank to it does not establish correct mixer order. Original saved delay at 130 BPM is two beats (923.08 ms), ping-pong. Earlier/later 60/40 diagnostic composite lower better: direct calibrated baseline later 7.513296, saved Bank 2.169893, band 5.103272->1.175376 dB; waveform .403595->.549586 regression. Training-only bounded timing/wet 145 trial screen found later 4.353953 vs direct 7.520388, waveform .403588->.424662, estimated peak -3.071 dBTP. Separate same-take diagnostic, not a listening winner. No new reverb source, original slot enable/mix values still unknown.
+
+## Actual source-driven saved slot order
+
+Use full Club gate print, 527,928 frames at 44.1 kHz; exact same geometry with each target; original named FST wrapper markers, track/slot identity, bytes/hash privately checked for all recovered effects. Run supported original DSP in numerical slot order; missing slots explicitly omitted. Original slot enable/mix not recovered, so all-supported raw chain is an assumption. Fit only global level on first 60%, evaluate later 40%. Baseline is gate print with training-fit global gain. Neither baseline nor these partial-chain scores compare directly with protected excerpt candidates. Composite is six-band/envelope/stereo/waveform error, lower better, not percent sound accuracy.
+
+| Target | Supported slots | Missing slots | Baseline later | Trial later | Peak dBTP | Diagnostic |
+|---|---:|---:|---:|---:|---:|---|
+| Muffle | 5 | 4 | 37.809734 | 13.764811 | -12.156 | pass |
+| Wobbly | 4 | 6 | 33.239288 | 23.484243 | -12.022 | reject band/waveform |
+| Zaam | 4 | 4 | 51.609354 | 14.534494 | -12.679 | reject waveform |
+| Angelic | 4 | 6 | 46.500790 | 11.919371 | -2.569 | pass |
+
+Muffle order EQ2 (2,3), Convolver (6), Flangus (7), Delay3 (9); unavailable Love Philter (1), Compressor (4), Soundgoodizer (5), Reeverb2 (8). Wobbly EQ2 (0,1,4), Convolver (8); unavailable Limiter (2), Soundgoodizer (3), Chorus (5), Flanger (6), Phaser (7), Wrapper (9). Zaam EQ2 (2,3), Flangus (6), Delay2 (9); unavailable Chorus (1), Limiter (4), Soundgoodizer (5), Reeverb2 (8). Angelic EQ2 (1,3), Bank (7), Flangus (8); unavailable Chorus (0), Limiter (2), Maximus (4), Compressor (5), Soundgoodizer (6), Reeverb2 (9). Slot indices zero-based, named records do not establish enabled status. All known raw parameters preserved.
+
+## Nested mixer-blend screen
+
+174 chain objective evaluations (51 Muffle, 41 each other three), with training gain grid nested in each evaluation; train 40%, choose snapshots on next 20%, score last 40%. Two coordinate sweeps, slot weights limited to 0/.25/.5/.75/1, fixed original raw states, no reference input during rendering. Later portion previously examined; same-take repeated research, not independent blind test. Muffle train 13.5231->11.0418, internal validation 13.1149->10.5037, later 13.764809->11.359434, estimated peak -10.8224 dBTP, all individual regression guards pass. Other three select unchanged supported-slot chain, no extra improvement. Muffle fit chooses no final Delay3 contribution: this is a diagnostic mixer inference on incomplete chain, not original Delay3 setting, not proof that original slot is bypassed. Preserve saved state and existing listening anchors. Initial parallel job shared inherited ZIP handle and failed CRC; reopen independently in each worker, rerun passed; original archive full CRC passes. Four real partial chains tested at 64/256/512/1024 frames, max absolute difference across all schedules 1.374e-5, max relative RMS 1.137e-5; not sample-exact, investigate upstream EQ block-state flushing and live automation separately.
+
+Private stage lab: Angelic no-delay source/saved Bank/timing trial and Muffle gate/saved-order partial chain/refined mix, original outside candidate voting, eight verified FLAC clips, same later region, common attenuation preserves gain differences, max emitted estimated peak below -6 dBTP. JS syntax check passed; browser navigation previously blocked; no new playback/visual inspection claim. Private checkpoint ZIP 89 entries including SHA256 manifest, original/adapted sources, recovered private states, scripts, reports, audio, CRC and all SHA-256 verified. Scripts retain earlier local paths and require prior packages/original archive. Not standalone VST3.
+
+Next: obtain missing dynamics and Reeverb2 implementations, exact mixer slot enable/mix and track routing, Wobbly modulation stages/Wrapper identification, Muffle Love Philter. Preserve Deuce exact v2.5 recovery task, both Alchemist anchors (B less bright), Speakerz R6, Hop Out A, Club Gate B, Zaam B/C and Muffle/Wobbly historical anchors. No full-chain or factory replacement.

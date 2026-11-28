@@ -1,0 +1,50 @@
+name: Phantom offline research dependency
+on:
+  push:
+    branches: [feature/deuce-v25-listening-approved-20261115]
+    paths:
+      - '.github/workflows/phantom-research.yml'
+      - 'tools/phantom_smoke91.py'
+      - 'skell_sound_match/wav_only/phantom_bridge.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  wheelhouse:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      PHANTOM_NO_TELEMETRY: '1'
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Download official binary wheels
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p phantom-bundle/wheels
+          python -m pip download --only-binary=:all: --dest phantom-bundle/wheels 'phantom-audio==2.0.0'
+          cd phantom-bundle/wheels
+          echo '9351b4a92e68b8af5601a70049e593c4edfa074615829e1ca5c6bfae8741107b  phantom_audio-2.0.0-py3-none-any.whl' | sha256sum -c -
+          sha256sum *.whl > ../SHA256SUMS.txt
+      - name: Test offline install and actual analyzer on generated audio only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m venv /tmp/phantom-test
+          /tmp/phantom-test/bin/python -m pip install --no-index --find-links=phantom-bundle/wheels 'phantom-audio==2.0.0'
+          /tmp/phantom-test/bin/python -m pip check
+          /tmp/phantom-test/bin/python -m pip freeze > phantom-bundle/installed.txt
+          PYTHONPATH="$PWD" /tmp/phantom-test/bin/python tools/phantom_smoke91.py /tmp/phantom-test/bin/phantom phantom-bundle
+      - name: Preserve tested offline bundle
+        uses: actions/upload-artifact@v6
+        with:
+          name: phantom-2.0.0-linux-x86_64-cp313-offline
+          path: phantom-bundle/
+          if-no-files-found: error
+          retention-days: 7
