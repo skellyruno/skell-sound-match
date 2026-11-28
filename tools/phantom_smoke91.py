@@ -17,5 +17,8 @@ with tempfile.TemporaryDirectory() as d:
     (out/'synthetic-analysis.json').write_text(json.dumps(a,indent=2))
     (out/'synthetic-comparison.json').write_text(json.dumps(b,indent=2))
     assert a['status']==b['status']=='completed', (a,b)
-    assert b['stdout'].strip(),b
-    print('Actual Phantom analysis and comparison commands succeeded on generated test pair')
+    assert a['analysis']['sample_rate']==sr and a['analysis']['channels']==2
+    assert -25<a['analysis']['loudness']['integrated_lufs']<-20
+    assert a['analysis']['stereo']['correlation']>.9
+    assert b['analysis'],b
+    print('Actual Phantom structured analysis and comparison succeeded on generated test pair')
